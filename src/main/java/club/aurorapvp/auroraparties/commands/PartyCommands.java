@@ -1,8 +1,8 @@
-package club.aurorapvp.commands;
+package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.configs.Lang;
-import club.aurorapvp.modules.Party;
-import club.aurorapvp.modules.PartyRequest;
+import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.modules.Party;
+import club.aurorapvp.auroraparties.modules.PartyRequest;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -19,14 +19,16 @@ public class PartyCommands extends BaseCommand {
   @Description("Opens the party menu")
   @SuppressWarnings("unused")
   public void onOpenGUI(Player p) {
-    if (Party.inParty(p)) {
-      Party party = Party.getParty(p);
-
-      assert party != null;
-      party.getGUI().open(p);
+    if (!Party.inParty(p)) {
+      p.sendMessage(Lang.getComponent("not-in-party"));
+      return;
     }
-  }
 
+    Party party = Party.getParty(p);
+
+    assert party != null;
+    party.getGUI().open(p);
+  }
 
   @Subcommand("create")
   @Description("Creates a new party")
@@ -42,7 +44,7 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(p);
 
     if (party == null) {
-      p.sendMessage(Lang.getComponent("You're not in a party!"));
+      p.sendMessage(Lang.getComponent("not-in-party"));
       return;
     } else if (!party.hasPermission(p, "can-disband")) {
       p.sendMessage(Lang.getComponent("no-permission"));
@@ -61,10 +63,13 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(p);
 
     if (party == null) {
-      p.sendMessage(Lang.getComponent("You're not in a party!"));
+      p.sendMessage(Lang.getComponent("not-in-party"));
       return;
     } else if (!party.hasPermission(p, "can-invite")) {
       p.sendMessage(Lang.getComponent("no-permission"));
+      return;
+    } else if (party.getMembers().size() >= 27) {
+      p.sendMessage(Lang.getComponent("party-full"));
       return;
     }
 
@@ -72,6 +77,9 @@ public class PartyCommands extends BaseCommand {
 
     if (invited == null) {
       p.sendMessage(Lang.getComponent("unknown-player"));
+      return;
+    } else if (party.contains(invited)) {
+      p.sendMessage(Lang.getComponent("already-in-party"));
       return;
     }
 

@@ -1,6 +1,6 @@
-package club.aurorapvp.modules;
+package club.aurorapvp.auroraparties.modules;
 
-import club.aurorapvp.configs.Lang;
+import club.aurorapvp.auroraparties.configs.Lang;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -83,6 +83,35 @@ public class Party {
     this.getGUI().addMember(p);
   }
 
+  public void leave(Player p) {
+    this.removeMember(p);
+
+    p.sendMessage(Lang.getComponent("left-party"));
+
+    partyLeader.sendMessage(Lang.formatComponent("player-left-party", p.getName()));
+
+    for (Player player : this.getMembers()) {
+      player.sendMessage(Lang.formatComponent("player-left-party", p.getName()));
+    }
+  }
+
+  public void kick(Player p) {
+    this.removeMember(p);
+
+    p.sendMessage(Lang.getComponent("removed-from-party"));
+
+    partyLeader.sendMessage(Lang.formatComponent("player-removed-from-party", p.getName()));
+
+    for (Player player : this.getMembers()) {
+      player.sendMessage(Lang.formatComponent("player-removed-from-party", p.getName()));
+    }
+  }
+
+  public void removeMember(Player p) {
+    partyMembers.remove(p);
+    this.getGUI().removeMember(p);
+  }
+
   public void setPermission(Player p, String permission, boolean value) {
     partyMembers.get(p).put(permission, value);
   }
@@ -94,6 +123,8 @@ public class Party {
     for (Player p : partyMembers.keySet()) {
       p.sendMessage(Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
     }
+
+    PARTIES.remove(this);
   }
 
   public static boolean inParty(Player p) {

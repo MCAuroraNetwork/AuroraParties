@@ -1,2 +1,261 @@
-package club.aurorapvp.auroraparties.modules;public class TeamDuelGUI {
+package club.aurorapvp.auroraparties.modules;
+
+import club.aurorapvp.auroraduels.modules.Queue;
+import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.util.InventoryUtil;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public class TeamDuelGUI {
+  private final Inventory inventory;
+  private int index = 0;
+
+  public TeamDuelGUI(ItemStack leaderSkull) {
+    ItemStack blueDivider = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+    ItemMeta meta = blueDivider.getItemMeta();
+    meta.displayName(Component.text(""));
+    blueDivider.setItemMeta(meta);
+
+    ItemStack blackDivider = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+    meta = blackDivider.getItemMeta();
+    meta.displayName(Component.text(""));
+    blackDivider.setItemMeta(meta);
+
+    ItemStack redDivider = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+    meta = redDivider.getItemMeta();
+    meta.displayName(Component.text(""));
+    redDivider.setItemMeta(meta);
+
+    inventory =
+        Bukkit.createInventory(null, 54,
+            MiniMessage.miniMessage()
+                .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + "New Team Duel"));
+
+    for (int row = 0; row < 6; row++) {
+      int blueSlot = row * 9 + 3;
+      int blackSlot = row * 9 + 4;
+      int redSlot = row * 9 + 5;
+
+      inventory.setItem(blueSlot, blueDivider);
+      inventory.setItem(blackSlot, blackDivider);
+      inventory.setItem(redSlot, redDivider);
+    }
+
+    ItemStack startDuel = new ItemStack(Material.GREEN_WOOL);
+    meta = startDuel.getItemMeta();
+    meta.displayName(Lang.getComponent("start-team-duel"));
+    startDuel.setItemMeta(meta);
+
+    ItemStack exit = new ItemStack(Material.RED_WOOL);
+    meta = exit.getItemMeta();
+    meta.displayName(Lang.getComponent("exit"));
+    exit.setItemMeta(meta);
+
+    inventory.setItem(49, startDuel);
+    inventory.setItem(40, exit);
+
+    inventory.setItem(0, leaderSkull);
+  }
+
+  public Inventory getInventory() {
+    return inventory;
+  }
+
+  public void startTeamDuel() {
+    Set<String> leftItemNames = new HashSet<>();
+    Set<String> rightItemNames = new HashSet<>();
+
+    for (int row = 0; row < 6; row++) {
+      for (int column = 0; column < 3; column++) {
+        int slot = row * 9 + column;
+        ItemStack item = inventory.getItem(slot);
+        String name = getStringName(item);
+
+        if (name != null) {
+          leftItemNames.add(name);
+        }
+      }
+    }
+
+    for (int row = 0; row < 6; row++) {
+      for (int column = 6; column < 9; column++) {
+        int slot = row * 9 + column;
+        ItemStack item = inventory.getItem(slot);
+        String name = getStringName(item);
+
+        if (name != null) {
+          rightItemNames.add(name);
+        }
+      }
+    }
+
+    Player[] team1 = new Player[leftItemNames.size()];
+    Player[] team2 = new Player[rightItemNames.size()];
+
+    int index = 0;
+    for (String name : leftItemNames) {
+      Player player = Bukkit.getPlayer(name);
+      team1[index] = player;
+      index++;
+    }
+
+    index = 0;
+    for (String name : rightItemNames) {
+      Player player = Bukkit.getPlayer(name);
+      team2[index] = player;
+      index++;
+    }
+
+    for (Player p : team1) {
+      AuroraParties.INSTANCE.getLogger().info(p.getName());
+    }
+
+    for (Player p : team2) {
+      AuroraParties.INSTANCE.getLogger().info(p.getName());
+    }
+
+    Queue.getQueue("default").enterDuelQueue(team1, team2, null, false);
+  }
+
+  private String getStringName(ItemStack item) {
+    if (item != null) {
+      ItemMeta meta = item.getItemMeta();
+      Component name = meta.displayName();
+      if (name != null) {
+        return PlainTextComponentSerializer.plainText().serialize(name);
+      }
+    }
+    return null;
+  }
+
+  public void addMember(ItemStack memberSkull) {
+    incrementIndex();
+
+    inventory.setItem(index, memberSkull);
+  }
+
+  public void removeMember(ItemStack memberSkull) {
+    decrementIndex();
+
+    int slot = InventoryUtil.findSlot(memberSkull, inventory);
+
+    // TODO same as PartyGUI#removeMember
+    inventory.clear(slot);
+
+    ItemStack lastSkull = InventoryUtil.getLastSkull(inventory);
+
+    if (!lastSkull.isSimilar(inventory.getItem(index))) {
+      InventoryUtil.moveItem(inventory, lastSkull, slot);
+    }
+  }
+
+  private void decrementIndex() {
+    if (index <= 0) {
+      throw new IndexOutOfBoundsException("Cannot decrement below 0");
+    }
+
+    index--;
+
+    if (index % 9 == 2 || index % 9 == 5) {
+      index -= 2;
+    }
+  }
+
+  private void incrementIndex() {
+    if (index >= 53) {
+      throw new IndexOutOfBoundsException("Cannot increment over 53");
+    }
+
+    index++;
+
+    if (index % 9 == 3 || index % 9 == 6) {
+      index += 2;
+    }
+  }
+
+  public static void onInventoryClick(InventoryClickEvent event) {
+    Player p = (Player) event.getWhoClicked();
+
+    if (!Party.inParty(p)) {
+      return;
+    }
+
+    Party party = Party.getParty(p);
+
+    assert party != null;
+    if (!party.isLeader(p)) {
+      return;
+    }
+
+    Inventory topInventory = event.getView().getTopInventory();
+
+    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
+      return;
+    }
+
+    ItemStack clickedItem = event.getCurrentItem();
+
+    if (clickedItem != null) {
+      if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE ||
+          clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE ||
+          clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
+        event.setCancelled(true);
+      }
+
+      if (clickedItem.getType() == Material.GREEN_WOOL) {
+        party.getGUI().getTeamDuelGUI().startTeamDuel();
+        event.setCancelled(true);
+      }
+
+      if (clickedItem.getType() == Material.RED_WOOL) {
+        party.getGUI().open(p);
+        event.setCancelled(true);
+      }
+    }
+
+    ItemStack cursorItem = event.getCursor();
+    int rawSlot = event.getRawSlot();
+
+    int topInventorySize = topInventory.getSize();
+
+    if (cursorItem != null && rawSlot >= topInventorySize) {
+      event.setCancelled(true);
+    }
+  }
+
+  public static void itemDropped(PlayerDropItemEvent event) {
+    ItemStack droppedItem = event.getItemDrop().getItemStack();
+    Player player = event.getPlayer();
+
+    Inventory topInventory = player.getOpenInventory().getTopInventory();
+
+    if (topInventory instanceof PlayerInventory) {
+      return;
+    }
+
+    event.getItemDrop().remove();
+
+    HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
+
+    if (!leftoverItems.isEmpty()) {
+      for (ItemStack leftoverItem : leftoverItems.values()) {
+        player.getWorld().dropItem(player.getLocation(), leftoverItem);
+      }
+    }
+  }
 }
+

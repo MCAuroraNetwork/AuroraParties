@@ -1,7 +1,7 @@
-package club.aurorapvp.commands;
+package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.AuroraParties;
-import club.aurorapvp.configs.Lang;
+import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.configs.Lang;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CatchUnknown;
 import co.aikar.commands.annotation.CommandAlias;

@@ -1,6 +1,6 @@
-package club.aurorapvp.configs;
+package club.aurorapvp.auroraparties.configs;
 
-import club.aurorapvp.AuroraParties;
+import club.aurorapvp.auroraparties.AuroraParties;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,15 +37,28 @@ public class Lang {
         "prefix <gradient:#FFAA00:#FF55FF>You have received a party invite from %1$s to join %2$s! Type /party accept to join!");
     DEFAULTS.put("invite-accepted", "prefix <gradient:#FFAA00:#FF55FF>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <gradient:#FFAA00:#FF55FF>Invite denied");
-    DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no prending invites!");
+    DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no pending invites!");
     DEFAULTS.put("no-permission",
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
     DEFAULTS.put("party-disbanded",
-        "prefix <gradient:#FFAA00:#FF55FF>The party %1$s has been disbanded by %2$s");
+        "prefix <gradient:#FFAA00:#FF55FF>%1$s has been disbanded by %2$s");
     DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF>Click here to leave the party");
     DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF>Click here to disband the party");
+    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF>Click here to exit");
+    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to create a team duel");
+    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to start a team duel");
     DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF>Click here to manage the party");
     DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");
+    DEFAULTS.put("already-in-party",
+        "prefix <gradient:#FFAA00:#FF55FF>Player is already in this party!");
+    DEFAULTS.put("not-in-party", "prefix <gradient:#FFAA00:#FF55FF>You're not in a party!");
+    DEFAULTS.put("removed-from-party",
+        "prefix <gradient:#FFAA00:#FF55FF>You have been removed from the party");
+    DEFAULTS.put("player-removed-from-party",
+        "prefix <gradient:#FFAA00:#FF55FF>%s has been removed from the party");
+    DEFAULTS.put("left-party", "prefix <gradient:#FFAA00:#FF55FF>You have left the party");
+    DEFAULTS.put("player-left-party", "prefix <gradient:#FFAA00:#FF55FF>%s has left the party");
+    DEFAULTS.put("party-full", "prefix <gradient:#FFAA00:#FF55FF>This party is full!");
     DEFAULTS.put("help-command", """
 
         """);

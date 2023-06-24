@@ -1,6 +1,6 @@
-package club.aurorapvp.modules;
+package club.aurorapvp.auroraparties.modules;
 
-import club.aurorapvp.configs.Lang;
+import club.aurorapvp.auroraparties.configs.Lang;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.entity.Player;

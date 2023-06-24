@@ -1,14 +1,14 @@
-package club.aurorapvp;
+package club.aurorapvp.auroraparties;
 
-import club.aurorapvp.commands.PartyCommands;
-import club.aurorapvp.commands.PluginCommands;
+import club.aurorapvp.auroraparties.commands.PartyCommands;
+import club.aurorapvp.auroraparties.commands.PluginCommands;
 import co.aikar.commands.BukkitCommandCompletionContext;
 import co.aikar.commands.CommandCompletions;
 import co.aikar.commands.PaperCommandManager;
 import java.util.List;
 
 public class Commands {
-  public static PaperCommandManager MANAGER = new PaperCommandManager(AuroraDuels.INSTANCE);
+  public static PaperCommandManager MANAGER = new PaperCommandManager(AuroraParties.INSTANCE);
 
   public static void init() {
     MANAGER.registerCommand(new PluginCommands());

@@ -305,7 +305,7 @@ public class PartyGUI {
       party.getGUI().handleManageClick(clickedItem);
     }
 
-    if (!AuroraParties.isAuroraDuelsInstalled() && party.getMembers().size() >= 1) {
+    if (!AuroraParties.isAuroraDuelsInstalled() || party.getMembers().size() < 1) {
       return;
     }
 

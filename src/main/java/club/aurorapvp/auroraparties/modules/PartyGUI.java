@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules;
 
+import club.aurorapvp.auroraduels.modules.Queue;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.configs.Lang;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -180,13 +182,29 @@ public class PartyGUI {
       return;
     }
 
-    ItemStack duel = new ItemStack(Material.NETHERITE_SWORD);
-    meta = duel.getItemMeta();
+    ItemStack teamDuel = new ItemStack(Material.NETHERITE_SWORD);
+    meta = teamDuel.getItemMeta();
     meta.lore(List.of(Component.text("")));
     meta.displayName(Lang.getComponent("create-team-duel"));
-    duel.setItemMeta(meta);
+    teamDuel.setItemMeta(meta);
 
-    leaderInventory.setItem(49, duel);
+    leaderInventory.setItem(49, teamDuel);
+
+    ItemStack partyDuel = new ItemStack(Material.DIAMOND_AXE);
+    meta = partyDuel.getItemMeta();
+    meta.lore(List.of(Component.text("")));
+    meta.displayName(Lang.getComponent("start-random-team-duel"));
+    partyDuel.setItemMeta(meta);
+
+    leaderInventory.setItem(47, partyDuel);
+
+    ItemStack ffaDuel = new ItemStack(Material.DIAMOND_SWORD);
+    meta = ffaDuel.getItemMeta();
+    meta.lore(List.of(Component.text("")));
+    meta.displayName(Lang.getComponent("start-ffa-duel"));
+    ffaDuel.setItemMeta(meta);
+
+    leaderInventory.setItem(51, ffaDuel);
   }
 
   private void setupManageTab(ItemStack leaderSkull) {
@@ -281,11 +299,24 @@ public class PartyGUI {
       } else {
         party.getGUI().openManageTab(p);
       }
-    } else if (slot == 49 && AuroraParties.isAuroraDuelsInstalled()) {
-      party.getGUI().openTeamDuelGUI(p);
-    } else if (party.getGUI().isManageTab(event.getInventory()) && clickedItem != null &&
+    }  else if (party.getGUI().isManageTab(event.getInventory()) && clickedItem != null &&
         clickedItem.getType() == Material.PLAYER_HEAD) {
       party.getGUI().handleManageClick(clickedItem);
+    }
+
+    if (!AuroraParties.isAuroraDuelsInstalled() && party.getMembers().size() >= 1) {
+      return;
+    }
+
+    Set<Player> players = party.getMembers();
+    players.add(party.getLeader());
+
+    if (slot == 49) {
+      party.getGUI().openTeamDuelGUI(p);
+    } else if (slot == 47) {
+      Queue.getQueue("default").enterDuelQueue(players, null, false);
+    } else if (slot == 51) {
+      Queue.getQueue("default").enterFFADuelQueue(players, null, false);
     }
   }
 }

@@ -47,6 +47,8 @@ public class Lang {
     DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF>Click here to exit");
     DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to create a team duel");
     DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to start a team duel");
+    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF>Click here to start an FFA duel");
+    DEFAULTS.put("start-random-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to start a random team duel");
     DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF>Click here to manage the party");
     DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");
     DEFAULTS.put("already-in-party",

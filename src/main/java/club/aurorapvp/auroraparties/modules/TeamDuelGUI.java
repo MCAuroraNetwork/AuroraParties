@@ -120,14 +120,6 @@ public class TeamDuelGUI {
       index++;
     }
 
-    for (Player p : team1) {
-      AuroraParties.INSTANCE.getLogger().info(p.getName());
-    }
-
-    for (Player p : team2) {
-      AuroraParties.INSTANCE.getLogger().info(p.getName());
-    }
-
     Queue.getQueue("default").enterDuelQueue(team1, team2, null, false);
   }
 

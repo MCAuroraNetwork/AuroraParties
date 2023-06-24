@@ -7,6 +7,7 @@ import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -308,7 +309,7 @@ public class PartyGUI {
       return;
     }
 
-    Set<Player> players = party.getMembers();
+    Set<Player> players = new HashSet<>(party.getMembers());
     players.add(party.getLeader());
 
     if (slot == 49) {

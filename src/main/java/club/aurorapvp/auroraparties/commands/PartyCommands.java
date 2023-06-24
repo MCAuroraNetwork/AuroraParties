@@ -1,5 +1,7 @@
 package club.aurorapvp.auroraparties.commands;
 
+import club.aurorapvp.auroraduels.modules.duels.Duel;
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.configs.Lang;
 import club.aurorapvp.auroraparties.modules.Party;
 import club.aurorapvp.auroraparties.modules.PartyRequest;
@@ -24,6 +26,10 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
+    if (AuroraParties.isAuroraDuelsInstalled() && Duel.inDuel(p)) {
+      return;
+    }
+
     Party party = Party.getParty(p);
 
     assert party != null;
@@ -34,6 +40,11 @@ public class PartyCommands extends BaseCommand {
   @Description("Creates a new party")
   @SuppressWarnings("unused")
   public void onCreate(Player p) {
+    if (Party.inParty(p)) {
+      p.sendMessage(Lang.getComponent("already-in-party"));
+      return;
+    }
+
     new Party(p);
   }
 
@@ -68,7 +79,7 @@ public class PartyCommands extends BaseCommand {
     } else if (!party.hasPermission(p, "can-invite")) {
       p.sendMessage(Lang.getComponent("no-permission"));
       return;
-    } else if (party.getMembers().size() >= 27) {
+    } else if (party.getMembers().size() >= 28) {
       p.sendMessage(Lang.getComponent("party-full"));
       return;
     }

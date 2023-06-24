@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules;
 
-import club.aurorapvp.auroraduels.configs.Config;
-import club.aurorapvp.auroraduels.modules.requests.Request;
+import club.aurorapvp.auroraparties.configs.Config;
 import club.aurorapvp.auroraparties.configs.Lang;
 import java.util.HashSet;
 import java.util.Set;

@@ -35,6 +35,7 @@ public class Lang {
     DEFAULTS.put("invite-sent", "prefix <gradient:#FFAA00:#FF55FF>Invite successfully sent!");
     DEFAULTS.put("invite-received",
         "prefix <gradient:#FFAA00:#FF55FF>You have received a party invite from %1$s to join %2$s! Type /party accept to join!");
+    DEFAULTS.put("invite-timed-out", "prefix <gradient:#FFAA00:#FF55FF>Invite timed out");
     DEFAULTS.put("invite-accepted", "prefix <gradient:#FFAA00:#FF55FF>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <gradient:#FFAA00:#FF55FF>Invite denied");
     DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no pending invites!");

@@ -55,6 +55,8 @@ public class Lang {
     DEFAULTS.put("already-in-party",
         "prefix <gradient:#FFAA00:#FF55FF>Player is already in this party!");
     DEFAULTS.put("not-in-party", "prefix <gradient:#FFAA00:#FF55FF>You're not in a party!");
+    DEFAULTS.put("not-enough-players",
+        "prefix <gradient:#FFAA00:#FF55FF>There's not enough players in this party!");
     DEFAULTS.put("removed-from-party",
         "prefix <gradient:#FFAA00:#FF55FF>You have been removed from the party");
     DEFAULTS.put("player-removed-from-party",
@@ -62,6 +64,7 @@ public class Lang {
     DEFAULTS.put("left-party", "prefix <gradient:#FFAA00:#FF55FF>You have left the party");
     DEFAULTS.put("player-left-party", "prefix <gradient:#FFAA00:#FF55FF>%s has left the party");
     DEFAULTS.put("party-full", "prefix <gradient:#FFAA00:#FF55FF>This party is full!");
+    // TODO
     DEFAULTS.put("help-command", """
 
         """);

@@ -103,6 +103,12 @@ public class TeamDuelGUI {
       }
     }
 
+    if (leftItemNames.size() == 0 || rightItemNames.size() == 0) {
+      party.getLeader().sendMessage(Lang.getComponent("not-enough-players"));
+      party.getLeader().closeInventory();
+      return;
+    }
+
     Player[] team1 = new Player[leftItemNames.size()];
     Player[] team2 = new Player[rightItemNames.size()];
 

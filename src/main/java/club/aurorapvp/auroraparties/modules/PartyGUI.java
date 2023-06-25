@@ -1,8 +1,10 @@
 package club.aurorapvp.auroraparties.modules;
 
-import club.aurorapvp.auroraduels.modules.Queue;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.modules.duels.PendingFFADuel;
+import club.aurorapvp.auroraparties.modules.duels.PendingPartyDuel;
+import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.Arrays;
@@ -107,7 +109,8 @@ public class PartyGUI {
     ItemStack memberSkull = memberSkulls.get(p);
     int slot = InventoryUtil.findSlot(memberSkull, publicInventory);
 
-    List<Inventory> inventories = Arrays.asList(publicInventory, memberInventory, leaderInventory, manageTab);
+    List<Inventory> inventories =
+        Arrays.asList(publicInventory, memberInventory, leaderInventory, manageTab);
 
     // TODO figure out why this is being so ANNOYING
     for (Inventory inventory : inventories) {
@@ -230,7 +233,7 @@ public class PartyGUI {
     exit.setItemMeta(meta);
 
     manageTab.setItem(45, exit);
-   }
+  }
 
   private void addToManageTab(int index, ItemStack memberSkull) {
     ItemMeta meta = memberSkull.getItemMeta();
@@ -300,7 +303,7 @@ public class PartyGUI {
       } else {
         party.getGUI().openManageTab(p);
       }
-    }  else if (party.getGUI().isManageTab(event.getInventory()) && clickedItem != null &&
+    } else if (party.getGUI().isManageTab(event.getInventory()) && clickedItem != null &&
         clickedItem.getType() == Material.PLAYER_HEAD) {
       party.getGUI().handleManageClick(clickedItem);
     }
@@ -315,9 +318,9 @@ public class PartyGUI {
     if (slot == 49) {
       party.getGUI().openTeamDuelGUI(p);
     } else if (slot == 47) {
-      Queue.getQueue("default").enterDuelQueue(players, null, false);
+      new PendingPartyDuel(p, players);
     } else if (slot == 51) {
-      Queue.getQueue("default").enterFFADuelQueue(players, null, false);
+      new PendingFFADuel(p, players);
     }
   }
 }

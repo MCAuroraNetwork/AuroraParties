@@ -1,9 +1,7 @@
-package club.aurorapvp.auroraparties.modules;
+package club.aurorapvp.auroraparties.modules.duels;
 
-import club.aurorapvp.auroraduels.modules.Queue;
-import club.aurorapvp.aurorakits.modules.Kit;
-import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.modules.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,60 +77,6 @@ public class TeamDuelGUI {
     return inventory;
   }
 
-  public void startTeamDuel(Kit kit) {
-    Set<String> leftItemNames = new HashSet<>();
-    Set<String> rightItemNames = new HashSet<>();
-
-    for (int row = 0; row < 6; row++) {
-      for (int column = 0; column < 3; column++) {
-        int slot = row * 9 + column;
-        ItemStack item = inventory.getItem(slot);
-        String name = getStringName(item);
-
-        if (name != null) {
-          leftItemNames.add(name);
-        }
-      }
-    }
-
-    for (int row = 0; row < 6; row++) {
-      for (int column = 6; column < 9; column++) {
-        int slot = row * 9 + column;
-        ItemStack item = inventory.getItem(slot);
-        String name = getStringName(item);
-
-        if (name != null) {
-          rightItemNames.add(name);
-        }
-      }
-    }
-
-    if (leftItemNames.size() == 0 || rightItemNames.size() == 0) {
-      party.getLeader().sendMessage(Lang.getComponent("not-enough-players"));
-      party.getLeader().closeInventory();
-      return;
-    }
-
-    Player[] team1 = new Player[leftItemNames.size()];
-    Player[] team2 = new Player[rightItemNames.size()];
-
-    int index = 0;
-    for (String name : leftItemNames) {
-      Player player = Bukkit.getPlayer(name);
-      team1[index] = player;
-      index++;
-    }
-
-    index = 0;
-    for (String name : rightItemNames) {
-      Player player = Bukkit.getPlayer(name);
-      team2[index] = player;
-      index++;
-    }
-
-    Queue.getQueue("default").enterDuelQueue(team1, team2, kit, false);
-  }
-
   public void startTeamDuel() {
     Set<String> leftItemNames = new HashSet<>();
     Set<String> rightItemNames = new HashSet<>();
@@ -184,7 +128,7 @@ public class TeamDuelGUI {
       index++;
     }
 
-    Queue.getQueue("default").enterDuelQueue(team1, team2, null, false);
+    new PendingTeamDuel(party.getLeader(), team1, team2);
   }
 
   private String getStringName(ItemStack item) {
@@ -276,11 +220,6 @@ public class TeamDuelGUI {
       return;
     } else if (clickedItem.getType() == Material.GREEN_WOOL) {
       event.setCancelled(true);
-
-      if (AuroraParties.isAuroraKitsInstalled()) {
-        new DuelKitGUI(party.getLeader(), party.getGUI().getTeamDuelGUI()).open();
-        return;
-      }
 
       party.getGUI().getTeamDuelGUI().startTeamDuel();
       return;

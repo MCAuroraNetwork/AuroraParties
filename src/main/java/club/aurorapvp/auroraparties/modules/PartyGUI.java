@@ -58,7 +58,7 @@ public class PartyGUI {
     this.setupManageTab(leaderSkull.clone());
 
     if (AuroraParties.isAuroraDuelsInstalled()) {
-      this.teamDuelGUI = new TeamDuelGUI(leaderSkull);
+      this.teamDuelGUI = new TeamDuelGUI(party, leaderSkull);
     } else {
       this.teamDuelGUI = null;
     }

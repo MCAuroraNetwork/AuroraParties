@@ -10,6 +10,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
-    if (AuroraParties.isAuroraDuelsInstalled() && Duel.inDuel(p)) {
+    if (Duel.inDuel(p)) {
       return;
     }
 
@@ -92,9 +93,11 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("accept")
+  @Syntax("[player]")
+  @CommandCompletion("@players")
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
-  public void onAccept(Player p) {
+  public void onAccept(Player p, @Optional String playerName) {
     PartyInvite request = PartyInvite.getInvite(p);
 
     if (request == null) {
@@ -106,9 +109,11 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("deny")
+  @Syntax("[player]")
+  @CommandCompletion("@players")
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
-  public void onDeny(Player p) {
+  public void onDeny(Player p, @Optional String playerName) {
     PartyInvite request = PartyInvite.getInvite(p);
 
     if (request == null) {

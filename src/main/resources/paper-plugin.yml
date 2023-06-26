@@ -8,4 +8,4 @@ website: aurorapvp.club
 dependencies:
   server:
     AuroraDuels:
-      required: false
+      required: true

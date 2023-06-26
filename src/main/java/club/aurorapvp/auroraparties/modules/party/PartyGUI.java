@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties.modules.party;
 
-import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingFFADuel;
 import club.aurorapvp.auroraparties.modules.duels.PendingPartyDuel;
@@ -58,12 +57,7 @@ public class PartyGUI {
     this.setupMemberInventory(leaderSkull);
     this.setupLeaderInventory(leaderSkull);
     this.setupManageTab(leaderSkull.clone());
-
-    if (AuroraParties.isAuroraDuelsInstalled()) {
-      this.teamDuelGUI = new TeamDuelGUI(party, leaderSkull);
-    } else {
-      this.teamDuelGUI = null;
-    }
+    this.teamDuelGUI = new TeamDuelGUI(party, leaderSkull);
   }
 
   public TeamDuelGUI getTeamDuelGUI() {
@@ -97,10 +91,7 @@ public class PartyGUI {
     memberInventory.setItem(index, memberSkull);
     leaderInventory.setItem(index, memberSkull);
     this.addToManageTab(index, memberSkull.clone());
-
-    if (AuroraParties.isAuroraDuelsInstalled()) {
-      this.teamDuelGUI.addMember(memberSkull);
-    }
+    this.teamDuelGUI.addMember(memberSkull);
   }
 
   public void removeMember(Player p) {
@@ -125,9 +116,7 @@ public class PartyGUI {
       }
     }
 
-    if (AuroraParties.isAuroraDuelsInstalled()) {
-      this.teamDuelGUI.removeMember(memberSkull);
-    }
+    this.teamDuelGUI.removeMember(memberSkull);
   }
 
   private void decrementIndex() {
@@ -181,10 +170,6 @@ public class PartyGUI {
     manageParty.setItemMeta(meta);
 
     leaderInventory.setItem(45, manageParty);
-
-    if (!AuroraParties.isAuroraDuelsInstalled()) {
-      return;
-    }
 
     ItemStack teamDuel = new ItemStack(Material.NETHERITE_SWORD);
     meta = teamDuel.getItemMeta();
@@ -308,7 +293,7 @@ public class PartyGUI {
       party.getGUI().handleManageClick(clickedItem);
     }
 
-    if (!AuroraParties.isAuroraDuelsInstalled() || party.getMembers().size() < 1) {
+    if (party.getMembers().size() < 1) {
       return;
     }
 

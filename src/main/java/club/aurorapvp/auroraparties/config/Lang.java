@@ -39,6 +39,7 @@ public class Lang {
     DEFAULTS.put("invite-accepted", "prefix <gradient:#FFAA00:#FF55FF>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <gradient:#FFAA00:#FF55FF>Invite denied");
     DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no pending invites!");
+    DEFAULTS.put("already-sent-invite", "prefix <gradient:#FFAA00:#FF55FF>You have already sent an invite!");
     DEFAULTS.put("no-permission",
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
     DEFAULTS.put("party-disbanded",

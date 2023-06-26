@@ -1,8 +1,7 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
-import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.modules.party.PartyGUI;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
+import club.aurorapvp.auroraparties.modules.party.PartyGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -12,16 +11,11 @@ public class InventoryEventListener implements Listener {
   @EventHandler
   public void onInventoryClicked(InventoryClickEvent event) {
     PartyGUI.inventoryClicked(event);
-
-    if (AuroraParties.isAuroraDuelsInstalled()) {
-      TeamDuelGUI.onInventoryClick(event);
-    }
+    TeamDuelGUI.onInventoryClick(event);
   }
 
   @EventHandler
   public void onItemDrop(PlayerDropItemEvent event) {
-    if (AuroraParties.isAuroraDuelsInstalled()) {
-      TeamDuelGUI.itemDropped(event);
-    }
+    TeamDuelGUI.itemDropped(event);
   }
 }

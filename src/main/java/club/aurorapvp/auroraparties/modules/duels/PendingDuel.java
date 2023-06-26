@@ -5,7 +5,6 @@ import club.aurorapvp.auroraduels.modules.queues.Queue;
 import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
 import club.aurorapvp.auroraduels.modules.requests.Request;
 import club.aurorapvp.aurorakits.modules.kits.Kit;
-import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.Set;
 import org.bukkit.entity.Player;
 
@@ -31,9 +30,7 @@ public abstract class PendingDuel extends Request {
       this.startDuel();
     }
 
-    if (!AuroraParties.isAuroraKitsInstalled()) {
-      this.startDuel();
-    }
+    this.startDuel();
 
     new DuelKitGui(partyLeader);
   }

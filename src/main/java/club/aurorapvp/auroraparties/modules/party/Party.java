@@ -17,8 +17,6 @@ public class Party {
     this.partyLeader = partyLeader;
     this.partyGUI = new PartyGUI(this);
 
-    defaultPermissions.put("can-invite", false);
-    defaultPermissions.put("can-disband", false);
 
     partyLeader.sendMessage(Lang.getComponent("party-created"));
 

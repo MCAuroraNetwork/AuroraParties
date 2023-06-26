@@ -2,9 +2,9 @@ package club.aurorapvp.auroraparties.commands;
 
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.configs.Lang;
-import club.aurorapvp.auroraparties.modules.Party;
-import club.aurorapvp.auroraparties.modules.PartyRequest;
+import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.modules.party.Party;
+import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -94,14 +94,14 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
-    new PartyRequest(p, invited);
+    new PartyInvite(p, invited);
   }
 
   @Subcommand("accept")
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
   public void onAccept(Player p) {
-    PartyRequest request = PartyRequest.getRequest(p);
+    PartyInvite request = PartyInvite.getInvite(p);
 
     if (request == null) {
       p.sendMessage(Lang.getComponent("no-invites"));
@@ -115,7 +115,7 @@ public class PartyCommands extends BaseCommand {
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
   public void onDeny(Player p) {
-    PartyRequest request = PartyRequest.getRequest(p);
+    PartyInvite request = PartyInvite.getInvite(p);
 
     if (request == null) {
       p.sendMessage(Lang.getComponent("no-invites"));

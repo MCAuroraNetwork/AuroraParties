@@ -1,40 +1,39 @@
-package club.aurorapvp.auroraparties.modules;
+package club.aurorapvp.auroraparties.modules.party;
 
-import club.aurorapvp.auroraparties.configs.Config;
-import club.aurorapvp.auroraparties.configs.Lang;
-import java.util.HashSet;
-import java.util.Set;
+import club.aurorapvp.auroraparties.config.Config;
+import club.aurorapvp.auroraparties.config.Lang;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.bukkit.entity.Player;
 
-public class PartyRequest {
-  private final static Set<PartyRequest> PENDING_REQUESTS = new HashSet<>();
+public class PartyInvite {
+  private final static LinkedList<PartyInvite> PARTY_INVITES = new LinkedList<>();
   private final Player partyLeader;
   private final Player invited;
   private final Party party;
 
-  public PartyRequest(Player partyLeader, Player invited) {
+  public PartyInvite(Player partyLeader, Player invited) {
     this.partyLeader = partyLeader;
     this.invited = invited;
     this.party = Party.getParty(partyLeader);
 
-    PENDING_REQUESTS.add(this);
+    PARTY_INVITES.add(this);
 
     assert party != null;
     partyLeader.sendMessage(Lang.getComponent("invite-sent"));
     invited.sendMessage(
         Lang.formatComponent("invite-received", partyLeader.getName(), party.getName()));
 
-    PartyRequest thisRequest = this;
+    PartyInvite thisRequest = this;
 
     new Timer().schedule(new TimerTask() {
                            @Override
                            public void run() {
-                             if (PENDING_REQUESTS.contains(thisRequest)) {
+                             if (PARTY_INVITES.contains(thisRequest)) {
                                partyLeader.sendMessage(Lang.getComponent("invite-timed-out"));
                                invited.sendMessage(Lang.getComponent("invite-timed-out"));
-                               PENDING_REQUESTS.remove(thisRequest);
+                               PARTY_INVITES.remove(thisRequest);
                                this.cancel();
                              }
                            }
@@ -48,23 +47,23 @@ public class PartyRequest {
 
   public void accept() {
     party.addMember(invited);
-    PENDING_REQUESTS.remove(this);
+    PARTY_INVITES.remove(this);
 
     partyLeader.sendMessage(Lang.getComponent("invite-accepted"));
     invited.sendMessage(Lang.getComponent("invite-accepted"));
   }
 
   public void deny() {
-    PENDING_REQUESTS.remove(this);
+    PARTY_INVITES.remove(this);
 
     partyLeader.sendMessage(Lang.getComponent("invite-denied"));
     invited.sendMessage(Lang.getComponent("invite-denied"));
   }
 
-  public static PartyRequest getRequest(Player p) {
-    for (PartyRequest request : PENDING_REQUESTS) {
-      if (request.getInvited() == p) {
-        return request;
+  public static PartyInvite getInvite(Player p) {
+    for (PartyInvite invite : PARTY_INVITES) {
+      if (invite.getInvited() == p) {
+        return invite;
       }
     }
     return null;

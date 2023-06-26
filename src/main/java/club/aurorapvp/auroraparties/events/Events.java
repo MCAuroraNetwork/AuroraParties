@@ -1,11 +1,11 @@
 package club.aurorapvp.auroraparties.events;
 
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.events.listeners.InventoryEvents;
+import club.aurorapvp.auroraparties.events.listeners.InventoryEventListener;
 import org.bukkit.Bukkit;
 
 public class Events {
   public static void init() {
-    Bukkit.getPluginManager().registerEvents(new InventoryEvents(), AuroraParties.INSTANCE);
+    Bukkit.getPluginManager().registerEvents(new InventoryEventListener(), AuroraParties.INSTANCE);
   }
 }

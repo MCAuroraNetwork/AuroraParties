@@ -1,7 +1,7 @@
-package club.aurorapvp.auroraparties.modules;
+package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingFFADuel;
 import club.aurorapvp.auroraparties.modules.duels.PendingPartyDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;

@@ -1,7 +1,7 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
-import club.aurorapvp.auroraparties.configs.Lang;
-import club.aurorapvp.auroraparties.modules.Party;
+import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.HashMap;
 import java.util.HashSet;

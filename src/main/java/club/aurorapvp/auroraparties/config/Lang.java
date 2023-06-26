@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.configs;
+package club.aurorapvp.auroraparties.config;
 
 import club.aurorapvp.auroraparties.AuroraParties;
 import java.io.File;
@@ -43,19 +43,18 @@ public class Lang {
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
     DEFAULTS.put("party-disbanded",
         "prefix <gradient:#FFAA00:#FF55FF>%1$s has been disbanded by %2$s");
-    DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF>Click here to leave the party");
-    DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF>Click here to disband the party");
-    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF>Click here to exit");
-    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to create a team duel");
-    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF>Click here to start a team duel");
-    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF>Click here to start an FFA duel");
+    DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF>Leave party");
+    DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF>Disband party");
+    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF>Exit");
+    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF>Team duel");
+    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF>Team duel");
+    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF>FFA duel");
     DEFAULTS.put("start-random-team-duel",
-        "<gradient:#FFAA00:#FF55FF>Click here to start a random team duel");
-    DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF>Click here to manage the party");
+        "<gradient:#FFAA00:#FF55FF>Random team duel");
+    DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF>Manage party");
     DEFAULTS.put("duel-kit-gui", "<gradient:#FFAA00:#FF55FF><bold>Select Duel Kit");
     DEFAULTS.put("next-page", "<gradient:#FFAA00:#FF55FF>Next page");
     DEFAULTS.put("previous-page", "<gradient:#FFAA00:#FF55FF>Previous page");
-    DEFAULTS.put("no-kit", "<gradient:#FFAA00:#FF55FF>Click here for no kit");
     DEFAULTS.put("kit-invalid-name", "prefix <gradient:#FFAA00:#FF55FF>Invalid kit name!");
     DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");
     DEFAULTS.put("already-in-party",

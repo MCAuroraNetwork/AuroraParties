@@ -1,6 +1,6 @@
-package club.aurorapvp.auroraparties.modules;
+package club.aurorapvp.auroraparties.modules.party;
 
-import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

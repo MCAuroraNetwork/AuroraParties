@@ -1,7 +1,8 @@
 package club.aurorapvp.auroraparties;
 
-import club.aurorapvp.auroraparties.configs.Config;
-import club.aurorapvp.auroraparties.configs.Lang;
+import club.aurorapvp.auroraparties.commands.Commands;
+import club.aurorapvp.auroraparties.config.Config;
+import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.events.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

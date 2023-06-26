@@ -1,9 +1,9 @@
 package club.aurorapvp.auroraparties;
 
-import club.aurorapvp.auroraparties.commands.Commands;
+import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.events.Events;
+import club.aurorapvp.auroraparties.events.EventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,8 +38,8 @@ public final class AuroraParties extends JavaPlugin {
         }
 
         // Initialize classes
-        Commands.init();
-        Events.init();
+        CommandManager.init();
+        EventManager.init();
 
         getLogger().info(
             "AuroraParties loaded in " + (System.currentTimeMillis() - startTime) +

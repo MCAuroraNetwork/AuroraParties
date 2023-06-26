@@ -1,9 +1,7 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.bukkit.entity.Player;
 
@@ -11,8 +9,7 @@ public class Party {
   private final static Set<Party> PARTIES = new HashSet<>();
   private final String name;
   private final Player partyLeader;
-  private final Map<Player, Map<String, Boolean>> partyMembers = new HashMap<>();
-  private final Map<String, Boolean> defaultPermissions = new HashMap<>();
+  private final Set<Player> partyMembers = new HashSet<>();
   private final PartyGUI partyGUI;
 
   public Party(Player partyLeader) {
@@ -37,7 +34,7 @@ public class Party {
   }
 
   public Set<Player> getMembers() {
-    return partyMembers.keySet();
+    return partyMembers;
   }
 
   public PartyGUI getGUI() {
@@ -57,14 +54,6 @@ public class Party {
     return false;
   }
 
-  public boolean hasPermission(Player p, String permission) {
-    if (isLeader(p)) {
-      return true;
-    }
-
-    return partyMembers.get(p).get(permission);
-  }
-
   public boolean contains(Player p) {
     if (this.getLeader() == p) {
       return true;
@@ -79,7 +68,7 @@ public class Party {
   }
 
   public void addMember(Player p) {
-    partyMembers.put(p, defaultPermissions);
+    partyMembers.add(p);
     this.getGUI().addMember(p);
   }
 
@@ -112,15 +101,11 @@ public class Party {
     this.getGUI().removeMember(p);
   }
 
-  public void setPermission(Player p, String permission, boolean value) {
-    partyMembers.get(p).put(permission, value);
-  }
-
   public void disband() {
     partyLeader.sendMessage(
         Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
 
-    for (Player p : partyMembers.keySet()) {
+    for (Player p : partyMembers) {
       p.sendMessage(Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
     }
 

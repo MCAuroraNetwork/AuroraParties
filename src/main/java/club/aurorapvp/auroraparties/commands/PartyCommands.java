@@ -57,7 +57,7 @@ public class PartyCommands extends BaseCommand {
     if (party == null) {
       p.sendMessage(Lang.getComponent("not-in-party"));
       return;
-    } else if (!party.hasPermission(p, "can-disband")) {
+    } else if (!party.isLeader(p)) {
       p.sendMessage(Lang.getComponent("no-permission"));
       return;
     }
@@ -75,12 +75,6 @@ public class PartyCommands extends BaseCommand {
 
     if (party == null) {
       p.sendMessage(Lang.getComponent("not-in-party"));
-      return;
-    } else if (!party.hasPermission(p, "can-invite")) {
-      p.sendMessage(Lang.getComponent("no-permission"));
-      return;
-    } else if (party.getMembers().size() >= 28) {
-      p.sendMessage(Lang.getComponent("party-full"));
       return;
     }
 

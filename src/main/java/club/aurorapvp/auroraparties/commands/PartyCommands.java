@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.commands;
 
 import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
@@ -13,6 +12,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -97,15 +97,47 @@ public class PartyCommands extends BaseCommand {
   @CommandCompletion("@players")
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
-  public void onAccept(Player p, @Optional String playerName) {
-    PartyInvite request = PartyInvite.getInvite(p);
-
-    if (request == null) {
+  public void onAccept(Player p, @Optional String inviterName) {
+    if (!PartyInvite.hasPendingInvite(p)) {
       p.sendMessage(Lang.getComponent("no-invites"));
       return;
     }
 
-    request.accept();
+    Player inviter = null;
+
+    if (inviterName != null) {
+      inviter = Bukkit.getPlayer(inviterName);
+    }
+
+    if (inviter == null) {
+      PartyInvite invite = PartyInvite.getInvite(p);
+
+      for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
+        if (pendingInvite != invite) {
+          pendingInvite.deny();
+        }
+      }
+
+      assert invite != null;
+      invite.accept();
+      return;
+    }
+
+    if (!PartyInvite.hasPendingInvite(inviter, p)) {
+      p.sendMessage(Lang.getComponent("no-invites"));
+      return;
+    }
+
+    PartyInvite invite = PartyInvite.getInvite(inviter, p);
+
+    for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
+      if (pendingInvite != invite) {
+        pendingInvite.deny();
+      }
+    }
+
+    assert invite != null;
+    invite.accept();
   }
 
   @Subcommand("deny")
@@ -113,14 +145,28 @@ public class PartyCommands extends BaseCommand {
   @CommandCompletion("@players")
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
-  public void onDeny(Player p, @Optional String playerName) {
-    PartyInvite request = PartyInvite.getInvite(p);
-
-    if (request == null) {
+  public void onDeny(Player p, @Optional String inviterName) {
+    if (!PartyInvite.hasPendingInvite(p)) {
       p.sendMessage(Lang.getComponent("no-invites"));
       return;
     }
 
-    request.deny();
+    Player inviter = null;
+
+    if (inviterName != null) {
+      inviter = Bukkit.getPlayer(inviterName);
+    }
+
+    if (inviter == null) {
+      Objects.requireNonNull(PartyInvite.getInvite(p)).deny();
+      return;
+    }
+
+    if (!PartyInvite.hasPendingInvite(inviter, p)) {
+      p.sendMessage(Lang.getComponent("no-invites"));
+      return;
+    }
+
+    Objects.requireNonNull(PartyInvite.getInvite(inviter, p)).deny();
   }
 }

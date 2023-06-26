@@ -18,8 +18,6 @@ public class Config {
   public static void generateDefaults() {
     final HashMap<String, Object> DEFAULTS = new HashMap<>();
 
-    DEFAULTS.put("optional-plugins.auroraduels-compatibility", true);
-    DEFAULTS.put("optional-plugins.aurorakits-compatibility", true);
     DEFAULTS.put("optional-plugins.auroracombat-compatibility", true);
     DEFAULTS.put("invites.timeout-time", 600000);
 

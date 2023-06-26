@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AuroraParties extends JavaPlugin {
     public static JavaPlugin INSTANCE;
+    private static boolean auroraCombatInstalled = false;
 
     @Override
     public void onEnable() {
@@ -20,6 +21,11 @@ public final class AuroraParties extends JavaPlugin {
         Config.init();
         Lang.init();
 
+        if (Bukkit.getPluginManager().getPlugin("AuroraCombat") != null &&
+            club.aurorapvp.auroraduels.config.Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
+            auroraCombatInstalled = true;
+        }
+
         // Initialize classes
         CommandManager.init();
         EventManager.init();
@@ -29,6 +35,9 @@ public final class AuroraParties extends JavaPlugin {
                 "ms");
     }
 
+    public static boolean isAuroraCombatInstalled() {
+        return auroraCombatInstalled;
+    }
     @Override
     public void onDisable() {
         // Plugin shutdown logic

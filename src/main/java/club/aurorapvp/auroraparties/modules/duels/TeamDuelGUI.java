@@ -1,10 +1,13 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
+import club.aurorapvp.auroracombat.modules.Rating;
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -69,6 +72,13 @@ public class TeamDuelGUI {
 
     inventory.setItem(49, startDuel);
     inventory.setItem(40, exit);
+
+    if (AuroraParties.isAuroraCombatInstalled()) {
+      meta = leaderSkull.getItemMeta();
+      meta.lore(List.of(
+          Component.text("ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
+      leaderSkull.setItemMeta(meta);
+    }
 
     inventory.setItem(0, leaderSkull);
   }

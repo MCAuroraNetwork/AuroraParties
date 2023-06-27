@@ -155,6 +155,13 @@ public class TeamDuelGUI {
   public void addMember(ItemStack memberSkull) {
     incrementIndex();
 
+    if (AuroraParties.isAuroraCombatInstalled()) {
+      ItemMeta meta = memberSkull.getItemMeta();
+      meta.lore(List.of(
+          Component.text("ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
+      memberSkull.setItemMeta(meta);
+    }
+
     inventory.setItem(index, memberSkull);
   }
 

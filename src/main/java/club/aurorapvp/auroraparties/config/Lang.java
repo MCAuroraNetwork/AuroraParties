@@ -44,17 +44,17 @@ public class Lang {
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
     DEFAULTS.put("party-disbanded",
         "prefix <gradient:#FFAA00:#FF55FF>%1$s has been disbanded by %2$s");
-    DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF>Leave party");
-    DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF>Disband party");
-    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF>Exit");
-    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF>Team duel");
-    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF>Team duel");
-    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF>FFA duel");
+    DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF><bold>Leave Party");
+    DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF><bold>Disband Party");
+    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF><bold>Exit");
+    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Team Duel");
+    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Start Duel");
+    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF><bold>FFA Duel");
     DEFAULTS.put("start-random-team-duel",
-        "<gradient:#FFAA00:#FF55FF>Random team duel");
-    DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF>Manage party");
+        "<gradient:#FFAA00:#FF55FF><bold>Random Team Duel");
+    DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF><bold>Manage Party");
     DEFAULTS.put("duel-kit-gui", "<gradient:#FFAA00:#FF55FF><bold>Select Duel Kit");
-    DEFAULTS.put("next-page", "<gradient:#FFAA00:#FF55FF>Next page");
+    DEFAULTS.put("next-page", "<gradient:#FFAA00:#FF55FF><bold>Next page");
     DEFAULTS.put("previous-page", "<gradient:#FFAA00:#FF55FF>Previous page");
     DEFAULTS.put("kit-invalid-name", "prefix <gradient:#FFAA00:#FF55FF>Invalid kit name!");
     DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");

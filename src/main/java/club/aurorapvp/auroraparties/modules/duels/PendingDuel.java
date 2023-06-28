@@ -32,6 +32,7 @@ public class PendingDuel {
 
   public void enterQueue() {
     duel.getQueue().enterDuelQueue(duel);
+    PENDING_DUELS.remove(this);
   }
 
   public static void onInventoryClicked(InventoryClickEvent event) {

@@ -36,7 +36,9 @@ public class PendingDuel {
   }
 
   public static void onInventoryClicked(InventoryClickEvent event) {
-    if (!QueueGUI.isQueueGUI(event.getClickedInventory())) {
+    Player p = (Player) event.getWhoClicked();
+
+    if (!QueueGUI.isQueueGUI(event.getClickedInventory()) || !PendingDuel.hasPendingDuel(p)) {
       return;
     }
 
@@ -45,8 +47,6 @@ public class PendingDuel {
     if (clickedItem == null || clickedItem.getType().isAir()) {
       return;
     }
-
-    Player p = (Player) event.getWhoClicked();
 
     event.setCancelled(true);
 

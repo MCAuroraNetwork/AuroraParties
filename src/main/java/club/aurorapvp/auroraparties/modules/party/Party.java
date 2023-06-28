@@ -127,9 +127,9 @@ public class Party {
 
   public void addMember(Player p) {
     for (Player player : this.getMembers()) {
-      player.sendMessage(Lang.formatComponent("player-joined-party", p));
+      player.sendMessage(Lang.formatComponent("player-joined-party", p.getName()));
     }
-    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", p));
+    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", p.getName()));
 
     partyMembers.add(p);
 

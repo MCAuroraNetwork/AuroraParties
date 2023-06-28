@@ -177,8 +177,7 @@ public class PublicPartyGUI {
     }
   }
 
-
-  public static void inventoryClicked(InventoryClickEvent event) {
+  public static void onInventoryClicked(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
     if (!PublicPartyGUI.isGuiInventory(event.getInventory())) {
@@ -197,7 +196,8 @@ public class PublicPartyGUI {
 
     final ItemStack clickedItem = event.getCurrentItem();
 
-    if (clickedItem == null || clickedItem.getType().isAir() || !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
+    if (clickedItem == null || clickedItem.getType().isAir() ||
+        !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
       return;
     }
 

@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroracombat.modules.Rating;
-import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
@@ -78,7 +77,8 @@ public class TeamDuelGUI {
     if (AuroraParties.isAuroraCombatInstalled()) {
       meta = leaderSkull.getItemMeta();
       meta.lore(List.of(
-          Component.text("ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
+          Component.text(
+              "ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
       leaderSkull.setItemMeta(meta);
     }
 
@@ -154,13 +154,13 @@ public class TeamDuelGUI {
     return null;
   }
 
-  public void addMember(ItemStack memberSkull) {
+  public void addMember(Player p, ItemStack memberSkull) {
     incrementIndex();
 
     if (AuroraParties.isAuroraCombatInstalled()) {
       ItemMeta meta = memberSkull.getItemMeta();
-      meta.lore(List.of(
-          Component.text("ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
+      meta.lore(
+          List.of(Component.text("ELO: " + Rating.getRating(p, "default_duels").getPoints())));
       memberSkull.setItemMeta(meta);
     }
 

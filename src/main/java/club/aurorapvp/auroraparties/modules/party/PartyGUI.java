@@ -92,7 +92,7 @@ public class PartyGUI {
     memberInventory.setItem(index, memberSkull);
     leaderInventory.setItem(index, memberSkull);
     this.addToManageTab(index, memberSkull.clone());
-    this.teamDuelGUI.addMember(memberSkull);
+    this.teamDuelGUI.addMember(p, memberSkull);
   }
 
   public void removeMember(Player p) {

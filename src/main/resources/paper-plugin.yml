@@ -10,7 +10,5 @@ dependencies:
   server:
     AuroraDuels:
       required: true
-    AuroraKits:
-      required: true
     AuroraCombat:
       required: false

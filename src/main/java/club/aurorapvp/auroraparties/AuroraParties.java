@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties;
 
+import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
@@ -26,10 +27,6 @@ public final class AuroraParties extends JavaPlugin {
         Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
       auroraCombatInstalled = true;
     }
-    if (Bukkit.getPluginManager().getPlugin("AuroraKits") != null &&
-        Config.get().getBoolean("optional-plugins.aurorakits-compatibility")) {
-      auroraKitsInstalled = true;
-    }
 
     // Initialize classes
     CommandManager.init();
@@ -45,7 +42,7 @@ public final class AuroraParties extends JavaPlugin {
   }
 
   public static boolean isAuroraKitsInstalled() {
-    return auroraKitsInstalled;
+    return AuroraDuels.isAuroraKitsInstalled();
   }
 
   @Override

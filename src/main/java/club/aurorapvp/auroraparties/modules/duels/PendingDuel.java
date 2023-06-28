@@ -1,43 +1,109 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
+import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.DuelKitGui;
 import club.aurorapvp.auroraduels.modules.queues.Queue;
 import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
-import club.aurorapvp.auroraduels.modules.requests.Request;
-import club.aurorapvp.aurorakits.modules.kits.Kit;
+import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.config.Lang;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemStack;
 
-// TODO this API abuse, of my own API, lol
-public abstract class PendingDuel extends Request {
+public class PendingDuel {
+  protected static final Set<PendingDuel> PENDING_DUELS = new HashSet<>();
   private final Player partyLeader;
-  protected Queue queue;
-  protected Kit kit;
+  private final Duel duel;
 
-  public PendingDuel(Player partyLeader, Set<Player> players) {
-    super(partyLeader, players);
+  public PendingDuel(Player partyLeader, Duel duel) {
     this.partyLeader = partyLeader;
+    this.duel = duel;
+
 
     QueueGUI.open(partyLeader);
+
+    PENDING_DUELS.add(this);
   }
 
-  public abstract void startDuel();
+  public void enterQueue() {
+    duel.getQueue().enterDuelQueue(duel);
+  }
 
-  public void setQueue(Queue queue) {
-    this.queue = queue;
-
-    if (queue.isKitSet()) {
-      this.startDuel();
+  public static void onInventoryClicked(InventoryClickEvent event) {
+    if (!QueueGUI.isQueueGUI(event.getClickedInventory())) {
+      return;
     }
 
-    this.startDuel();
+    final ItemStack clickedItem = event.getCurrentItem();
 
-    new DuelKitGui(partyLeader);
+    if (clickedItem == null || clickedItem.getType().isAir()) {
+      return;
+    }
+
+    Player p = (Player) event.getWhoClicked();
+
+    event.setCancelled(true);
+
+    if (event.getCurrentItem().getItemMeta().displayName() == null) {
+      p.sendMessage(Lang.getComponent("queue-not-found"));
+    } else {
+      String itemName =
+          PlainTextComponentSerializer.plainText().serialize(event.getCurrentItem().displayName());
+      String queueName = itemName.substring(1, itemName.length() - 1);
+
+      Queue queue = Queue.getQueue(queueName.toLowerCase());
+
+      if (queue == null) {
+        p.sendMessage(Lang.getComponent("queue-not-found"));
+        return;
+      }
+
+      Objects.requireNonNull(Duel.getDuel(p)).setQueue(queue);
+
+      if (AuroraParties.isAuroraKitsInstalled()) {
+        new DuelKitGui(p);
+        return;
+      }
+
+      Objects.requireNonNull(PendingDuel.getPendingDuel(p)).enterQueue();
+    }
   }
 
-  public void setKit(Kit kit) {
-    this.kit = kit;
+  public static void onInventoryClose(InventoryCloseEvent event) {
+    if (!PendingDuel.hasPendingDuel((Player) event.getPlayer())) {
+      return;
+    }
 
-    this.startDuel();
+    if (Objects.requireNonNull(DuelKitGui.getGui((Player) event.getPlayer()))
+        .isGuiInventory(event.getInventory())) {
+      Objects.requireNonNull(PendingDuel.getPendingDuel((Player) event.getPlayer())).enterQueue();
+    }
+  }
+
+  public static PendingDuel getPendingDuel(Player p) {
+    for (PendingDuel pendingDuel : PENDING_DUELS) {
+      if (pendingDuel.partyLeader == p) {
+        return pendingDuel;
+      }
+    }
+    return null;
+  }
+
+  public static boolean hasPendingDuel(Player p) {
+    for (PendingDuel pendingDuel : PENDING_DUELS) {
+      if (pendingDuel.partyLeader == p) {
+        return true;
+      }
+    }
+    return false;
   }
 }

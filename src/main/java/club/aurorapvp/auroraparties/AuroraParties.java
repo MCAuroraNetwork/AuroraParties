@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class AuroraParties extends JavaPlugin {
   public static JavaPlugin INSTANCE;
   private static boolean auroraCombatInstalled = false;
+  private static boolean auroraKitsInstalled = false;
 
   @Override
   public void onEnable() {
@@ -25,6 +26,10 @@ public final class AuroraParties extends JavaPlugin {
         Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
       auroraCombatInstalled = true;
     }
+    if (Bukkit.getPluginManager().getPlugin("AuroraKits") != null &&
+        Config.get().getBoolean("optional-plugins.aurorakits-compatibility")) {
+      auroraKitsInstalled = true;
+    }
 
     // Initialize classes
     CommandManager.init();
@@ -37,6 +42,10 @@ public final class AuroraParties extends JavaPlugin {
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
+  }
+
+  public static boolean isAuroraKitsInstalled() {
+    return auroraKitsInstalled;
   }
 
   @Override

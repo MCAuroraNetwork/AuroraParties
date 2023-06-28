@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
+import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.modules.party.PartyGUI;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,7 @@ public class InventoryEventListener implements Listener {
   public void onInventoryClicked(InventoryClickEvent event) {
     PartyGUI.inventoryClicked(event);
     TeamDuelGUI.onInventoryClick(event);
+    PendingDuel.onInventoryClicked(event);
   }
 
   @EventHandler

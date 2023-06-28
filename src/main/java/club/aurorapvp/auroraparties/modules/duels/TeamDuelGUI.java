@@ -1,6 +1,8 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroracombat.modules.Rating;
+import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
+import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
@@ -138,7 +140,7 @@ public class TeamDuelGUI {
       index++;
     }
 
-    new PendingTeamDuel(party.getLeader(), team1, team2);
+    new PendingDuel(party.getLeader(), new TeamDuel(team1, team2, false));
   }
 
   private String getStringName(ItemStack item) {

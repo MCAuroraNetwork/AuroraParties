@@ -1,8 +1,9 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraduels.modules.duels.FFADuel;
+import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.modules.duels.PendingFFADuel;
-import club.aurorapvp.auroraparties.modules.duels.PendingPartyDuel;
+import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
@@ -303,9 +304,9 @@ public class PartyGUI {
     if (slot == 49) {
       party.getGUI().openTeamDuelGUI(p);
     } else if (slot == 47) {
-      new PendingPartyDuel(p, players);
+      new PendingDuel(p, new PartyDuel(players, false));
     } else if (slot == 51) {
-      new PendingFFADuel(p, players);
+      new PendingDuel(p, new FFADuel(players, false));
     }
   }
 }

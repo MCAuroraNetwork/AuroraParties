@@ -19,6 +19,7 @@ public class Config {
     final HashMap<String, Object> DEFAULTS = new HashMap<>();
 
     DEFAULTS.put("optional-plugins.auroracombat-compatibility", true);
+    DEFAULTS.put("optional-plugins.aurorakits-compatibility", true);
     DEFAULTS.put("invites.timeout-time", 600000);
 
     for (String path : DEFAULTS.keySet()) {

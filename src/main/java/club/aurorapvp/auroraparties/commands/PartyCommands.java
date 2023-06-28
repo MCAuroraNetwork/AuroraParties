@@ -4,6 +4,8 @@ import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
+import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
+import club.aurorapvp.auroraparties.modules.party.PublicPartyGUI;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -16,14 +18,14 @@ import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-@CommandAlias("party")
+@CommandAlias("party|parties")
 public class PartyCommands extends BaseCommand {
   @Default
   @Description("Opens the party menu")
   @SuppressWarnings("unused")
   public void onOpenGUI(Player p) {
     if (!Party.inParty(p)) {
-      p.sendMessage(Lang.getComponent("not-in-party"));
+      PublicPartyGUI.open(p);
       return;
     }
 
@@ -98,19 +100,33 @@ public class PartyCommands extends BaseCommand {
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
   public void onAccept(Player p, @Optional String inviterName) {
-    if (!PartyInvite.hasPendingInvite(p)) {
-      p.sendMessage(Lang.getComponent("no-invites"));
-      return;
-    }
+    if (PartyInvite.hasPendingInvite(p)) {
+      Player inviter = null;
 
-    Player inviter = null;
+      if (inviterName != null) {
+        inviter = Bukkit.getPlayer(inviterName);
+      }
 
-    if (inviterName != null) {
-      inviter = Bukkit.getPlayer(inviterName);
-    }
+      if (inviter == null) {
+        PartyInvite invite = PartyInvite.getInvite(p);
 
-    if (inviter == null) {
-      PartyInvite invite = PartyInvite.getInvite(p);
+        for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
+          if (pendingInvite != invite) {
+            pendingInvite.deny();
+          }
+        }
+
+        assert invite != null;
+        invite.accept();
+        return;
+      }
+
+      if (!PartyInvite.hasPendingInvite(inviter, p)) {
+        p.sendMessage(Lang.getComponent("no-invites"));
+        return;
+      }
+
+      PartyInvite invite = PartyInvite.getInvite(inviter, p);
 
       for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
         if (pendingInvite != invite) {
@@ -120,24 +136,33 @@ public class PartyCommands extends BaseCommand {
 
       assert invite != null;
       invite.accept();
-      return;
-    }
+    } else if (PartyJoinRequest.hasRequest(Party.getParty(p))) {
+      Party party = Party.getParty(p);
 
-    if (!PartyInvite.hasPendingInvite(inviter, p)) {
-      p.sendMessage(Lang.getComponent("no-invites"));
-      return;
-    }
-
-    PartyInvite invite = PartyInvite.getInvite(inviter, p);
-
-    for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
-      if (pendingInvite != invite) {
-        pendingInvite.deny();
+      assert party != null;
+      if (!party.isLeader(p)) {
+        p.sendMessage(Lang.getComponent("no-permission"));
+        return;
       }
-    }
 
-    assert invite != null;
-    invite.accept();
+      Player requester = null;
+
+      if (inviterName != null) {
+        requester = Bukkit.getPlayer(inviterName);
+      }
+
+      if (requester == null) {
+        Objects.requireNonNull(PartyJoinRequest.getRequest(party)).accept();
+        return;
+      }
+
+      if (!PartyJoinRequest.hasRequest(party, requester)) {
+        p.sendMessage(Lang.getComponent("no-requests"));
+        return;
+      }
+
+      Objects.requireNonNull(PartyJoinRequest.getRequest(party, requester)).accept();
+    }
   }
 
   @Subcommand("deny")
@@ -146,27 +171,50 @@ public class PartyCommands extends BaseCommand {
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
   public void onDeny(Player p, @Optional String inviterName) {
-    if (!PartyInvite.hasPendingInvite(p)) {
-      p.sendMessage(Lang.getComponent("no-invites"));
-      return;
+    if (PartyInvite.hasPendingInvite(p)) {
+      Player inviter = null;
+
+      if (inviterName != null) {
+        inviter = Bukkit.getPlayer(inviterName);
+      }
+
+      if (inviter == null) {
+        Objects.requireNonNull(PartyInvite.getInvite(p)).deny();
+        return;
+      }
+
+      if (!PartyInvite.hasPendingInvite(inviter, p)) {
+        p.sendMessage(Lang.getComponent("no-invites"));
+        return;
+      }
+
+      Objects.requireNonNull(PartyInvite.getInvite(inviter, p)).deny();
+    } else if (PartyJoinRequest.hasRequest(Party.getParty(p))) {
+      Party party = Party.getParty(p);
+
+      assert party != null;
+      if (!party.isLeader(p)) {
+        p.sendMessage(Lang.getComponent("no-permission"));
+        return;
+      }
+
+      Player requester = null;
+
+      if (inviterName != null) {
+        requester = Bukkit.getPlayer(inviterName);
+      }
+
+      if (requester == null) {
+        Objects.requireNonNull(PartyJoinRequest.getRequest(party)).deny();
+        return;
+      }
+
+      if (!PartyJoinRequest.hasRequest(party, requester)) {
+        p.sendMessage(Lang.getComponent("no-requests"));
+        return;
+      }
+
+      Objects.requireNonNull(PartyJoinRequest.getRequest(party, requester)).deny();
     }
-
-    Player inviter = null;
-
-    if (inviterName != null) {
-      inviter = Bukkit.getPlayer(inviterName);
-    }
-
-    if (inviter == null) {
-      Objects.requireNonNull(PartyInvite.getInvite(p)).deny();
-      return;
-    }
-
-    if (!PartyInvite.hasPendingInvite(inviter, p)) {
-      p.sendMessage(Lang.getComponent("no-invites"));
-      return;
-    }
-
-    Objects.requireNonNull(PartyInvite.getInvite(inviter, p)).deny();
   }
 }

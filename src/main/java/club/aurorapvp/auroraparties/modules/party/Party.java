@@ -1,9 +1,15 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.enums.PartyStatus;
+import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Party {
   private final static Set<Party> PARTIES = new HashSet<>();
@@ -11,12 +17,23 @@ public class Party {
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
   private final PartyGUI partyGUI;
+  private PartyStatus status;
+  private ItemStack displayItem;
 
   public Party(Player partyLeader) {
     this.name = partyLeader.getName() + "'s Party";
     this.partyLeader = partyLeader;
     this.partyGUI = new PartyGUI(this);
 
+    status = PartyStatus.PRIVATE;
+
+    ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
+    ItemMeta meta = displayItem.getItemMeta();
+    meta.displayName(Lang.formatComponent("party-name", partyLeader.getName()));
+    meta.lore(List.of(Component.text("Private"), Component.text("1 Member")));
+    displayItem.setItemMeta(meta);
+
+    this.displayItem = displayItem;
 
     partyLeader.sendMessage(Lang.getComponent("party-created"));
 
@@ -39,6 +56,14 @@ public class Party {
     return partyGUI;
   }
 
+  public PartyStatus getStatus() {
+    return status;
+  }
+
+  public ItemStack getDisplayItem() {
+    return displayItem;
+  }
+
   public boolean isLeader(Player p) {
     return partyLeader == p;
   }
@@ -50,6 +75,41 @@ public class Party {
       }
     }
     return false;
+  }
+
+  public void setStatus(PartyStatus status) {
+    this.status = status;
+
+    ItemMeta meta = displayItem.getItemMeta();
+
+    switch (status) {
+      case PRIVATE -> {
+        PublicPartyGUI.removeParty(this);
+
+        meta.lore(List.of(Component.text("Private"),
+            Component.text(this.getMembers().size() + 1 + " Members")));
+
+        displayItem.setItemMeta(meta);
+      }
+      case ANYONE_CAN_JOIN -> {
+        meta.lore(List.of(Component.text("Anyone can Join"),
+            Component.text(this.getMembers().size() + 1 + " Members")));
+
+        displayItem.setItemMeta(meta);
+
+        PublicPartyGUI.addParty(this);
+      }
+      case INVITE_ONLY -> {
+        PublicPartyGUI.removeParty(this);
+
+        meta.lore(List.of(Component.text("Invite Only"),
+          Component.text(this.getMembers().size() + 1 + " Members")));
+
+        displayItem.setItemMeta(meta);
+
+        PublicPartyGUI.addParty(this);
+      }
+    }
   }
 
   public boolean contains(Player p) {
@@ -66,7 +126,26 @@ public class Party {
   }
 
   public void addMember(Player p) {
+    for (Player player : this.getMembers()) {
+      player.sendMessage(Lang.formatComponent("player-joined-party", p));
+    }
+    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", p));
+
     partyMembers.add(p);
+
+    ItemMeta meta = displayItem.getItemMeta();
+
+    switch (status) {
+      case PRIVATE -> meta.lore(List.of(Component.text("Private"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+      case ANYONE_CAN_JOIN -> meta.lore(List.of(Component.text("Anyone Can Join"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+      case INVITE_ONLY -> meta.lore(List.of(Component.text("Invite Only"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+    }
+
+    displayItem.setItemMeta(meta);
+
     this.getGUI().addMember(p);
   }
 
@@ -92,6 +171,19 @@ public class Party {
     for (Player player : this.getMembers()) {
       player.sendMessage(Lang.formatComponent("player-removed-from-party", p.getName()));
     }
+
+    ItemMeta meta = displayItem.getItemMeta();
+
+    switch (status) {
+      case PRIVATE -> meta.lore(List.of(Component.text("Private"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+      case ANYONE_CAN_JOIN -> meta.lore(List.of(Component.text("Anyone Can Join"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+      case INVITE_ONLY -> meta.lore(List.of(Component.text("Invite Only"),
+          Component.text(this.getMembers().size() + 1 + "Members")));
+    }
+
+    displayItem.setItemMeta(meta);
   }
 
   public void removeMember(Player p) {
@@ -125,6 +217,9 @@ public class Party {
     return false;
   }
 
+  public static Set<Party> getParties() {
+    return PARTIES;
+  }
 
   public static Party getParty(Player p) {
     for (Party party : PARTIES) {

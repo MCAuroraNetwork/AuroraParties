@@ -3,6 +3,7 @@ package club.aurorapvp.auroraparties.modules.party;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.enums.PartyStatus;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -219,6 +220,14 @@ public class PartyGUI {
     exit.setItemMeta(meta);
 
     manageTab.setItem(45, exit);
+
+    ItemStack status = new ItemStack(Material.REDSTONE);
+    meta = status.getItemMeta();
+    meta.displayName(Lang.getComponent("status"));
+    meta.lore(List.of(Component.text("Private")));
+    status.setItemMeta(meta);
+
+    manageTab.setItem(49, status);
   }
 
   private void addToManageTab(int index, ItemStack memberSkull) {
@@ -238,9 +247,42 @@ public class PartyGUI {
     return inventory == manageTab;
   }
 
-  private void handleManageClick(ItemStack clickedSkull) {
+  private void handleManageClick(InventoryClickEvent event) {
+    ItemStack clickedItem = event.getCurrentItem();
+
+    if (clickedItem == null) {
+      return;
+    }
+
+    if (event.getSlot() == 49) {
+      switch (party.getStatus()) {
+        case PRIVATE -> {
+          party.setStatus(PartyStatus.ANYONE_CAN_JOIN);
+          ItemMeta meta = clickedItem.getItemMeta();
+          meta.lore(List.of(Component.text("Anyone can Join")));
+          clickedItem.setItemMeta(meta);
+        }
+        case ANYONE_CAN_JOIN -> {
+          party.setStatus(PartyStatus.INVITE_ONLY);
+          ItemMeta meta = clickedItem.getItemMeta();
+          meta.lore(List.of(Component.text("Invite Only")));
+          clickedItem.setItemMeta(meta);
+        }
+        case INVITE_ONLY -> {
+          party.setStatus(PartyStatus.PRIVATE);
+          ItemMeta meta = clickedItem.getItemMeta();
+          meta.lore(List.of(Component.text("Private")));
+          clickedItem.setItemMeta(meta);
+        }
+      }
+    }
+
+    if (clickedItem.getType() != Material.PLAYER_HEAD) {
+      return;
+    }
+
     String playerName =
-        PlainTextComponentSerializer.plainText().serialize(clickedSkull.displayName());
+        PlainTextComponentSerializer.plainText().serialize(clickedItem.displayName());
 
     Player p = Bukkit.getPlayer(playerName.substring(1, playerName.length() - 1));
 
@@ -289,9 +331,8 @@ public class PartyGUI {
       } else {
         party.getGUI().openManageTab(p);
       }
-    } else if (party.getGUI().isManageTab(event.getInventory()) && clickedItem != null &&
-        clickedItem.getType() == Material.PLAYER_HEAD) {
-      party.getGUI().handleManageClick(clickedItem);
+    } else if (party.getGUI().isManageTab(event.getInventory())) {
+      party.getGUI().handleManageClick(event);
     }
 
     if (party.getMembers().size() < 1) {

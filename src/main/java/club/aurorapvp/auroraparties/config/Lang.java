@@ -39,7 +39,15 @@ public class Lang {
     DEFAULTS.put("invite-accepted", "prefix <gradient:#FFAA00:#FF55FF>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <gradient:#FFAA00:#FF55FF>Invite denied");
     DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no pending invites!");
-    DEFAULTS.put("already-sent-invite", "prefix <gradient:#FFAA00:#FF55FF>You have already sent an invite!");
+    DEFAULTS.put("already-sent-invite",
+        "prefix <gradient:#FFAA00:#FF55FF>You have already sent an invite!");
+    DEFAULTS.put("request-sent", "prefix <gradient:#FFAA00:#FF55FF>Request successfully sent!");
+    DEFAULTS.put("request-received",
+        "prefix <gradient:#FFAA00:#FF55FF>You have received a party join request from %s to join your party! Type /party accept to let them join!");
+    DEFAULTS.put("request-accepted", "prefix <gradient:#FFAA00:#FF55FF>Request accepted!");
+    DEFAULTS.put("request-denied", "prefix <gradient:#FFAA00:#FF55FF>Request denied");
+    DEFAULTS.put("request-cancelled", "prefix <gradient:#FFAA00:#FF55FF>The party join request has been cancelled");
+    DEFAULTS.put("no-requests", "prefix <gradient:#FFAA00:#FF55FF>You have no pending requests!");
     DEFAULTS.put("no-permission",
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
     DEFAULTS.put("party-disbanded",
@@ -47,6 +55,9 @@ public class Lang {
     DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF><bold>Leave Party");
     DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF><bold>Disband Party");
     DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF><bold>Exit");
+    DEFAULTS.put("status", "<gradient:#FFAA00:#FF55FF><bold>Party Status");
+    DEFAULTS.put("party-name", "<gradient:#FFAA00:#FF55FF><bold>%s's Party");
+    DEFAULTS.put("parties-gui", "<gradient:#FFAA00:#FF55FF><bold>All Parties");
     DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Team Duel");
     DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Start Duel");
     DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF><bold>FFA Duel");
@@ -55,7 +66,7 @@ public class Lang {
     DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF><bold>Manage Party");
     DEFAULTS.put("duel-kit-gui", "<gradient:#FFAA00:#FF55FF><bold>Select Duel Kit");
     DEFAULTS.put("next-page", "<gradient:#FFAA00:#FF55FF><bold>Next page");
-    DEFAULTS.put("previous-page", "<gradient:#FFAA00:#FF55FF>Previous page");
+    DEFAULTS.put("previous-page", "<gradient:#FFAA00:#FF55FF><bold>Previous page");
     DEFAULTS.put("kit-invalid-name", "prefix <gradient:#FFAA00:#FF55FF>Invalid kit name!");
     DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");
     DEFAULTS.put("already-in-party",
@@ -69,6 +80,7 @@ public class Lang {
         "prefix <gradient:#FFAA00:#FF55FF>%s has been removed from the party");
     DEFAULTS.put("left-party", "prefix <gradient:#FFAA00:#FF55FF>You have left the party");
     DEFAULTS.put("player-left-party", "prefix <gradient:#FFAA00:#FF55FF>%s has left the party");
+    DEFAULTS.put("player-joined-party", "prefix <gradient:#FFAA00:#FF55FF>%s has joined the party");
     DEFAULTS.put("party-full", "prefix <gradient:#FFAA00:#FF55FF>This party is full!");
     // TODO
     DEFAULTS.put("help-command", """

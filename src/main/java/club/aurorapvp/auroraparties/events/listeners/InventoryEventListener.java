@@ -6,6 +6,7 @@ import club.aurorapvp.auroraparties.modules.party.PartyGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class InventoryEventListener implements Listener {
@@ -14,6 +15,11 @@ public class InventoryEventListener implements Listener {
     PartyGUI.inventoryClicked(event);
     TeamDuelGUI.onInventoryClick(event);
     PendingDuel.onInventoryClicked(event);
+  }
+
+  @EventHandler
+  public void onInventoryClosed(InventoryCloseEvent event) {
+    PendingDuel.onInventoryClose(event);
   }
 
   @EventHandler

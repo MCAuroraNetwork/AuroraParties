@@ -12,7 +12,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class AuroraParties extends JavaPlugin {
   public static JavaPlugin INSTANCE;
   private static boolean auroraCombatInstalled = false;
-  private static boolean auroraKitsInstalled = false;
+  private static final boolean auroraKitsInstalled = false;
+
+  public static boolean isAuroraCombatInstalled() {
+    return auroraCombatInstalled;
+  }
+
+  public static boolean isAuroraKitsInstalled() {
+    return AuroraDuels.isAuroraKitsInstalled();
+  }
 
   @Override
   public void onEnable() {
@@ -37,14 +45,6 @@ public final class AuroraParties extends JavaPlugin {
     getLogger().info(
         "AuroraParties loaded in " + (System.currentTimeMillis() - startTime) +
             "ms");
-  }
-
-  public static boolean isAuroraCombatInstalled() {
-    return auroraCombatInstalled;
-  }
-
-  public static boolean isAuroraKitsInstalled() {
-    return AuroraDuels.isAuroraKitsInstalled();
   }
 
   @Override

@@ -18,7 +18,7 @@ public class Party {
   private final Set<Player> partyMembers = new HashSet<>();
   private final PartyGUI partyGUI;
   private PartyStatus status;
-  private ItemStack displayItem;
+  private final ItemStack displayItem;
 
   public Party(Player partyLeader) {
     this.name = partyLeader.getName() + "'s Party";
@@ -40,6 +40,34 @@ public class Party {
     PARTIES.add(this);
   }
 
+  public static boolean inParty(Player p) {
+    for (Party party : PARTIES) {
+      if (party.getLeader() == p) {
+        return true;
+      }
+
+      for (Player member : party.getMembers()) {
+        if (member == p) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public static Set<Party> getParties() {
+    return PARTIES;
+  }
+
+  public static Party getParty(Player p) {
+    for (Party party : PARTIES) {
+      if (party.contains(p)) {
+        return party;
+      }
+    }
+    return null;
+  }
+
   public String getName() {
     return name;
   }
@@ -58,23 +86,6 @@ public class Party {
 
   public PartyStatus getStatus() {
     return status;
-  }
-
-  public ItemStack getDisplayItem() {
-    return displayItem;
-  }
-
-  public boolean isLeader(Player p) {
-    return partyLeader == p;
-  }
-
-  public boolean isMember(Player p) {
-    for (Player member : this.getMembers()) {
-      if (member == p) {
-        return true;
-      }
-    }
-    return false;
   }
 
   public void setStatus(PartyStatus status) {
@@ -103,13 +114,30 @@ public class Party {
         PublicPartyGUI.removeParty(this);
 
         meta.lore(List.of(Component.text("Invite Only"),
-          Component.text(this.getMembers().size() + 1 + " Members")));
+            Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
 
         PublicPartyGUI.addParty(this);
       }
     }
+  }
+
+  public ItemStack getDisplayItem() {
+    return displayItem;
+  }
+
+  public boolean isLeader(Player p) {
+    return partyLeader == p;
+  }
+
+  public boolean isMember(Player p) {
+    for (Player member : this.getMembers()) {
+      if (member == p) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public boolean contains(Player p) {
@@ -200,33 +228,5 @@ public class Party {
     }
 
     PARTIES.remove(this);
-  }
-
-  public static boolean inParty(Player p) {
-    for (Party party : PARTIES) {
-      if (party.getLeader() == p) {
-        return true;
-      }
-
-      for (Player member : party.getMembers()) {
-        if (member == p) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  public static Set<Party> getParties() {
-    return PARTIES;
-  }
-
-  public static Party getParty(Player p) {
-    for (Party party : PARTIES) {
-      if (party.contains(p)) {
-        return party;
-      }
-    }
-    return null;
   }
 }

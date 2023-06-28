@@ -62,6 +62,63 @@ public class PartyGUI {
     this.teamDuelGUI = new TeamDuelGUI(party, leaderSkull);
   }
 
+  public static void inventoryClicked(InventoryClickEvent event) {
+    Player p = (Player) event.getWhoClicked();
+
+    if (!Party.inParty(p)) {
+      return;
+    }
+
+    if (!Objects.requireNonNull(Party.getParty(p)).getGUI()
+        .isGuiInventory(event.getInventory())) {
+      return;
+    }
+
+    Party party = Party.getParty(p);
+    assert party != null;
+    event.setCancelled(true);
+
+    int slot = event.getSlot();
+
+    if (!party.isLeader(p)) {
+      if (slot == 53) {
+        party.leave(p);
+        p.closeInventory();
+      }
+      return;
+    }
+
+    ItemStack clickedItem = event.getCurrentItem();
+
+    if (slot == 53) {
+      party.disband();
+      p.closeInventory();
+    } else if (slot == 45) {
+      if (party.getGUI().isManageTab(event.getInventory())) {
+        party.getGUI().open(p);
+      } else {
+        party.getGUI().openManageTab(p);
+      }
+    } else if (party.getGUI().isManageTab(event.getInventory())) {
+      party.getGUI().handleManageClick(event);
+    }
+
+    if (party.getMembers().size() < 1) {
+      return;
+    }
+
+    Set<Player> players = new HashSet<>(party.getMembers());
+    players.add(party.getLeader());
+
+    if (slot == 49) {
+      party.getGUI().openTeamDuelGUI(p);
+    } else if (slot == 47) {
+      new PendingDuel(p, new PartyDuel(players, false));
+    } else if (slot == 51) {
+      new PendingDuel(p, new FFADuel(players, false));
+    }
+  }
+
   public TeamDuelGUI getTeamDuelGUI() {
     return teamDuelGUI;
   }
@@ -292,62 +349,5 @@ public class PartyGUI {
 
     assert p != null;
     party.kick(p);
-  }
-
-  public static void inventoryClicked(InventoryClickEvent event) {
-    Player p = (Player) event.getWhoClicked();
-
-    if (!Party.inParty(p)) {
-      return;
-    }
-
-    if (!Objects.requireNonNull(Party.getParty(p)).getGUI()
-        .isGuiInventory(event.getInventory())) {
-      return;
-    }
-
-    Party party = Party.getParty(p);
-    assert party != null;
-    event.setCancelled(true);
-
-    int slot = event.getSlot();
-
-    if (!party.isLeader(p)) {
-      if (slot == 53) {
-        party.leave(p);
-        p.closeInventory();
-      }
-      return;
-    }
-
-    ItemStack clickedItem = event.getCurrentItem();
-
-    if (slot == 53) {
-      party.disband();
-      p.closeInventory();
-    } else if (slot == 45) {
-      if (party.getGUI().isManageTab(event.getInventory())) {
-        party.getGUI().open(p);
-      } else {
-        party.getGUI().openManageTab(p);
-      }
-    } else if (party.getGUI().isManageTab(event.getInventory())) {
-      party.getGUI().handleManageClick(event);
-    }
-
-    if (party.getMembers().size() < 1) {
-      return;
-    }
-
-    Set<Player> players = new HashSet<>(party.getMembers());
-    players.add(party.getLeader());
-
-    if (slot == 49) {
-      party.getGUI().openTeamDuelGUI(p);
-    } else if (slot == 47) {
-      new PendingDuel(p, new PartyDuel(players, false));
-    } else if (slot == 51) {
-      new PendingDuel(p, new FFADuel(players, false));
-    }
   }
 }

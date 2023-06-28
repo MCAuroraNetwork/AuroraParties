@@ -60,27 +60,6 @@ public class PartyInvite {
     );
   }
 
-  public void accept() {
-    party.addMember(invited);
-    PENDING_INVITES.remove(this);
-
-    for (PartyInvite invite : PartyInvite.getInvites(invited)) {
-      if (invite != this) {
-        invite.deny();
-      }
-    }
-
-    partyLeader.sendMessage(Lang.getComponent("invite-accepted"));
-    invited.sendMessage(Lang.getComponent("invite-accepted"));
-  }
-
-  public void deny() {
-    PENDING_INVITES.remove(this);
-
-    partyLeader.sendMessage(Lang.getComponent("invite-denied"));
-    invited.sendMessage(Lang.getComponent("invite-denied"));
-  }
-
   public static PartyInvite getInvite(Player p) {
     for (PartyInvite invite : PENDING_INVITES) {
       if (invite.partyLeader == p || invite.invited == p) {
@@ -127,5 +106,26 @@ public class PartyInvite {
       }
     }
     return false;
+  }
+
+  public void accept() {
+    party.addMember(invited);
+    PENDING_INVITES.remove(this);
+
+    for (PartyInvite invite : PartyInvite.getInvites(invited)) {
+      if (invite != this) {
+        invite.deny();
+      }
+    }
+
+    partyLeader.sendMessage(Lang.getComponent("invite-accepted"));
+    invited.sendMessage(Lang.getComponent("invite-accepted"));
+  }
+
+  public void deny() {
+    PENDING_INVITES.remove(this);
+
+    partyLeader.sendMessage(Lang.getComponent("invite-denied"));
+    invited.sendMessage(Lang.getComponent("invite-denied"));
   }
 }

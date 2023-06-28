@@ -21,7 +21,6 @@ public class PluginCommands extends BaseCommand {
     long startTime = System.currentTimeMillis();
 
 
-
     AuroraParties.INSTANCE.getLogger().info(
         "AuroraDuels reloaded in " + (System.currentTimeMillis() - startTime) + "ms");
   }

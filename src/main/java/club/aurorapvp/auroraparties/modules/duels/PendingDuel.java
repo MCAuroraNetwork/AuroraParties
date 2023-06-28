@@ -30,11 +30,6 @@ public class PendingDuel {
     PENDING_DUELS.add(this);
   }
 
-  public void enterQueue() {
-    duel.getQueue().enterDuelQueue(duel);
-    PENDING_DUELS.remove(this);
-  }
-
   public static void onInventoryClicked(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
@@ -102,5 +97,10 @@ public class PendingDuel {
       }
     }
     return false;
+  }
+
+  public void enterQueue() {
+    duel.getQueue().enterDuelQueue(duel);
+    PENDING_DUELS.remove(this);
   }
 }

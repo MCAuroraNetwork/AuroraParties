@@ -10,7 +10,7 @@ public class PlayerHeadUtil {
   public static ItemStack getPlayerSkull(Player p) {
     ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
     SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-    
+
     skullMeta.setOwningPlayer(p);
     skullMeta.displayName(Component.text(p.getName()));
     skull.setItemMeta(skullMeta);

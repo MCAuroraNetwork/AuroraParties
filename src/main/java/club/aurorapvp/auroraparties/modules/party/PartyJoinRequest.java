@@ -21,33 +21,6 @@ public class PartyJoinRequest {
     PENDING_REQUESTS.add(this);
   }
 
-  public Party getParty() {
-    return party;
-  }
-
-  public void accept() {
-    for (PartyJoinRequest request : PartyJoinRequest.getRequests(requester)) {
-      if (request != this) {
-        request.cancel();
-      }
-    }
-
-    requester.sendMessage(Lang.getComponent("request-accepted"));
-
-    party.addMember(requester);
-    PENDING_REQUESTS.remove(this);
-  }
-
-  public void deny() {
-    requester.sendMessage(Lang.getComponent("request-denied"));
-    PENDING_REQUESTS.remove(this);
-  }
-
-  public void cancel() {
-    party.getLeader().sendMessage(Lang.getComponent("request-cancelled"));
-    PENDING_REQUESTS.remove(this);
-  }
-
   public static Set<PartyJoinRequest> getRequests(Player p) {
     Set<PartyJoinRequest> matchingRequests = new HashSet<>();
 
@@ -94,5 +67,32 @@ public class PartyJoinRequest {
       }
     }
     return null;
+  }
+
+  public Party getParty() {
+    return party;
+  }
+
+  public void accept() {
+    for (PartyJoinRequest request : PartyJoinRequest.getRequests(requester)) {
+      if (request != this) {
+        request.cancel();
+      }
+    }
+
+    requester.sendMessage(Lang.getComponent("request-accepted"));
+
+    party.addMember(requester);
+    PENDING_REQUESTS.remove(this);
+  }
+
+  public void deny() {
+    requester.sendMessage(Lang.getComponent("request-denied"));
+    PENDING_REQUESTS.remove(this);
+  }
+
+  public void cancel() {
+    party.getLeader().sendMessage(Lang.getComponent("request-cancelled"));
+    PENDING_REQUESTS.remove(this);
   }
 }

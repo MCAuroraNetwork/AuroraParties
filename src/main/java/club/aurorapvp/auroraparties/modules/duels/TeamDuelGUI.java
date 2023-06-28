@@ -85,6 +85,79 @@ public class TeamDuelGUI {
     inventory.setItem(0, leaderSkull);
   }
 
+  public static void onInventoryClick(InventoryClickEvent event) {
+    Player p = (Player) event.getWhoClicked();
+
+    if (!Party.inParty(p)) {
+      return;
+    }
+
+    Party party = Party.getParty(p);
+
+    assert party != null;
+    if (!party.isLeader(p)) {
+      return;
+    }
+
+    Inventory topInventory = event.getView().getTopInventory();
+
+    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
+      return;
+    }
+
+    ItemStack clickedItem = event.getCurrentItem();
+
+    if (clickedItem == null || clickedItem.getType().isAir()) {
+      return;
+    }
+
+    if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE ||
+        clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE ||
+        clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
+      event.setCancelled(true);
+      return;
+    } else if (clickedItem.getType() == Material.GREEN_WOOL) {
+      event.setCancelled(true);
+
+      party.getGUI().getTeamDuelGUI().startTeamDuel();
+      return;
+    } else if (clickedItem.getType() == Material.RED_WOOL) {
+      party.getGUI().open(p);
+      event.setCancelled(true);
+      return;
+    }
+
+    ItemStack cursorItem = event.getCursor();
+    int rawSlot = event.getRawSlot();
+
+    int topInventorySize = topInventory.getSize();
+
+    if (cursorItem != null && rawSlot >= topInventorySize) {
+      event.setCancelled(true);
+    }
+  }
+
+  public static void itemDropped(PlayerDropItemEvent event) {
+    ItemStack droppedItem = event.getItemDrop().getItemStack();
+    Player player = event.getPlayer();
+
+    Inventory topInventory = player.getOpenInventory().getTopInventory();
+
+    if (topInventory instanceof PlayerInventory) {
+      return;
+    }
+
+    event.getItemDrop().remove();
+
+    HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
+
+    if (!leftoverItems.isEmpty()) {
+      for (ItemStack leftoverItem : leftoverItems.values()) {
+        player.getWorld().dropItem(player.getLocation(), leftoverItem);
+      }
+    }
+  }
+
   public Inventory getInventory() {
     return inventory;
   }
@@ -203,79 +276,6 @@ public class TeamDuelGUI {
 
     if (index % 9 == 3 || index % 9 == 6) {
       index += 2;
-    }
-  }
-
-  public static void onInventoryClick(InventoryClickEvent event) {
-    Player p = (Player) event.getWhoClicked();
-
-    if (!Party.inParty(p)) {
-      return;
-    }
-
-    Party party = Party.getParty(p);
-
-    assert party != null;
-    if (!party.isLeader(p)) {
-      return;
-    }
-
-    Inventory topInventory = event.getView().getTopInventory();
-
-    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
-      return;
-    }
-
-    ItemStack clickedItem = event.getCurrentItem();
-
-    if (clickedItem == null || clickedItem.getType().isAir()) {
-      return;
-    }
-
-    if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE ||
-        clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE ||
-        clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
-      event.setCancelled(true);
-      return;
-    } else if (clickedItem.getType() == Material.GREEN_WOOL) {
-      event.setCancelled(true);
-
-      party.getGUI().getTeamDuelGUI().startTeamDuel();
-      return;
-    } else if (clickedItem.getType() == Material.RED_WOOL) {
-      party.getGUI().open(p);
-      event.setCancelled(true);
-      return;
-    }
-
-    ItemStack cursorItem = event.getCursor();
-    int rawSlot = event.getRawSlot();
-
-    int topInventorySize = topInventory.getSize();
-
-    if (cursorItem != null && rawSlot >= topInventorySize) {
-      event.setCancelled(true);
-    }
-  }
-
-  public static void itemDropped(PlayerDropItemEvent event) {
-    ItemStack droppedItem = event.getItemDrop().getItemStack();
-    Player player = event.getPlayer();
-
-    Inventory topInventory = player.getOpenInventory().getTopInventory();
-
-    if (topInventory instanceof PlayerInventory) {
-      return;
-    }
-
-    event.getItemDrop().remove();
-
-    HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
-
-    if (!leftoverItems.isEmpty()) {
-      for (ItemStack leftoverItem : leftoverItems.values()) {
-        player.getWorld().dropItem(player.getLocation(), leftoverItem);
-      }
     }
   }
 }

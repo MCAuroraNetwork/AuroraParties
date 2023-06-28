@@ -46,7 +46,8 @@ public class Lang {
         "prefix <gradient:#FFAA00:#FF55FF>You have received a party join request from %s to join your party! Type /party accept to let them join!");
     DEFAULTS.put("request-accepted", "prefix <gradient:#FFAA00:#FF55FF>Request accepted!");
     DEFAULTS.put("request-denied", "prefix <gradient:#FFAA00:#FF55FF>Request denied");
-    DEFAULTS.put("request-cancelled", "prefix <gradient:#FFAA00:#FF55FF>The party join request has been cancelled");
+    DEFAULTS.put("request-cancelled",
+        "prefix <gradient:#FFAA00:#FF55FF>The party join request has been cancelled");
     DEFAULTS.put("no-requests", "prefix <gradient:#FFAA00:#FF55FF>You have no pending requests!");
     DEFAULTS.put("no-permission",
         "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");

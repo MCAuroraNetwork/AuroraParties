@@ -71,13 +71,21 @@ public class PendingDuel {
   }
 
   public static void onInventoryClose(InventoryCloseEvent event) {
-    if (!PendingDuel.hasPendingDuel((Player) event.getPlayer())) {
+    if (!(event.getPlayer() instanceof Player p)) {
       return;
     }
 
-    if (Objects.requireNonNull(DuelKitGui.getGui((Player) event.getPlayer()))
-        .isGuiInventory(event.getInventory())) {
-      Objects.requireNonNull(PendingDuel.getPendingDuel((Player) event.getPlayer())).enterQueue();
+    if (!PendingDuel.hasPendingDuel(p)) {
+      return;
+    }
+
+    if (QueueGUI.isQueueGUI(event.getInventory()) && PendingDuel.hasPendingDuel(p) &&
+        Objects.requireNonNull(Duel.getDuel(p)).getQueue() == null) {
+      QueueGUI.open(p);
+    }
+
+    if (Objects.requireNonNull(DuelKitGui.getGui(p)).isGuiInventory(event.getInventory())) {
+      Objects.requireNonNull(PendingDuel.getPendingDuel(p)).enterQueue();
     }
   }
 

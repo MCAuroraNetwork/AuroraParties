@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class AuroraParties extends JavaPlugin {
   public static JavaPlugin INSTANCE;
   private static boolean auroraCombatInstalled = false;
-  private static final boolean auroraKitsInstalled = false;
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;

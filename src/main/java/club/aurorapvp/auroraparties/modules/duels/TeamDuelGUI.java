@@ -156,7 +156,7 @@ public class TeamDuelGUI {
       return;
     }
 
-    event.setCancelled(true);
+    event.getItemDrop().remove();
 
     HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
 

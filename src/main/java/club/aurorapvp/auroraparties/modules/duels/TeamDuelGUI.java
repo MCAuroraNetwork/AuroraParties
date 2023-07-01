@@ -20,7 +20,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class TeamDuelGUI {
@@ -139,21 +138,31 @@ public class TeamDuelGUI {
 
   public static void itemDropped(PlayerDropItemEvent event) {
     ItemStack droppedItem = event.getItemDrop().getItemStack();
-    Player player = event.getPlayer();
+    Player p = event.getPlayer();
+    Inventory topInventory = p.getOpenInventory().getTopInventory();
 
-    Inventory topInventory = player.getOpenInventory().getTopInventory();
-
-    if (topInventory instanceof PlayerInventory) {
+    if (!Party.inParty(p)) {
       return;
     }
 
-    event.getItemDrop().remove();
+    Party party = Party.getParty(p);
+
+    assert party != null;
+    if (!party.isLeader(p)) {
+      return;
+    }
+
+    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
+      return;
+    }
+
+    event.setCancelled(true);
 
     HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
 
     if (!leftoverItems.isEmpty()) {
       for (ItemStack leftoverItem : leftoverItems.values()) {
-        player.getWorld().dropItem(player.getLocation(), leftoverItem);
+        p.getWorld().dropItem(p.getLocation(), leftoverItem);
       }
     }
   }

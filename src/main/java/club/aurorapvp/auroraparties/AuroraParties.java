@@ -42,13 +42,13 @@ public final class AuroraParties extends JavaPlugin {
     PublicPartyGUI.reload();
 
     getLogger().info(
-        "AuroraParties loaded in " + (System.currentTimeMillis() - startTime) +
+        "AuroraParties Enabled in " + (System.currentTimeMillis() - startTime) +
             "ms");
   }
 
   @Override
   public void onDisable() {
     // Plugin shutdown logic
-    getLogger().info("AuroraParties unloaded");
+    getLogger().info("AuroraParties Disabled");
   }
 }

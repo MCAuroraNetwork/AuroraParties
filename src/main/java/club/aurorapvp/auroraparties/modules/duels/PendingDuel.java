@@ -24,7 +24,6 @@ public class PendingDuel {
     this.partyLeader = partyLeader;
     this.duel = duel;
 
-
     QueueGUI.open(partyLeader);
 
     PENDING_DUELS.add(this);
@@ -84,7 +83,13 @@ public class PendingDuel {
       QueueGUI.open(p);
     }
 
-    if (Objects.requireNonNull(DuelKitGui.getGui(p)).isGuiInventory(event.getInventory())) {
+    DuelKitGui kitGui = DuelKitGui.getGui(p);
+
+    if (kitGui == null) {
+      return;
+    }
+
+    if (kitGui.isGuiInventory(event.getInventory())) {
       Objects.requireNonNull(PendingDuel.getPendingDuel(p)).enterQueue();
     }
   }

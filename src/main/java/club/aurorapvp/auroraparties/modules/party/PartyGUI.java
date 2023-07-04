@@ -174,7 +174,7 @@ public class PartyGUI {
     decrementIndex();
 
     ItemStack memberSkull = memberSkulls.get(p);
-    int slot = InventoryUtil.findSlot(memberSkull, publicInventory);
+    int slot = InventoryUtil.findSkullSlot(memberSkull, publicInventory);
 
     List<Inventory> inventories =
         Arrays.asList(publicInventory, memberInventory, leaderInventory, manageTab);

@@ -270,7 +270,7 @@ public class TeamDuelGUI {
   public void removeMember(ItemStack memberSkull) {
     decrementIndex();
 
-    int slot = InventoryUtil.findSlot(memberSkull, inventory);
+    int slot = InventoryUtil.findSkullSlot(memberSkull, inventory);
 
     // TODO same as PartyGUI#removeMember
     inventory.clear(slot);

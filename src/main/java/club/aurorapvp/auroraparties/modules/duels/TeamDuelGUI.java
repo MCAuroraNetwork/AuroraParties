@@ -6,6 +6,7 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
+import club.aurorapvp.aurorateleports.modules.WorldSpawn;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -222,7 +224,18 @@ public class TeamDuelGUI {
       index++;
     }
 
-    new PendingDuel(party.getLeader(), new TeamDuel(team1, team2, false));
+    WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
+    Location loc = null;
+
+    if (worldSpawn != null) {
+      loc = worldSpawn.getSpawn();
+    }
+
+    if (loc == null) {
+      loc = WorldSpawn.getGlobalSpawn();
+    }
+
+    new PendingDuel(party.getLeader(), new TeamDuel(team1, team2, loc, false));
   }
 
   private String getStringName(ItemStack item) {

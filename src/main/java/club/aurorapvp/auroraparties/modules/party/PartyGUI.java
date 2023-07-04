@@ -2,12 +2,14 @@ package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.enums.PartyStatus;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
+import club.aurorapvp.aurorateleports.modules.WorldSpawn;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -110,12 +113,28 @@ public class PartyGUI {
     Set<Player> players = new HashSet<>(party.getMembers());
     players.add(party.getLeader());
 
+    Location loc = null;
+
+    if (AuroraParties.isAuroraTeleportsInstalled()) {
+      WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
+
+      if (worldSpawn != null) {
+        loc = worldSpawn.getSpawn();
+      }
+
+      if (loc == null) {
+        loc = WorldSpawn.getGlobalSpawn();
+      }
+    } else {
+      loc = Bukkit.getWorlds().get(0).getSpawnLocation();
+    }
+
     if (slot == 49) {
       party.getGUI().openTeamDuelGUI(p);
     } else if (slot == 47) {
-      new PendingDuel(p, new PartyDuel(players, false));
+      new PendingDuel(p, new PartyDuel(players, loc, false));
     } else if (slot == 51) {
-      new PendingDuel(p, new FFADuel(players, false));
+      new PendingDuel(p, new FFADuel(players, loc, false));
     }
   }
 

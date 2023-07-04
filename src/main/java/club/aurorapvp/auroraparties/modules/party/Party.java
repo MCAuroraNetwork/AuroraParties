@@ -25,10 +25,6 @@ public class Party {
     this.partyLeader = partyLeader;
     this.partyGUI = new PartyGUI(this);
 
-    status = PartyStatus.INVITE_ONLY;
-
-    this.setStatus(PartyStatus.INVITE_ONLY);
-
     ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
     ItemMeta meta = displayItem.getItemMeta();
     meta.displayName(Lang.formatComponent("party-name", partyLeader.getName()));

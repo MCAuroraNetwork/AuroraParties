@@ -106,11 +106,13 @@ public class PublicPartyGUI {
 
   public static void nextPage(Player p) {
     int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
+
     if (currentPage < pages - 1) {
       currentPage++;
     } else {
       currentPage = 0;
     }
+
     PLAYER_PAGES.put(p, currentPage);
     PublicPartyGUI.open(p);
   }

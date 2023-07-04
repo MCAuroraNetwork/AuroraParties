@@ -65,7 +65,7 @@ public class PartyGUI {
     this.teamDuelGUI = new TeamDuelGUI(party, leaderSkull);
   }
 
-  public static void inventoryClicked(InventoryClickEvent event) {
+  public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
     if (!Party.inParty(p)) {
@@ -90,8 +90,6 @@ public class PartyGUI {
       }
       return;
     }
-
-    ItemStack clickedItem = event.getCurrentItem();
 
     if (slot == 53) {
       party.disband();

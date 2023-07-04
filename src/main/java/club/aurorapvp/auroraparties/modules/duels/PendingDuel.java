@@ -29,7 +29,7 @@ public class PendingDuel {
     PENDING_DUELS.add(this);
   }
 
-  public static void onInventoryClicked(InventoryClickEvent event) {
+  public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
     if (!QueueGUI.isQueueGUI(event.getClickedInventory()) || !PendingDuel.hasPendingDuel(p)) {

@@ -106,7 +106,7 @@ public class PublicPartyGUI {
 
   public static void nextPage(Player p) {
     int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
-    if (currentPage <= pages) {
+    if (currentPage < pages - 1) {
       currentPage++;
     } else {
       currentPage = 0;
@@ -117,11 +117,13 @@ public class PublicPartyGUI {
 
   public static void previousPage(Player p) {
     int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
-    if (currentPage >= 1) {
+
+    if (currentPage > 1) {
       currentPage--;
     } else {
-      currentPage = pages;
+      currentPage = pages - 1;
     }
+
     PLAYER_PAGES.put(p, currentPage);
     PublicPartyGUI.open(p);
   }
@@ -177,7 +179,7 @@ public class PublicPartyGUI {
     }
   }
 
-  public static void onInventoryClicked(InventoryClickEvent event) {
+  public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
     if (!PublicPartyGUI.isGuiInventory(event.getInventory())) {

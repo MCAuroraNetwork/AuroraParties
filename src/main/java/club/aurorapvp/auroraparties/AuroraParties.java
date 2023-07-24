@@ -12,14 +12,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class AuroraParties extends JavaPlugin {
   public static JavaPlugin INSTANCE;
   private static boolean auroraCombatInstalled = false;
-  private static boolean auroraTeleportsInstalled = false;
+  private static boolean auroraWarpsInstalled = false;
 
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
   }
 
-  public static boolean isAuroraTeleportsInstalled() { return auroraTeleportsInstalled; }
+  public static boolean isAuroraWarpsInstalled() { return auroraWarpsInstalled; }
 
   public static boolean isAuroraKitsInstalled() {
     return AuroraDuels.isAuroraKitsInstalled();
@@ -42,7 +42,7 @@ public final class AuroraParties extends JavaPlugin {
 
     if (Bukkit.getPluginManager().getPlugin("AuroraTeleports") != null &&
         Config.get().getBoolean("optional-plugins.aurorateleports-compatibility")) {
-      auroraTeleportsInstalled = true;
+      auroraWarpsInstalled = true;
     }
 
     // Initialize classes

@@ -6,11 +6,12 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
-import club.aurorapvp.aurorateleports.modules.WorldSpawn;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -226,7 +227,7 @@ public class TeamDuelGUI {
 
     Location loc = null;
 
-    if (AuroraParties.isAuroraTeleportsInstalled()) {
+    if (AuroraParties.isAuroraWarpsInstalled()) {
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
       if (worldSpawn != null) {

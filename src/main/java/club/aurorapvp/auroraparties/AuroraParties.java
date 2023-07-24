@@ -40,8 +40,8 @@ public final class AuroraParties extends JavaPlugin {
       auroraCombatInstalled = true;
     }
 
-    if (Bukkit.getPluginManager().getPlugin("AuroraTeleports") != null &&
-        Config.get().getBoolean("optional-plugins.aurorateleports-compatibility")) {
+    if (Bukkit.getPluginManager().getPlugin("AuroraWarps") != null &&
+        Config.get().getBoolean("optional-plugins.aurorawarps-compatibility")) {
       auroraWarpsInstalled = true;
     }
 

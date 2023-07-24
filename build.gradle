@@ -31,7 +31,7 @@ dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
     compileOnly ':AuroraDuels:1.11.12'
     compileOnly ':AuroraWarps:1.0.0'
-    compileOnly ':AuroraCombat:1.5.3'
+    compileOnly ':AuroraCombat:1.6.3'
 }
 
 build {

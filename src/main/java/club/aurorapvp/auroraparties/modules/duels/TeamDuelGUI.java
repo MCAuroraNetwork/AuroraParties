@@ -49,7 +49,9 @@ public class TeamDuelGUI {
     redDivider.setItemMeta(meta);
 
     inventory =
-        Bukkit.createInventory(null, 54,
+        Bukkit.createInventory(
+            null,
+            54,
             MiniMessage.miniMessage()
                 .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + "New Team Duel"));
 
@@ -78,9 +80,13 @@ public class TeamDuelGUI {
 
     if (AuroraParties.isAuroraCombatInstalled()) {
       meta = leaderSkull.getItemMeta();
-      meta.lore(List.of(
-          Component.text(
-              "ELO: " + Rating.getRating(party.getLeader(), "default_duels").getPoints())));
+      meta.lore(
+          List.of(
+              Component.text(
+                  "ELO: "
+                      + Rating.getRating("default_duels")
+                          .getScore(party.getLeader())
+                          .getPoints())));
       leaderSkull.setItemMeta(meta);
     }
 
@@ -113,9 +119,9 @@ public class TeamDuelGUI {
       return;
     }
 
-    if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE ||
-        clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE ||
-        clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
+    if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE
+        || clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE
+        || clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
       event.setCancelled(true);
       return;
     } else if (clickedItem.getType() == Material.GREEN_WOOL) {
@@ -261,7 +267,12 @@ public class TeamDuelGUI {
     if (AuroraParties.isAuroraCombatInstalled()) {
       ItemMeta meta = memberSkull.getItemMeta();
       meta.lore(
-          List.of(Component.text("ELO: " + Rating.getRating(p, "default_duels").getPoints())));
+          List.of(
+              Component.text(
+                  "ELO: "
+                      + Rating.getRating("default_duels")
+                          .getScore(party.getLeader())
+                          .getPoints())));
       memberSkull.setItemMeta(meta);
     }
 
@@ -307,4 +318,3 @@ public class TeamDuelGUI {
     }
   }
 }
-

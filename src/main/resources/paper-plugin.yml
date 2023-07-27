@@ -12,5 +12,5 @@ dependencies:
       required: true
     AuroraCombat:
       required: false
-    AuroraTeleports:
+    AuroraWarps:
       required: false

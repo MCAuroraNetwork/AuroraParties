@@ -4,7 +4,6 @@ import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.enums.PartyStatus;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -332,19 +331,19 @@ public class PartyGUI {
     if (event.getSlot() == 49) {
       switch (party.getStatus()) {
         case PRIVATE -> {
-          party.setStatus(PartyStatus.ANYONE_CAN_JOIN);
+          party.setStatus(Party.PartyStatus.ANYONE_CAN_JOIN);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Anyone can Join")));
           clickedItem.setItemMeta(meta);
         }
         case ANYONE_CAN_JOIN -> {
-          party.setStatus(PartyStatus.INVITE_ONLY);
+          party.setStatus(Party.PartyStatus.INVITE_ONLY);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Invite Only")));
           clickedItem.setItemMeta(meta);
         }
         case INVITE_ONLY -> {
-          party.setStatus(PartyStatus.PRIVATE);
+          party.setStatus(Party.PartyStatus.PRIVATE);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Private")));
           clickedItem.setItemMeta(meta);

@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.enums.PartyStatus;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.HashSet;
 import java.util.List;
@@ -230,5 +229,11 @@ public class Party {
     }
 
     PARTIES.remove(this);
+  }
+
+  public enum PartyStatus {
+    ANYONE_CAN_JOIN,
+    INVITE_ONLY,
+    PRIVATE
   }
 }

@@ -1,7 +1,7 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.enums.PartyStatus;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class PublicPartyGUI {
     Inventory inventory = Bukkit.createInventory(null, 54, Lang.getComponent("parties-gui"));
 
     for (Party party : parties) {
-      if (party.getStatus() != PartyStatus.PRIVATE) {
+      if (party.getStatus() != Party.PartyStatus.PRIVATE) {
         inventory.addItem(party.getDisplayItem());
       }
     }
@@ -210,9 +210,9 @@ public class PublicPartyGUI {
       SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 
       if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-        if (party.getStatus() == PartyStatus.ANYONE_CAN_JOIN) {
+        if (party.getStatus() == Party.PartyStatus.ANYONE_CAN_JOIN) {
           party.addMember(p);
-        } else if (party.getStatus() == PartyStatus.INVITE_ONLY) {
+        } else if (party.getStatus() == Party.PartyStatus.INVITE_ONLY) {
           new PartyJoinRequest(p, party);
         }
       }

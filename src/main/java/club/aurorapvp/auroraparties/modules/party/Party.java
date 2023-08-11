@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Party {
-  private final static Set<Party> PARTIES = new HashSet<>();
+  private static final Set<Party> PARTIES = new HashSet<>();
   private final String name;
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
@@ -95,14 +95,18 @@ public class Party {
       case PRIVATE -> {
         PublicPartyGUI.removeParty(this);
 
-        meta.lore(List.of(Component.text("Private"),
-            Component.text(this.getMembers().size() + 1 + " Members")));
+        meta.lore(
+            List.of(
+                Component.text("Private"),
+                Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
       }
       case ANYONE_CAN_JOIN -> {
-        meta.lore(List.of(Component.text("Anyone can Join"),
-            Component.text(this.getMembers().size() + 1 + " Members")));
+        meta.lore(
+            List.of(
+                Component.text("Anyone can Join"),
+                Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
 
@@ -111,8 +115,10 @@ public class Party {
       case INVITE_ONLY -> {
         PublicPartyGUI.removeParty(this);
 
-        meta.lore(List.of(Component.text("Invite Only"),
-            Component.text(this.getMembers().size() + 1 + " Members")));
+        meta.lore(
+            List.of(
+                Component.text("Invite Only"),
+                Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
 
@@ -165,12 +171,17 @@ public class Party {
     ItemMeta meta = displayItem.getItemMeta();
 
     switch (status) {
-      case PRIVATE -> meta.lore(List.of(Component.text("Private"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
-      case ANYONE_CAN_JOIN -> meta.lore(List.of(Component.text("Anyone Can Join"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
-      case INVITE_ONLY -> meta.lore(List.of(Component.text("Invite Only"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
+      case PRIVATE -> meta.lore(
+          List.of(
+              Component.text("Private"), Component.text(this.getMembers().size() + 1 + "Members")));
+      case ANYONE_CAN_JOIN -> meta.lore(
+          List.of(
+              Component.text("Anyone Can Join"),
+              Component.text(this.getMembers().size() + 1 + "Members")));
+      case INVITE_ONLY -> meta.lore(
+          List.of(
+              Component.text("Invite Only"),
+              Component.text(this.getMembers().size() + 1 + "Members")));
     }
 
     displayItem.setItemMeta(meta);
@@ -204,12 +215,17 @@ public class Party {
     ItemMeta meta = displayItem.getItemMeta();
 
     switch (status) {
-      case PRIVATE -> meta.lore(List.of(Component.text("Private"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
-      case ANYONE_CAN_JOIN -> meta.lore(List.of(Component.text("Anyone Can Join"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
-      case INVITE_ONLY -> meta.lore(List.of(Component.text("Invite Only"),
-          Component.text(this.getMembers().size() + 1 + "Members")));
+      case PRIVATE -> meta.lore(
+          List.of(
+              Component.text("Private"), Component.text(this.getMembers().size() + 1 + "Members")));
+      case ANYONE_CAN_JOIN -> meta.lore(
+          List.of(
+              Component.text("Anyone Can Join"),
+              Component.text(this.getMembers().size() + 1 + "Members")));
+      case INVITE_ONLY -> meta.lore(
+          List.of(
+              Component.text("Invite Only"),
+              Component.text(this.getMembers().size() + 1 + "Members")));
     }
 
     displayItem.setItemMeta(meta);

@@ -14,12 +14,13 @@ public final class AuroraParties extends JavaPlugin {
   private static boolean auroraCombatInstalled = false;
   private static boolean auroraWarpsInstalled = false;
 
-
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
   }
 
-  public static boolean isAuroraWarpsInstalled() { return auroraWarpsInstalled; }
+  public static boolean isAuroraWarpsInstalled() {
+    return auroraWarpsInstalled;
+  }
 
   public static boolean isAuroraKitsInstalled() {
     return AuroraDuels.isAuroraKitsInstalled();
@@ -35,13 +36,13 @@ public final class AuroraParties extends JavaPlugin {
     Config.init();
     Lang.init();
 
-    if (Bukkit.getPluginManager().getPlugin("AuroraCombat") != null &&
-        Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
+    if (Bukkit.getPluginManager().getPlugin("AuroraCombat") != null
+        && Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
       auroraCombatInstalled = true;
     }
 
-    if (Bukkit.getPluginManager().getPlugin("AuroraWarps") != null &&
-        Config.get().getBoolean("optional-plugins.aurorawarps-compatibility")) {
+    if (Bukkit.getPluginManager().getPlugin("AuroraWarps") != null
+        && Config.get().getBoolean("optional-plugins.aurorawarps-compatibility")) {
       auroraWarpsInstalled = true;
     }
 
@@ -50,9 +51,7 @@ public final class AuroraParties extends JavaPlugin {
     EventManager.init();
     PublicPartyGUI.reload();
 
-    getLogger().info(
-        "AuroraParties enabled in " + (System.currentTimeMillis() - startTime) +
-            "ms");
+    getLogger().info("AuroraParties enabled in " + (System.currentTimeMillis() - startTime) + "ms");
   }
 
   @Override

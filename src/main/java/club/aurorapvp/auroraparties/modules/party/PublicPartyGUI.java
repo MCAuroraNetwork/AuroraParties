@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -200,8 +199,9 @@ public class PublicPartyGUI {
 
     final ItemStack clickedItem = event.getCurrentItem();
 
-    if (clickedItem == null || clickedItem.getType().isAir() ||
-        !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
+    if (clickedItem == null
+        || clickedItem.getType().isAir()
+        || !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
       return;
     }
 

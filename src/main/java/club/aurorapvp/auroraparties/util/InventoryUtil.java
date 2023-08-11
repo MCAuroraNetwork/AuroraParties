@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties.util;
 
-import club.aurorapvp.auroraparties.AuroraParties;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

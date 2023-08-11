@@ -78,8 +78,9 @@ public class PendingDuel {
       return;
     }
 
-    if (QueueGUI.isQueueGUI(event.getInventory()) && PendingDuel.hasPendingDuel(p) &&
-        Objects.requireNonNull(Duel.getDuel(p)).getQueue() == null) {
+    if (QueueGUI.isQueueGUI(event.getInventory())
+        && PendingDuel.hasPendingDuel(p)
+        && Objects.requireNonNull(Duel.getDuel(p)).getQueue() == null) {
       QueueGUI.open(p);
     }
 

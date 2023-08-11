@@ -8,14 +8,13 @@ import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
+import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -46,16 +45,25 @@ public class PartyGUI {
     memberSkulls.put(party.getLeader(), leaderSkull);
 
     publicInventory =
-        Bukkit.createInventory(null, 54,
+        Bukkit.createInventory(
+            null,
+            54,
             MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>" + name));
     memberInventory =
-        Bukkit.createInventory(null, 54,
+        Bukkit.createInventory(
+            null,
+            54,
             MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>" + name));
     leaderInventory =
-        Bukkit.createInventory(null, 54,
+        Bukkit.createInventory(
+            null,
+            54,
             MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>" + name));
-    manageTab = Bukkit.createInventory(null, 54,
-        MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>Manage Party"));
+    manageTab =
+        Bukkit.createInventory(
+            null,
+            54,
+            MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>Manage Party"));
 
     publicInventory.setItem(10, leaderSkull);
 
@@ -72,8 +80,7 @@ public class PartyGUI {
       return;
     }
 
-    if (!Objects.requireNonNull(Party.getParty(p)).getGUI()
-        .isGuiInventory(event.getInventory())) {
+    if (!Objects.requireNonNull(Party.getParty(p)).getGUI().isGuiInventory(event.getInventory())) {
       return;
     }
 
@@ -167,7 +174,7 @@ public class PartyGUI {
     memberInventory.setItem(index, memberSkull);
     leaderInventory.setItem(index, memberSkull);
     this.addToManageTab(index, memberSkull.clone());
-    this.teamDuelGUI.addMember(p, memberSkull);
+    this.teamDuelGUI.addMember(memberSkull);
   }
 
   public void removeMember(Player p) {
@@ -274,9 +281,11 @@ public class PartyGUI {
 
   private void setupManageTab(ItemStack leaderSkull) {
     ItemMeta meta = leaderSkull.getItemMeta();
-    meta.lore(List.of(MiniMessage.miniMessage()
-            .deserialize("<gradient:#FFAA00:#FF55FF><italic>This is the party leader"),
-        Component.text("Cannot be removed")));
+    meta.lore(
+        List.of(
+            MiniMessage.miniMessage()
+                .deserialize("<gradient:#FFAA00:#FF55FF><italic>This is the party leader"),
+            Component.text("Cannot be removed")));
     leaderSkull.setItemMeta(meta);
 
     manageTab.setItem(10, leaderSkull);
@@ -313,8 +322,10 @@ public class PartyGUI {
   }
 
   private boolean isGuiInventory(Inventory inventory) {
-    return inventory == publicInventory || inventory == memberInventory ||
-        inventory == leaderInventory || inventory == manageTab;
+    return inventory == publicInventory
+        || inventory == memberInventory
+        || inventory == leaderInventory
+        || inventory == manageTab;
   }
 
   private boolean isManageTab(Inventory inventory) {

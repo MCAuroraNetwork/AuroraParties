@@ -20,9 +20,9 @@ public class PluginCommands extends BaseCommand {
   public void onReload() {
     long startTime = System.currentTimeMillis();
 
-
-    AuroraParties.INSTANCE.getLogger().info(
-        "AuroraDuels reloaded in " + (System.currentTimeMillis() - startTime) + "ms");
+    AuroraParties.INSTANCE
+        .getLogger()
+        .info("AuroraParties reloaded in " + (System.currentTimeMillis() - startTime) + "ms");
   }
 
   @CatchUnknown

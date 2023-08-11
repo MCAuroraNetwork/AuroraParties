@@ -10,7 +10,7 @@ import java.util.TimerTask;
 import org.bukkit.entity.Player;
 
 public class PartyInvite {
-  private final static LinkedList<PartyInvite> PENDING_INVITES = new LinkedList<>();
+  private static final LinkedList<PartyInvite> PENDING_INVITES = new LinkedList<>();
   private final Player partyLeader;
   private final Player invited;
   private final Party party;
@@ -46,18 +46,20 @@ public class PartyInvite {
 
     PartyInvite thisRequest = this;
 
-    new Timer().schedule(new TimerTask() {
-                           @Override
-                           public void run() {
-                             if (PENDING_INVITES.contains(thisRequest)) {
-                               partyLeader.sendMessage(Lang.getComponent("invite-timed-out"));
-                               invited.sendMessage(Lang.getComponent("invite-timed-out"));
-                               PENDING_INVITES.remove(thisRequest);
-                               this.cancel();
-                             }
-                           }
-                         }, Config.get().getInt("invites.timeout-time")
-    );
+    new Timer()
+        .schedule(
+            new TimerTask() {
+              @Override
+              public void run() {
+                if (PENDING_INVITES.contains(thisRequest)) {
+                  partyLeader.sendMessage(Lang.getComponent("invite-timed-out"));
+                  invited.sendMessage(Lang.getComponent("invite-timed-out"));
+                  PENDING_INVITES.remove(thisRequest);
+                  this.cancel();
+                }
+              }
+            },
+            Config.get().getInt("invites.timeout-time"));
   }
 
   public static PartyInvite getInvite(Player p) {

@@ -7,7 +7,7 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 
 public class PartyJoinRequest {
-  private final static LinkedList<PartyJoinRequest> PENDING_REQUESTS = new LinkedList<>();
+  private static final LinkedList<PartyJoinRequest> PENDING_REQUESTS = new LinkedList<>();
   private final Party party;
   private final Player requester;
 

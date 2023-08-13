@@ -31,37 +31,32 @@ public class Lang {
     }
 
     DEFAULTS.put("prefix", "~<gradient:#FFAA00:#FF55FF><bold>AuroraParties ><reset>~");
-    DEFAULTS.put("party-created", "prefix <aqua>Party created!");
-    DEFAULTS.put("invite-sent", "prefix <aqua>Invite sent!");
+    DEFAULTS.put("party-created", "prefix <green>Party created!");
+    DEFAULTS.put("invite-sent", "prefix <green>Invite sent!");
     DEFAULTS.put(
         "invite-received",
         "prefix <aqua>%1$s invited you to join %2$s! Type /party accept to join!");
-    DEFAULTS.put("invite-timed-out", "prefix <aqua>Invite expired");
-    DEFAULTS.put("invite-accepted", "prefix <aqua>Invite accepted!");
-    DEFAULTS.put("invite-denied", "prefix <aqua>Invite denied");
-    DEFAULTS.put("no-invites", "prefix <aqua>No pending invites!");
-    DEFAULTS.put(
-        "already-sent-invite", "prefix <aqua>Invite already sent!");
-    DEFAULTS.put("request-sent", "prefix <aqua>Request sent!");
+    DEFAULTS.put("invite-timed-out", "prefix <red>Invite expired");
+    DEFAULTS.put("invite-accepted", "prefix <green>Invite accepted!");
+    DEFAULTS.put("invite-denied", "prefix <red>Invite denied");
+    DEFAULTS.put("no-invites", "prefix <red>No pending invites!");
+    DEFAULTS.put("already-sent-invite", "prefix <red>Invite already sent!");
+    DEFAULTS.put("request-sent", "prefix <green>Request sent!");
     DEFAULTS.put(
         "request-received",
         "prefix <aqua>%s requested to join your party! Type /party accept to let them join!");
-    DEFAULTS.put("request-accepted", "prefix <aqua>Request accepted!");
-    DEFAULTS.put("request-denied", "prefix <aqua>Request denied");
-    DEFAULTS.put(
-        "request-cancelled",
-        "prefix <aqua>Party join request cancelled");
-    DEFAULTS.put("no-requests", "prefix <aqua>No pending requests!");
-    DEFAULTS.put(
-        "no-permission", "prefix <aqua>You don't have permission to do that!");
-    DEFAULTS.put(
-        "party-disbanded", "prefix <aqua>%1$s disbanded by %2$s");
-    DEFAULTS.put("leave-party", "<aqua><bold>Leave Party");
-    DEFAULTS.put("disband-party", "<aqua><bold>Disband Party");
-    DEFAULTS.put("exit", "<aqua><bold>Exit");
+    DEFAULTS.put("request-accepted", "prefix <green>Request accepted!");
+    DEFAULTS.put("request-denied", "prefix <red>Request denied");
+    DEFAULTS.put("request-cancelled", "prefix <red>Party join request cancelled");
+    DEFAULTS.put("no-requests", "prefix <red>No pending requests!");
+    DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that!");
+    DEFAULTS.put("party-disbanded", "prefix <red>%1$s disbanded by %2$s");
+    DEFAULTS.put("leave-party", "<red><bold>Leave Party");
+    DEFAULTS.put("disband-party", "<red><bold>Disband Party");
+    DEFAULTS.put("exit", "<red><bold>Exit");
     DEFAULTS.put("status", "<aqua><bold>Party Status");
-    DEFAULTS.put("party-name", "<aqua><bold>%s's Party");
-    DEFAULTS.put("parties-gui", "<aqua><bold>All Parties");
+    DEFAULTS.put("party-name", "<gradient:#FFAA00:#FF55FF><bold>%s's Party");
+    DEFAULTS.put("parties-gui", "<gradient:#FFAA00:#FF55FF><bold>All Parties");
     DEFAULTS.put("create-team-duel", "<aqua><bold>Team Duel");
     DEFAULTS.put("start-team-duel", "<aqua><bold>Start Duel");
     DEFAULTS.put("start-ffa-duel", "<aqua><bold>FFA Duel");
@@ -70,24 +65,17 @@ public class Lang {
     DEFAULTS.put("duel-kit-gui", "<aqua><bold>Select Duel Kit");
     DEFAULTS.put("next-page", "<aqua><bold>Next page");
     DEFAULTS.put("previous-page", "<aqua><bold>Previous page");
-    DEFAULTS.put("kit-invalid-name", "prefix <aqua>Invalid kit name!");
-    DEFAULTS.put("unknown-player", "prefix <aqua>Player not found!");
-    DEFAULTS.put(
-        "already-in-party", "prefix <aqua>Player already in this party!");
-    DEFAULTS.put("not-in-party", "prefix <aqua>You're not in a party!");
-    DEFAULTS.put(
-        "not-enough-players",
-        "prefix <aqua>Not enough players in this party!");
-    DEFAULTS.put(
-        "removed-from-party",
-        "prefix <aqua>You have been removed from the party");
-    DEFAULTS.put(
-        "player-removed-from-party",
-        "prefix <aqua>%s removed from the party");
-    DEFAULTS.put("left-party", "prefix <aqua>You have left the party");
-    DEFAULTS.put("player-left-party", "prefix <aqua>%s left the party");
-    DEFAULTS.put("player-joined-party", "prefix <aqua>%s joined the party");
-    DEFAULTS.put("party-full", "prefix <aqua>This party is full!");
+    DEFAULTS.put("kit-invalid-name", "prefix <red>Invalid kit name!");
+    DEFAULTS.put("unknown-player", "prefix <red>Player not found!");
+    DEFAULTS.put("already-in-party", "prefix <red>Player already in this party!");
+    DEFAULTS.put("not-in-party", "prefix <red>You're not in a party!");
+    DEFAULTS.put("not-enough-players", "prefix <red>Not enough players in this party!");
+    DEFAULTS.put("removed-from-party", "prefix <red>You have been removed from the party");
+    DEFAULTS.put("player-removed-from-party", "prefix <red>%s removed from the party");
+    DEFAULTS.put("left-party", "prefix <red>You have left the party");
+    DEFAULTS.put("player-left-party", "prefix <red>%s left the party");
+    DEFAULTS.put("player-joined-party", "prefix <green>%s joined the party");
+    DEFAULTS.put("party-full", "prefix <red>This party is full!");
     // TODO
     DEFAULTS.put("help-command", """
 

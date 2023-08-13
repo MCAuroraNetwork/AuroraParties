@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
@@ -118,9 +119,10 @@ public class PartyGUI {
     Set<Player> players = new HashSet<>(party.getMembers());
     players.add(party.getLeader());
 
-    Location loc = null;
+    Location loc = Duel.getDuelLobby();
 
-    if (AuroraParties.isAuroraWarpsInstalled()) {
+    if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
       if (worldSpawn != null) {
@@ -130,7 +132,9 @@ public class PartyGUI {
       if (loc == null) {
         loc = WorldSpawn.getGlobalSpawn();
       }
-    } else {
+    }
+
+    if (loc == null) {
       loc = Bukkit.getWorlds().get(0).getSpawnLocation();
     }
 

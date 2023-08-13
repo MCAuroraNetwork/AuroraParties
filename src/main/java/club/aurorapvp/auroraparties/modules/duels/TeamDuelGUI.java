@@ -1,6 +1,7 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroracombat.modules.Rating;
+import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
@@ -230,9 +231,10 @@ public class TeamDuelGUI {
       index++;
     }
 
-    Location loc = null;
+    Location loc = Duel.getDuelLobby();
 
-    if (AuroraParties.isAuroraWarpsInstalled()) {
+    if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
       if (worldSpawn != null) {
@@ -242,7 +244,9 @@ public class TeamDuelGUI {
       if (loc == null) {
         loc = WorldSpawn.getGlobalSpawn();
       }
-    } else {
+    }
+
+    if (loc == null) {
       loc = Bukkit.getWorlds().get(0).getSpawnLocation();
     }
 

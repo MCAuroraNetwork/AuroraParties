@@ -31,63 +31,63 @@ public class Lang {
     }
 
     DEFAULTS.put("prefix", "~<gradient:#FFAA00:#FF55FF><bold>AuroraParties ><reset>~");
-    DEFAULTS.put("party-created", "prefix <gradient:#FFAA00:#FF55FF>Party successfully created!");
-    DEFAULTS.put("invite-sent", "prefix <gradient:#FFAA00:#FF55FF>Invite successfully sent!");
+    DEFAULTS.put("party-created", "prefix <aqua>Party created!");
+    DEFAULTS.put("invite-sent", "prefix <aqua>Invite sent!");
     DEFAULTS.put(
         "invite-received",
-        "prefix <gradient:#FFAA00:#FF55FF>You have received a party invite from %1$s to join %2$s! Type /party accept to join!");
-    DEFAULTS.put("invite-timed-out", "prefix <gradient:#FFAA00:#FF55FF>Invite timed out");
-    DEFAULTS.put("invite-accepted", "prefix <gradient:#FFAA00:#FF55FF>Invite accepted!");
-    DEFAULTS.put("invite-denied", "prefix <gradient:#FFAA00:#FF55FF>Invite denied");
-    DEFAULTS.put("no-invites", "prefix <gradient:#FFAA00:#FF55FF>You have no pending invites!");
+        "prefix <aqua>%1$s invited you to join %2$s! Type /party accept to join!");
+    DEFAULTS.put("invite-timed-out", "prefix <aqua>Invite expired");
+    DEFAULTS.put("invite-accepted", "prefix <aqua>Invite accepted!");
+    DEFAULTS.put("invite-denied", "prefix <aqua>Invite denied");
+    DEFAULTS.put("no-invites", "prefix <aqua>No pending invites!");
     DEFAULTS.put(
-        "already-sent-invite", "prefix <gradient:#FFAA00:#FF55FF>You have already sent an invite!");
-    DEFAULTS.put("request-sent", "prefix <gradient:#FFAA00:#FF55FF>Request successfully sent!");
+        "already-sent-invite", "prefix <aqua>Invite already sent!");
+    DEFAULTS.put("request-sent", "prefix <aqua>Request sent!");
     DEFAULTS.put(
         "request-received",
-        "prefix <gradient:#FFAA00:#FF55FF>You have received a party join request from %s to join your party! Type /party accept to let them join!");
-    DEFAULTS.put("request-accepted", "prefix <gradient:#FFAA00:#FF55FF>Request accepted!");
-    DEFAULTS.put("request-denied", "prefix <gradient:#FFAA00:#FF55FF>Request denied");
+        "prefix <aqua>%s requested to join your party! Type /party accept to let them join!");
+    DEFAULTS.put("request-accepted", "prefix <aqua>Request accepted!");
+    DEFAULTS.put("request-denied", "prefix <aqua>Request denied");
     DEFAULTS.put(
         "request-cancelled",
-        "prefix <gradient:#FFAA00:#FF55FF>The party join request has been cancelled");
-    DEFAULTS.put("no-requests", "prefix <gradient:#FFAA00:#FF55FF>You have no pending requests!");
+        "prefix <aqua>Party join request cancelled");
+    DEFAULTS.put("no-requests", "prefix <aqua>No pending requests!");
     DEFAULTS.put(
-        "no-permission", "prefix <gradient:#FFAA00:#FF55FF>You don't have permission to do that!");
+        "no-permission", "prefix <aqua>You don't have permission to do that!");
     DEFAULTS.put(
-        "party-disbanded", "prefix <gradient:#FFAA00:#FF55FF>%1$s has been disbanded by %2$s");
-    DEFAULTS.put("leave-party", "<gradient:#FFAA00:#FF55FF><bold>Leave Party");
-    DEFAULTS.put("disband-party", "<gradient:#FFAA00:#FF55FF><bold>Disband Party");
-    DEFAULTS.put("exit", "<gradient:#FFAA00:#FF55FF><bold>Exit");
-    DEFAULTS.put("status", "<gradient:#FFAA00:#FF55FF><bold>Party Status");
-    DEFAULTS.put("party-name", "<gradient:#FFAA00:#FF55FF><bold>%s's Party");
-    DEFAULTS.put("parties-gui", "<gradient:#FFAA00:#FF55FF><bold>All Parties");
-    DEFAULTS.put("create-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Team Duel");
-    DEFAULTS.put("start-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Start Duel");
-    DEFAULTS.put("start-ffa-duel", "<gradient:#FFAA00:#FF55FF><bold>FFA Duel");
-    DEFAULTS.put("start-random-team-duel", "<gradient:#FFAA00:#FF55FF><bold>Random Team Duel");
-    DEFAULTS.put("manage-party", "<gradient:#FFAA00:#FF55FF><bold>Manage Party");
-    DEFAULTS.put("duel-kit-gui", "<gradient:#FFAA00:#FF55FF><bold>Select Duel Kit");
-    DEFAULTS.put("next-page", "<gradient:#FFAA00:#FF55FF><bold>Next page");
-    DEFAULTS.put("previous-page", "<gradient:#FFAA00:#FF55FF><bold>Previous page");
-    DEFAULTS.put("kit-invalid-name", "prefix <gradient:#FFAA00:#FF55FF>Invalid kit name!");
-    DEFAULTS.put("unknown-player", "prefix <gradient:#FFAA00:#FF55FF>Unable to find player!");
+        "party-disbanded", "prefix <aqua>%1$s disbanded by %2$s");
+    DEFAULTS.put("leave-party", "<aqua><bold>Leave Party");
+    DEFAULTS.put("disband-party", "<aqua><bold>Disband Party");
+    DEFAULTS.put("exit", "<aqua><bold>Exit");
+    DEFAULTS.put("status", "<aqua><bold>Party Status");
+    DEFAULTS.put("party-name", "<aqua><bold>%s's Party");
+    DEFAULTS.put("parties-gui", "<aqua><bold>All Parties");
+    DEFAULTS.put("create-team-duel", "<aqua><bold>Team Duel");
+    DEFAULTS.put("start-team-duel", "<aqua><bold>Start Duel");
+    DEFAULTS.put("start-ffa-duel", "<aqua><bold>FFA Duel");
+    DEFAULTS.put("start-random-team-duel", "<aqua><bold>Random Team Duel");
+    DEFAULTS.put("manage-party", "<aqua><bold>Manage Party");
+    DEFAULTS.put("duel-kit-gui", "<aqua><bold>Select Duel Kit");
+    DEFAULTS.put("next-page", "<aqua><bold>Next page");
+    DEFAULTS.put("previous-page", "<aqua><bold>Previous page");
+    DEFAULTS.put("kit-invalid-name", "prefix <aqua>Invalid kit name!");
+    DEFAULTS.put("unknown-player", "prefix <aqua>Player not found!");
     DEFAULTS.put(
-        "already-in-party", "prefix <gradient:#FFAA00:#FF55FF>Player is already in this party!");
-    DEFAULTS.put("not-in-party", "prefix <gradient:#FFAA00:#FF55FF>You're not in a party!");
+        "already-in-party", "prefix <aqua>Player already in this party!");
+    DEFAULTS.put("not-in-party", "prefix <aqua>You're not in a party!");
     DEFAULTS.put(
         "not-enough-players",
-        "prefix <gradient:#FFAA00:#FF55FF>There's not enough players in this party!");
+        "prefix <aqua>Not enough players in this party!");
     DEFAULTS.put(
         "removed-from-party",
-        "prefix <gradient:#FFAA00:#FF55FF>You have been removed from the party");
+        "prefix <aqua>You have been removed from the party");
     DEFAULTS.put(
         "player-removed-from-party",
-        "prefix <gradient:#FFAA00:#FF55FF>%s has been removed from the party");
-    DEFAULTS.put("left-party", "prefix <gradient:#FFAA00:#FF55FF>You have left the party");
-    DEFAULTS.put("player-left-party", "prefix <gradient:#FFAA00:#FF55FF>%s has left the party");
-    DEFAULTS.put("player-joined-party", "prefix <gradient:#FFAA00:#FF55FF>%s has joined the party");
-    DEFAULTS.put("party-full", "prefix <gradient:#FFAA00:#FF55FF>This party is full!");
+        "prefix <aqua>%s removed from the party");
+    DEFAULTS.put("left-party", "prefix <aqua>You have left the party");
+    DEFAULTS.put("player-left-party", "prefix <aqua>%s left the party");
+    DEFAULTS.put("player-joined-party", "prefix <aqua>%s joined the party");
+    DEFAULTS.put("party-full", "prefix <aqua>This party is full!");
     // TODO
     DEFAULTS.put("help-command", """
 

@@ -69,6 +69,7 @@ public class Lang {
     DEFAULTS.put("unknown-player", "prefix <red>Player not found!");
     DEFAULTS.put("already-in-party", "prefix <red>Player already in this party!");
     DEFAULTS.put("not-in-party", "prefix <red>You're not in a party!");
+    DEFAULTS.put("unknown-party", "prefix <red>Party not found!");
     DEFAULTS.put("not-enough-players", "prefix <red>Not enough players in this party!");
     DEFAULTS.put("removed-from-party", "prefix <red>You have been removed from the party");
     DEFAULTS.put("player-removed-from-party", "prefix <red>%s removed from the party");

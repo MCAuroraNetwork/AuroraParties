@@ -2,7 +2,7 @@ package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
-import club.aurorapvp.auroraduels.modules.duels.PartyDuel;
+import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
@@ -10,9 +10,11 @@ import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
+import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -141,7 +143,32 @@ public class PartyGUI {
     if (slot == 49) {
       party.getGUI().openTeamDuelGUI(p);
     } else if (slot == 47) {
-      new PendingDuel(p, new PartyDuel(players, loc, false));
+      int size = players.size();
+      Player extra = null;
+
+      if (size % 2 == 1) {
+        Iterator<Player> iterator = players.iterator();
+        for (int i = 0; i < size - 1; i++) {
+          iterator.next();
+        }
+        extra = iterator.next();
+        iterator.remove();
+        size--;
+      }
+
+      Iterable<List<Player>> partitions = Iterables.partition(players, (size / 2));
+
+      Player[] temp = new HashSet<>(partitions.iterator().next()).toArray(new Player[0]);
+
+      if (extra != null) {
+        temp = Arrays.copyOf(temp, temp.length + 1);
+        temp[temp.length - 1] = extra;
+      }
+
+      Player[] team1 = temp;
+      Player[] team2 = new HashSet<>(Iterables.getLast(partitions)).toArray(new Player[0]);
+
+      new PendingDuel(p, new TeamDuel(team1, team2, loc, false));
     } else if (slot == 51) {
       new PendingDuel(p, new FFADuel(players, loc, false));
     }

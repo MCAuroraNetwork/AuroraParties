@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class PublicPartyGUI {
+public class PartyIndexGUI {
   private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
   private static Inventory[] inventories;
   private static int pages;
@@ -113,7 +113,7 @@ public class PublicPartyGUI {
     }
 
     PLAYER_PAGES.put(p, currentPage);
-    PublicPartyGUI.open(p);
+    PartyIndexGUI.open(p);
   }
 
   public static void previousPage(Player p) {
@@ -126,7 +126,7 @@ public class PublicPartyGUI {
     }
 
     PLAYER_PAGES.put(p, currentPage);
-    PublicPartyGUI.open(p);
+    PartyIndexGUI.open(p);
   }
 
   public static boolean isGuiInventory(Inventory inventory) {
@@ -183,17 +183,17 @@ public class PublicPartyGUI {
   public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
-    if (!PublicPartyGUI.isGuiInventory(event.getInventory())) {
+    if (!PartyIndexGUI.isGuiInventory(event.getInventory())) {
       return;
     }
 
     event.setCancelled(true);
 
     if (event.getSlot() == 45) {
-      PublicPartyGUI.previousPage(p);
+      PartyIndexGUI.previousPage(p);
       return;
     } else if (event.getSlot() == 53) {
-      PublicPartyGUI.nextPage(p);
+      PartyIndexGUI.nextPage(p);
       return;
     }
 
@@ -222,6 +222,6 @@ public class PublicPartyGUI {
   public static void open(Player p) {
     reload();
 
-    p.openInventory(PublicPartyGUI.getCurrentPage(p));
+    p.openInventory(PartyIndexGUI.getCurrentPage(p));
   }
 }

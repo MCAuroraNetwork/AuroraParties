@@ -5,7 +5,7 @@ import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.events.EventManager;
-import club.aurorapvp.auroraparties.modules.party.PublicPartyGUI;
+import club.aurorapvp.auroraparties.modules.party.PartyIndexGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -49,7 +49,7 @@ public final class AuroraParties extends JavaPlugin {
     // Initialize classes
     CommandManager.init();
     EventManager.init();
-    PublicPartyGUI.reload();
+    PartyIndexGUI.reload();
 
     getLogger().info("AuroraParties enabled in " + (System.currentTimeMillis() - startTime) + "ms");
   }

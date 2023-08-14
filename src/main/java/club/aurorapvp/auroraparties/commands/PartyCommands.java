@@ -3,9 +3,9 @@ package club.aurorapvp.auroraparties.commands;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
+import club.aurorapvp.auroraparties.modules.party.PartyIndexGUI;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
-import club.aurorapvp.auroraparties.modules.party.PublicPartyGUI;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -25,7 +25,7 @@ public class PartyCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onOpenGUI(Player p) {
     if (!Party.inParty(p)) {
-      PublicPartyGUI.open(p);
+      PartyIndexGUI.open(p);
       return;
     }
 
@@ -36,7 +36,12 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(p);
 
     assert party != null;
-    party.getGUI().open(p);
+
+    if (party.isLeader(p)) {
+      p.openInventory(party.getLeaderGUI().getInventory());
+    } else {
+      p.openInventory(party.getMemberGUI().getInventory());
+    }
   }
 
   @Subcommand("create")

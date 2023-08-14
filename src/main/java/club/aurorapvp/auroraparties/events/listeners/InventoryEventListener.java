@@ -1,9 +1,9 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
-import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
-import club.aurorapvp.auroraparties.modules.party.PartyGUI;
-import club.aurorapvp.auroraparties.modules.party.PublicPartyGUI;
+import club.aurorapvp.auroraparties.modules.party.Party;
+import club.aurorapvp.auroraparties.modules.party.guis.TeamDuelGUI;
+import club.aurorapvp.auroraparties.modules.party.PartyIndexGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 public class InventoryEventListener implements Listener {
   @EventHandler
   public void onInventoryClicked(InventoryClickEvent event) {
-    PartyGUI.onInventoryClick(event);
+    Party.onInventoryClick(event);
     TeamDuelGUI.onInventoryClick(event);
     PendingDuel.onInventoryClick(event);
-    PublicPartyGUI.onInventoryClick(event);
+    PartyIndexGUI.onInventoryClick(event);
   }
 
   @EventHandler

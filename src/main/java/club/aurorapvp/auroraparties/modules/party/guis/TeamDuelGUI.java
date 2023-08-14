@@ -1,10 +1,11 @@
-package club.aurorapvp.auroraparties.modules.duels;
+package club.aurorapvp.auroraparties.modules.party.guis;
 
 import club.aurorapvp.auroracombat.modules.Rating;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
@@ -22,10 +23,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
-public class TeamDuelGUI {
+public class TeamDuelGUI implements InventoryHolder {
   private final Inventory inventory;
   private final Party party;
   private int index = 0;
@@ -50,7 +53,7 @@ public class TeamDuelGUI {
 
     inventory =
         Bukkit.createInventory(
-            null,
+            this,
             54,
             MiniMessage.miniMessage()
                 .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + "New Team Duel"));
@@ -109,7 +112,7 @@ public class TeamDuelGUI {
 
     Inventory topInventory = event.getView().getTopInventory();
 
-    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
+    if (!(topInventory.getHolder() instanceof TeamDuelGUI teamDuelGUI)) {
       return;
     }
 
@@ -127,10 +130,15 @@ public class TeamDuelGUI {
     } else if (clickedItem.getType() == Material.GREEN_WOOL) {
       event.setCancelled(true);
 
-      party.getGUI().getTeamDuelGUI().startTeamDuel();
+      teamDuelGUI.startTeamDuel();
       return;
     } else if (clickedItem.getType() == Material.RED_WOOL) {
-      party.getGUI().open(p);
+      if (party.isLeader(p)) {
+        p.openInventory(party.getLeaderGUI().getInventory());
+      } else {
+        p.openInventory(party.getMemberGUI().getInventory());
+      }
+
       event.setCancelled(true);
       return;
     }
@@ -161,7 +169,7 @@ public class TeamDuelGUI {
       return;
     }
 
-    if (!(party.getGUI().getTeamDuelGUI().getInventory() == topInventory)) {
+    if (!(topInventory.getHolder() instanceof TeamDuelGUI)) {
       return;
     }
 
@@ -176,7 +184,8 @@ public class TeamDuelGUI {
     }
   }
 
-  public Inventory getInventory() {
+  @Override
+  public @NotNull Inventory getInventory() {
     return inventory;
   }
 
@@ -208,7 +217,7 @@ public class TeamDuelGUI {
       }
     }
 
-    if (leftItemNames.size() == 0 || rightItemNames.size() == 0) {
+    if (leftItemNames.isEmpty() || rightItemNames.isEmpty()) {
       party.getLeader().sendMessage(Lang.getComponent("not-enough-players"));
       party.getLeader().closeInventory();
       return;
@@ -287,14 +296,11 @@ public class TeamDuelGUI {
 
     int slot = InventoryUtil.findSkullSlot(memberSkull, inventory);
 
-    // TODO same as PartyGUI#removeMember
     inventory.clear(slot);
 
     ItemStack lastSkull = InventoryUtil.getLastSkull(inventory);
 
-    if (!lastSkull.isSimilar(inventory.getItem(index))) {
-      InventoryUtil.moveItem(inventory, lastSkull, slot);
-    }
+    InventoryUtil.moveItem(inventory, lastSkull, slot);
   }
 
   private void decrementIndex() {

@@ -10,6 +10,7 @@ import club.aurorapvp.auroraparties.modules.party.guis.PartyGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyLeaderGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyManageGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyMemberGUI;
+import club.aurorapvp.auroraparties.modules.party.guis.PartySelectGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PublicPartyGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -27,7 +28,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -148,7 +148,7 @@ public class Party {
 
     switch (status) {
       case PRIVATE -> {
-        PartyIndexGUI.removeParty(this);
+        PartySelectGUI.removeParty(this);
 
         meta.lore(
             List.of(
@@ -165,10 +165,10 @@ public class Party {
 
         displayItem.setItemMeta(meta);
 
-        PartyIndexGUI.addParty(this);
+        PartySelectGUI.addParty(this);
       }
       case INVITE_ONLY -> {
-        PartyIndexGUI.removeParty(this);
+        PartySelectGUI.removeParty(this);
 
         meta.lore(
             List.of(
@@ -177,7 +177,7 @@ public class Party {
 
         displayItem.setItemMeta(meta);
 
-        PartyIndexGUI.addParty(this);
+        PartySelectGUI.addParty(this);
       }
     }
   }
@@ -212,15 +212,6 @@ public class Party {
 
   public boolean isLeader(Player p) {
     return partyLeader == p;
-  }
-
-  public boolean isMember(Player p) {
-    for (Player member : this.getMembers()) {
-      if (member == p) {
-        return true;
-      }
-    }
-    return false;
   }
 
   public boolean contains(Player p) {

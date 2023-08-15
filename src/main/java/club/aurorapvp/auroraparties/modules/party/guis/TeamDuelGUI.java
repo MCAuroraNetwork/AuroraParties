@@ -9,7 +9,6 @@ import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +18,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -26,9 +26,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public class TeamDuelGUI implements InventoryHolder {
+  private static final NamespacedKey key = new NamespacedKey(AuroraParties.INSTANCE, "ui-item");
   private final Inventory inventory;
   private final Party party;
   private int index = 0;
@@ -144,19 +147,28 @@ public class TeamDuelGUI implements InventoryHolder {
     }
 
     ItemStack cursorItem = event.getCursor();
+
+    if (cursorItem == null) {
+      return;
+    }
+
+    PersistentDataContainer container = cursorItem.getItemMeta().getPersistentDataContainer();
+
+    if (!Boolean.TRUE.equals(container.get(key, PersistentDataType.BOOLEAN))) {
+      return;
+    }
+
     int rawSlot = event.getRawSlot();
 
     int topInventorySize = topInventory.getSize();
 
-    if (cursorItem != null && rawSlot >= topInventorySize) {
+    if (rawSlot >= topInventorySize) {
       event.setCancelled(true);
     }
   }
 
   public static void itemDropped(PlayerDropItemEvent event) {
-    ItemStack droppedItem = event.getItemDrop().getItemStack();
     Player p = event.getPlayer();
-    Inventory topInventory = p.getOpenInventory().getTopInventory();
 
     if (!Party.inParty(p)) {
       return;
@@ -169,19 +181,23 @@ public class TeamDuelGUI implements InventoryHolder {
       return;
     }
 
+    Inventory topInventory = p.getOpenInventory().getTopInventory();
+
     if (!(topInventory.getHolder() instanceof TeamDuelGUI)) {
+      return;
+    }
+
+    ItemStack item = event.getItemDrop().getItemStack();
+
+    PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+
+    if (!Boolean.TRUE.equals(container.get(key, PersistentDataType.BOOLEAN))) {
       return;
     }
 
     event.getItemDrop().remove();
 
-    HashMap<Integer, ItemStack> leftoverItems = topInventory.addItem(droppedItem);
-
-    if (!leftoverItems.isEmpty()) {
-      for (ItemStack leftoverItem : leftoverItems.values()) {
-        p.getWorld().dropItem(p.getLocation(), leftoverItem);
-      }
-    }
+    topInventory.addItem(item);
   }
 
   @Override
@@ -276,6 +292,8 @@ public class TeamDuelGUI implements InventoryHolder {
   public void addMember(ItemStack memberSkull) {
     incrementIndex();
 
+    ItemStack clone = memberSkull.clone();
+
     if (AuroraParties.isAuroraCombatInstalled()) {
       ItemMeta meta = memberSkull.getItemMeta();
       meta.lore(
@@ -285,7 +303,10 @@ public class TeamDuelGUI implements InventoryHolder {
                       + Rating.getRating("default_duels")
                           .getScore(party.getLeader())
                           .getPoints())));
-      memberSkull.setItemMeta(meta);
+
+      meta.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
+      
+      clone.setItemMeta(meta);
     }
 
     inventory.setItem(index, memberSkull);

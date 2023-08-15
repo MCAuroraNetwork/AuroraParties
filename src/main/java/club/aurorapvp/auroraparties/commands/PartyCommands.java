@@ -3,7 +3,7 @@ package club.aurorapvp.auroraparties.commands;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
-import club.aurorapvp.auroraparties.modules.party.PartyIndexGUI;
+import club.aurorapvp.auroraparties.modules.party.guis.PartySelectGUI;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import co.aikar.commands.BaseCommand;
@@ -25,7 +25,7 @@ public class PartyCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onOpenGUI(Player p) {
     if (!Party.inParty(p)) {
-      PartyIndexGUI.open(p);
+      PartySelectGUI.open(p);
       return;
     }
 

@@ -64,9 +64,12 @@ public class PartyManageGUI extends PartyGUI {
   public void addMember(int index, ItemStack memberSkull) {
     ItemMeta meta = memberSkull.getItemMeta();
     meta.lore(List.of(Component.text("Click to kick from party")));
-    memberSkull.setItemMeta(meta);
 
-    inventory.setItem(index, memberSkull);
+    ItemStack clone = memberSkull.clone();
+
+    clone.setItemMeta(meta);
+
+    inventory.setItem(index, clone);
   }
 
   @Override

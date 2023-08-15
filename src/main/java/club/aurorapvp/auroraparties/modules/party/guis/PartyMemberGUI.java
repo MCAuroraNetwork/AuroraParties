@@ -3,9 +3,13 @@ package club.aurorapvp.auroraparties.modules.party.guis;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
+import java.util.Objects;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,6 +46,23 @@ public class PartyMemberGUI extends PartyGUI {
     inventory.clear(slot);
 
     InventoryUtil.moveItem(inventory, lastSkull, slot);
+  }
+
+  @Override
+  @EventHandler
+  public void onInventoryClick(InventoryClickEvent event) {
+    if (!Objects.equals(event.getInventory().getHolder(), this)) {
+      return;
+    }
+
+    event.setCancelled(true);
+
+    Player p = (Player) event.getWhoClicked();
+
+    if (event.getSlot() == 53) {
+      party.leave(p);
+      p.closeInventory();
+    }
   }
 
   @Override

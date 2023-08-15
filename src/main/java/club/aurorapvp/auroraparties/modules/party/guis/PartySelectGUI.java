@@ -12,33 +12,36 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 public class PartySelectGUI {
   private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
-  private static Inventory[] inventories;
-  private static int pages;
+  private static Page[] pages;
+  private static int index;
 
   public static Inventory getCurrentPage(Player p) {
     int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
-    return inventories[currentPage];
+    return pages[currentPage].getInventory();
   }
 
   public static void addParty(Party party) {
-    Inventory lastPage = inventories[pages - 1];
+    Page lastPage = pages[index - 1];
 
-    if (lastPage.getContents()[44] != null) {
-      createPage(party);
+    if (lastPage.getInventory().getContents()[44] != null) {
+      pages[index] = new Page(party);
+      index++;
     } else {
-      lastPage.addItem(party.getDisplayItem());
+      lastPage.getInventory().addItem(party.getDisplayItem());
     }
   }
 
   public static void removeParty(Party party) {
-    for (Inventory inventory : inventories) {
-      for (ItemStack itemStack : inventory.getContents()) {
+    for (Page page : pages) {
+      for (ItemStack itemStack : page.getInventory().getContents()) {
 
         if (itemStack == null || !(itemStack.getItemMeta() instanceof SkullMeta meta)) {
           continue;
@@ -48,67 +51,16 @@ public class PartySelectGUI {
         SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 
         if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-          inventory.remove(itemStack);
+          page.getInventory().remove(itemStack);
         }
       }
     }
   }
 
-  public static void createPage(Party party) {
-    Inventory inventory = Bukkit.createInventory(null, 54, Lang.getComponent("GUIName"));
-    inventory.addItem(party.getDisplayItem());
-
-    ItemMeta meta;
-
-    ItemStack nextPage = new ItemStack(Material.PAPER);
-    meta = nextPage.getItemMeta();
-    meta.displayName(Lang.getComponent("next-page"));
-    nextPage.setItemMeta(meta);
-
-    ItemStack previousPage = new ItemStack(Material.PAPER);
-    meta = previousPage.getItemMeta();
-    meta.displayName(Lang.getComponent("previous-page"));
-    previousPage.setItemMeta(meta);
-
-    inventory.setItem(45, nextPage);
-    inventory.setItem(53, nextPage);
-
-    inventories[pages - 1] = inventory;
-    pages++;
-  }
-
-  public static void createPage(Party[] parties) {
-    Inventory inventory = Bukkit.createInventory(null, 54, Lang.getComponent("parties-gui"));
-
-    for (Party party : parties) {
-      if (party.getStatus() != Party.PartyStatus.PRIVATE) {
-        inventory.addItem(party.getDisplayItem());
-      }
-    }
-
-    ItemMeta meta;
-
-    ItemStack nextPage = new ItemStack(Material.PAPER);
-    meta = nextPage.getItemMeta();
-    meta.displayName(Lang.getComponent("next-page"));
-    nextPage.setItemMeta(meta);
-
-    ItemStack previousPage = new ItemStack(Material.PAPER);
-    meta = previousPage.getItemMeta();
-    meta.displayName(Lang.getComponent("previous-page"));
-    previousPage.setItemMeta(meta);
-
-    inventory.setItem(45, previousPage);
-    inventory.setItem(53, nextPage);
-
-    inventories[pages] = inventory;
-    pages++;
-  }
-
   public static void nextPage(Player p) {
     int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
 
-    if (currentPage < pages - 1) {
+    if (currentPage < index - 1) {
       currentPage++;
     } else {
       currentPage = 0;
@@ -124,36 +76,27 @@ public class PartySelectGUI {
     if (currentPage > 1) {
       currentPage--;
     } else {
-      currentPage = pages - 1;
+      currentPage = index - 1;
     }
 
     PLAYER_PAGES.put(p, currentPage);
     PartySelectGUI.open(p);
   }
 
-  public static boolean isGuiInventory(Inventory inventory) {
-    for (Inventory guiInventory : inventories) {
-      if (inventory.equals(guiInventory)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   public static void reload() {
     Set<Party> partySet = Party.getParties();
 
-    pages = 0;
+    index = 0;
 
     for (int i = 0; i < partySet.size(); i++) {
       if (i % 44 == 0 && i != 0) {
-        pages++;
+        index++;
       }
     }
 
-    inventories = new Inventory[pages + 1];
+    pages = new Page[index + 1];
 
-    int currentPages = pages + 1;
+    int currentPages = index + 1;
 
     for (int i = 0; i < currentPages; i++) {
       int numParties = partySet.size() - i * 45;
@@ -178,14 +121,15 @@ public class PartySelectGUI {
         counter++;
       }
 
-      createPage(parties);
+      pages[index] = new Page(parties);
+      index++;
     }
   }
 
   public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
-    if (!PartySelectGUI.isGuiInventory(event.getInventory())) {
+    if (!(event.getInventory() instanceof Page)) {
       return;
     }
 
@@ -201,9 +145,7 @@ public class PartySelectGUI {
 
     final ItemStack clickedItem = event.getCurrentItem();
 
-    if (clickedItem == null
-        || clickedItem.getType().isAir()
-        || !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
+    if (clickedItem == null || !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
       return;
     }
 
@@ -212,9 +154,9 @@ public class PartySelectGUI {
       SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 
       if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-        if (party.getStatus() == Party.PartyStatus.ANYONE_CAN_JOIN) {
+        if (party.getStatus() == Party.Status.ANYONE_CAN_JOIN) {
           party.addMember(p);
-        } else if (party.getStatus() == Party.PartyStatus.INVITE_ONLY) {
+        } else if (party.getStatus() == Party.Status.INVITE_ONLY) {
           new PartyJoinRequest(p, party);
         }
       }
@@ -225,5 +167,59 @@ public class PartySelectGUI {
     reload();
 
     p.openInventory(PartySelectGUI.getCurrentPage(p));
+  }
+
+  public static class Page implements InventoryHolder {
+    private final Inventory inventory;
+
+    private Page(Party[] parties) {
+      inventory = Bukkit.createInventory(null, 54, Lang.getComponent("parties-gui"));
+
+      for (Party party : parties) {
+        if (party.getStatus() != Party.Status.PRIVATE) {
+          inventory.addItem(party.getDisplayItem());
+        }
+      }
+
+      ItemMeta meta;
+
+      ItemStack nextPage = new ItemStack(Material.PAPER);
+      meta = nextPage.getItemMeta();
+      meta.displayName(Lang.getComponent("next-page"));
+      nextPage.setItemMeta(meta);
+
+      ItemStack previousPage = new ItemStack(Material.PAPER);
+      meta = previousPage.getItemMeta();
+      meta.displayName(Lang.getComponent("previous-page"));
+      previousPage.setItemMeta(meta);
+
+      inventory.setItem(45, previousPage);
+      inventory.setItem(53, nextPage);
+    }
+
+    private Page(Party party) {
+      inventory = Bukkit.createInventory(null, 54, Lang.getComponent("GUIName"));
+      inventory.addItem(party.getDisplayItem());
+
+      ItemMeta meta;
+
+      ItemStack nextPage = new ItemStack(Material.PAPER);
+      meta = nextPage.getItemMeta();
+      meta.displayName(Lang.getComponent("next-page"));
+      nextPage.setItemMeta(meta);
+
+      ItemStack previousPage = new ItemStack(Material.PAPER);
+      meta = previousPage.getItemMeta();
+      meta.displayName(Lang.getComponent("previous-page"));
+      previousPage.setItemMeta(meta);
+
+      inventory.setItem(45, nextPage);
+      inventory.setItem(53, nextPage);
+    }
+
+    @Override
+    public @NotNull Inventory getInventory() {
+      return inventory;
+    }
   }
 }

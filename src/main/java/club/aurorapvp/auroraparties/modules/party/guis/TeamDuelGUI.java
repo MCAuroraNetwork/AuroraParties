@@ -11,6 +11,7 @@ import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -20,6 +21,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -30,7 +33,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-public class TeamDuelGUI implements InventoryHolder {
+public class TeamDuelGUI implements InventoryHolder, Listener {
   private static final NamespacedKey key = new NamespacedKey(AuroraParties.INSTANCE, "ui-item");
   private final Inventory inventory;
   private final Party party;
@@ -97,25 +100,13 @@ public class TeamDuelGUI implements InventoryHolder {
     }
 
     inventory.setItem(0, leaderSkull);
+
+    Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
   }
 
-  public static void onInventoryClick(InventoryClickEvent event) {
-    Player p = (Player) event.getWhoClicked();
-
-    if (!Party.inParty(p)) {
-      return;
-    }
-
-    Party party = Party.getParty(p);
-
-    assert party != null;
-    if (!party.isLeader(p)) {
-      return;
-    }
-
-    Inventory topInventory = event.getView().getTopInventory();
-
-    if (!(topInventory.getHolder() instanceof TeamDuelGUI teamDuelGUI)) {
+  @EventHandler
+  public void onInventoryClick(InventoryClickEvent event) {
+    if (!Objects.equals(event.getInventory().getHolder(), this)) {
       return;
     }
 
@@ -130,17 +121,17 @@ public class TeamDuelGUI implements InventoryHolder {
         || clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
       event.setCancelled(true);
       return;
-    } else if (clickedItem.getType() == Material.GREEN_WOOL) {
+    }
+
+    if (event.getSlot() == 49) {
       event.setCancelled(true);
 
-      teamDuelGUI.startTeamDuel();
+      this.startTeamDuel();
       return;
-    } else if (clickedItem.getType() == Material.RED_WOOL) {
-      if (party.isLeader(p)) {
-        p.openInventory(party.getLeaderGUI().getInventory());
-      } else {
-        p.openInventory(party.getMemberGUI().getInventory());
-      }
+    } else if (event.getSlot() == 40) {
+      Player p = (Player) event.getWhoClicked();
+
+      p.openInventory(party.getLeaderGUI().getInventory());
 
       event.setCancelled(true);
       return;
@@ -160,9 +151,7 @@ public class TeamDuelGUI implements InventoryHolder {
 
     int rawSlot = event.getRawSlot();
 
-    int topInventorySize = topInventory.getSize();
-
-    if (rawSlot >= topInventorySize) {
+    if (rawSlot >= 54) {
       event.setCancelled(true);
     }
   }
@@ -305,7 +294,7 @@ public class TeamDuelGUI implements InventoryHolder {
                           .getPoints())));
 
       meta.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
-      
+
       clone.setItemMeta(meta);
     }
 

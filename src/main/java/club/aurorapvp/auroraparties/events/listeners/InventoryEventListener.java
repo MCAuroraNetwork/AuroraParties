@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 public class InventoryEventListener implements Listener {
   @EventHandler
   public void onInventoryClicked(InventoryClickEvent event) {
-    TeamDuelGUI.onInventoryClick(event);
     PendingDuel.onInventoryClick(event);
     PartySelectGUI.onInventoryClick(event);
   }

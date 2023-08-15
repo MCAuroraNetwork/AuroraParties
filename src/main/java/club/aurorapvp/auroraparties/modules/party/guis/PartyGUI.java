@@ -3,6 +3,7 @@ package club.aurorapvp.auroraparties.modules.party.guis;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
@@ -20,5 +21,6 @@ public abstract class PartyGUI implements InventoryHolder, Listener {
 
   public abstract void removeMember(int slot, ItemStack lastSkull);
 
+  @EventHandler
   public abstract void onInventoryClick(InventoryClickEvent event);
 }

@@ -99,19 +99,19 @@ public class PartyManageGUI extends PartyGUI {
     if (event.getSlot() == 49) {
       switch (party.getStatus()) {
         case PRIVATE -> {
-          party.setStatus(Party.PartyStatus.ANYONE_CAN_JOIN);
+          party.setStatus(Party.Status.ANYONE_CAN_JOIN);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Anyone can Join")));
           clickedItem.setItemMeta(meta);
         }
         case ANYONE_CAN_JOIN -> {
-          party.setStatus(Party.PartyStatus.INVITE_ONLY);
+          party.setStatus(Party.Status.INVITE_ONLY);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Invite Only")));
           clickedItem.setItemMeta(meta);
         }
         case INVITE_ONLY -> {
-          party.setStatus(Party.PartyStatus.PRIVATE);
+          party.setStatus(Party.Status.PRIVATE);
           ItemMeta meta = clickedItem.getItemMeta();
           meta.lore(List.of(Component.text("Private")));
           clickedItem.setItemMeta(meta);

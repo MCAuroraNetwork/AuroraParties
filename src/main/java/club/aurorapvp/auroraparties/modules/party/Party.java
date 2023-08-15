@@ -1,12 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
-import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraduels.modules.duels.FFADuel;
-import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
-import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
-import club.aurorapvp.auroraparties.modules.party.guis.PartyGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyLeaderGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyManageGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.PartyMemberGUI;
@@ -15,19 +9,12 @@ import club.aurorapvp.auroraparties.modules.party.guis.PublicPartyGUI;
 import club.aurorapvp.auroraparties.modules.party.guis.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
-import club.aurorapvp.aurorawarps.modules.WorldSpawn;
-import com.google.common.collect.Iterables;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -43,7 +30,7 @@ public class Party {
   private final PublicPartyGUI publicPartyGUI;
   private final TeamDuelGUI teamDuelGUI;
   private int index = 10;
-  private PartyStatus status;
+  private Status status;
   private final ItemStack displayItem;
 
   public Party(Player partyLeader) {
@@ -66,7 +53,7 @@ public class Party {
 
     this.displayItem = displayItem;
 
-    this.setStatus(PartyStatus.INVITE_ONLY);
+    this.setStatus(Status.INVITE_ONLY);
 
     partyLeader.sendMessage(Lang.getComponent("party-created"));
 
@@ -137,11 +124,11 @@ public class Party {
     return partyMembers;
   }
 
-  public PartyStatus getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(PartyStatus status) {
+  public void setStatus(Status status) {
     this.status = status;
 
     ItemMeta meta = displayItem.getItemMeta();
@@ -320,7 +307,6 @@ public class Party {
     int slot = InventoryUtil.findSkullSlot(memberSkull, publicPartyGUI.getInventory());
     ItemStack lastSkull = InventoryUtil.getLastSkull(publicPartyGUI.getInventory());
 
-
     partyLeaderGUI.removeMember(slot, lastSkull);
     partyManageGUI.removeMember(slot, lastSkull);
     partyMemberGUI.removeMember(slot, lastSkull);
@@ -339,7 +325,7 @@ public class Party {
     PARTIES.remove(this);
   }
 
-  public enum PartyStatus {
+  public enum Status {
     ANYONE_CAN_JOIN,
     INVITE_ONLY,
     PRIVATE

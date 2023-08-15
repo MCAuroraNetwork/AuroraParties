@@ -1,6 +1,8 @@
-package club.aurorapvp.auroraparties.modules.party;
+package club.aurorapvp.auroraparties.modules.party.guis;
 
 import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.modules.party.Party;
+import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class PartyIndexGUI {
+public class PartySelectGUI {
   private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
   private static Inventory[] inventories;
   private static int pages;
@@ -113,7 +115,7 @@ public class PartyIndexGUI {
     }
 
     PLAYER_PAGES.put(p, currentPage);
-    PartyIndexGUI.open(p);
+    PartySelectGUI.open(p);
   }
 
   public static void previousPage(Player p) {
@@ -126,7 +128,7 @@ public class PartyIndexGUI {
     }
 
     PLAYER_PAGES.put(p, currentPage);
-    PartyIndexGUI.open(p);
+    PartySelectGUI.open(p);
   }
 
   public static boolean isGuiInventory(Inventory inventory) {
@@ -183,17 +185,17 @@ public class PartyIndexGUI {
   public static void onInventoryClick(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
-    if (!PartyIndexGUI.isGuiInventory(event.getInventory())) {
+    if (!PartySelectGUI.isGuiInventory(event.getInventory())) {
       return;
     }
 
     event.setCancelled(true);
 
     if (event.getSlot() == 45) {
-      PartyIndexGUI.previousPage(p);
+      PartySelectGUI.previousPage(p);
       return;
     } else if (event.getSlot() == 53) {
-      PartyIndexGUI.nextPage(p);
+      PartySelectGUI.nextPage(p);
       return;
     }
 
@@ -222,6 +224,6 @@ public class PartyIndexGUI {
   public static void open(Player p) {
     reload();
 
-    p.openInventory(PartyIndexGUI.getCurrentPage(p));
+    p.openInventory(PartySelectGUI.getCurrentPage(p));
   }
 }

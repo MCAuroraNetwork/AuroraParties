@@ -1,21 +1,19 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
+import club.aurorapvp.auroraduels.AuroraDuels;
+import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
+import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.DuelKitGui;
-import club.aurorapvp.auroraduels.modules.queues.Queue;
-import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
-import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
 
-public class PendingDuel {
+import club.aurorapvp.auroraparties.AuroraParties;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class PendingDuel implements Listener {
   protected static final Set<PendingDuel> PENDING_DUELS = new HashSet<>();
   private final Player partyLeader;
   private final Duel duel;
@@ -24,93 +22,36 @@ public class PendingDuel {
     this.partyLeader = partyLeader;
     this.duel = duel;
 
-    QueueGUI.open(partyLeader);
+    AuroraDuels.getQueueGUI().open(partyLeader);
 
     PENDING_DUELS.add(this);
   }
 
-  public static void onInventoryClick(InventoryClickEvent event) {
-    Player p = (Player) event.getWhoClicked();
-
-    if (!QueueGUI.isQueueGUI(event.getClickedInventory()) || !PendingDuel.hasPendingDuel(p)) {
+  @EventHandler
+  public void onQueueSelect(QueueSelectEvent event) {
+    if (partyLeader != event.getPlayer()) {
       return;
     }
 
-    final ItemStack clickedItem = event.getCurrentItem();
+    duel.setQueue(event.getQueue());
 
-    if (clickedItem == null || clickedItem.getType().isAir()) {
+    if (AuroraParties.isAuroraKitsInstalled()) {
+      DuelKitGui.getGui(event.getPlayer()).open();
       return;
     }
 
-    event.setCancelled(true);
-
-    if (event.getCurrentItem().getItemMeta().displayName() == null) {
-      p.sendMessage(Lang.getComponent("queue-not-found"));
-    } else {
-      String itemName =
-          PlainTextComponentSerializer.plainText().serialize(event.getCurrentItem().displayName());
-      String queueName = itemName.substring(1, itemName.length() - 1);
-
-      Queue queue = Queue.getQueue(queueName.toLowerCase());
-
-      if (queue == null) {
-        p.sendMessage(Lang.getComponent("queue-not-found"));
-        return;
-      }
-
-      Objects.requireNonNull(Duel.getDuel(p)).setQueue(queue);
-
-      if (AuroraParties.isAuroraKitsInstalled()) {
-        new DuelKitGui(p);
-        return;
-      }
-
-      Objects.requireNonNull(PendingDuel.getPendingDuel(p)).enterQueue();
-    }
+    this.enterQueue();
   }
 
-  public static void onInventoryClose(InventoryCloseEvent event) {
-    if (!(event.getPlayer() instanceof Player p)) {
+  @EventHandler
+  public void onKitSelect(DuelKitSelectEvent event) {
+    if (partyLeader != event.getPlayer()) {
       return;
     }
 
-    if (!PendingDuel.hasPendingDuel(p)) {
-      return;
-    }
+    duel.setKit(event.getKit());
 
-    if (QueueGUI.isQueueGUI(event.getInventory())
-        && PendingDuel.hasPendingDuel(p)
-        && Objects.requireNonNull(Duel.getDuel(p)).getQueue() == null) {
-      QueueGUI.open(p);
-    }
-
-    DuelKitGui kitGui = DuelKitGui.getGui(p);
-
-    if (kitGui == null) {
-      return;
-    }
-
-    if (kitGui.isGuiInventory(event.getInventory())) {
-      Objects.requireNonNull(PendingDuel.getPendingDuel(p)).enterQueue();
-    }
-  }
-
-  public static PendingDuel getPendingDuel(Player p) {
-    for (PendingDuel pendingDuel : PENDING_DUELS) {
-      if (pendingDuel.partyLeader == p) {
-        return pendingDuel;
-      }
-    }
-    return null;
-  }
-
-  public static boolean hasPendingDuel(Player p) {
-    for (PendingDuel pendingDuel : PENDING_DUELS) {
-      if (pendingDuel.partyLeader == p) {
-        return true;
-      }
-    }
-    return false;
+    this.enterQueue();
   }
 
   public void enterQueue() {

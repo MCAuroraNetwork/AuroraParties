@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties;
 
-import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
@@ -10,20 +9,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AuroraParties extends JavaPlugin {
-  public static JavaPlugin INSTANCE;
-  private static boolean auroraCombatInstalled = false;
+  public static JavaPlugin INSTANCE;private static boolean auroraCombatInstalled = false;
   private static boolean auroraWarpsInstalled = false;
+  private static boolean auroraKitsInstalled = false;
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
   }
-
   public static boolean isAuroraWarpsInstalled() {
     return auroraWarpsInstalled;
   }
-
   public static boolean isAuroraKitsInstalled() {
-    return AuroraDuels.isAuroraKitsInstalled();
+    return auroraKitsInstalled;
   }
 
   @Override
@@ -44,6 +41,11 @@ public final class AuroraParties extends JavaPlugin {
     if (Bukkit.getPluginManager().getPlugin("AuroraWarps") != null
         && Config.get().getBoolean("optional-plugins.aurorawarps-compatibility")) {
       auroraWarpsInstalled = true;
+    }
+
+    if ((Bukkit.getPluginManager().getPlugin("AuroraKits") != null)
+        && Config.get().getBoolean("optional-plugins.aurorakits-compatibility")) {
+      auroraKitsInstalled = true;
     }
 
     // Initialize classes

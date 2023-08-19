@@ -22,6 +22,7 @@ public class Config {
     DEFAULTS.put("optional-plugins.aurorakits-compatibility", true);
     DEFAULTS.put("optional-plugins.aurorawarps-compatibility", true);
     DEFAULTS.put("invites.timeout-time", 600000);
+    DEFAULTS.put("join-requests.timeout-time", 600000);
 
     for (String path : DEFAULTS.keySet()) {
       if (!get().isSet(path) || get().getString(path) == null) {

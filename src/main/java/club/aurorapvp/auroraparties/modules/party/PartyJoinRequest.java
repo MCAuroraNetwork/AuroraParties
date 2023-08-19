@@ -25,14 +25,14 @@ public class PartyJoinRequest {
                       @Override
                       public void run() {
                         if (PENDING_REQUESTS.contains(thisRequest)) {
-                          requester.sendMessage(Lang.getComponent("invite-timed-out"));
-                          party.getLeader().sendMessage(Lang.getComponent("invite-timed-out"));
+                          requester.sendMessage(Lang.getComponent("request-timed-out"));
+                          party.getLeader().sendMessage(Lang.getComponent("request-timed-out"));
                           PENDING_REQUESTS.remove(thisRequest);
                           this.cancel();
                         }
                       }
                     },
-                    Config.get().getInt("invites.timeout-time"));
+                    Config.get().getInt("join-requests.timeout-time"));
     
     PENDING_REQUESTS.add(this);
   }

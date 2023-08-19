@@ -45,6 +45,7 @@ public class Lang {
     DEFAULTS.put(
         "request-received",
         "prefix <aqua>%s requested to join your party! Type /party accept to let them join!");
+    DEFAULTS.put("request-timed-out", "prefix <red>Join request expired");
     DEFAULTS.put("request-accepted", "prefix <green>Request accepted!");
     DEFAULTS.put("request-denied", "prefix <red>Request denied");
     DEFAULTS.put("request-cancelled", "prefix <red>Party join request cancelled");

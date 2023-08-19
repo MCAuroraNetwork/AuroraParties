@@ -75,7 +75,7 @@ public class PartyCommands extends BaseCommand {
 
   @Subcommand("invite")
   @CommandCompletion("@players")
-  @Syntax("[player]")
+  @Syntax("<player>")
   @Description("Invites a player to a party")
   @SuppressWarnings("unused")
   public void onInvite(Player player, String playerName) {

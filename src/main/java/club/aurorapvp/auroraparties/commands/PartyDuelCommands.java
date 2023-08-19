@@ -21,8 +21,8 @@ import org.bukkit.entity.Player;
 @CommandAlias("partyduel")
 public class PartyDuelCommands extends BaseCommand {
   @Default
-  @Syntax("[player]")
   @CommandCompletion("@players")
+  @Syntax("<player>")
   @Description("Sends a duel request to another party")
   @SuppressWarnings("unused")
   public void onNewRequest(Player player, String playerName) {

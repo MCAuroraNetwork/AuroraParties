@@ -21,11 +21,11 @@ public class PartyJoinRequest {
     PENDING_REQUESTS.add(this);
   }
 
-  public static Set<PartyJoinRequest> getRequests(Player p) {
+  public static Set<PartyJoinRequest> getRequests(Player player) {
     Set<PartyJoinRequest> matchingRequests = new HashSet<>();
 
     for (PartyJoinRequest request : PENDING_REQUESTS) {
-      if (request.requester == p) {
+      if (request.requester == player) {
         matchingRequests.add(request);
       }
     }

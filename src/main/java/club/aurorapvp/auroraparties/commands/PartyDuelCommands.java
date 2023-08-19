@@ -25,25 +25,25 @@ public class PartyDuelCommands extends BaseCommand {
   @CommandCompletion("@players")
   @Description("Sends a duel request to another party")
   @SuppressWarnings("unused")
-  public void onNewRequest(Player p, String playerName) {
-    if (!Party.inParty(p)) {
-      p.sendMessage(Lang.getComponent("not-in-party"));
+  public void onNewRequest(Player player, String playerName) {
+    if (!Party.inParty(player)) {
+      player.sendMessage(Lang.getComponent("not-in-party"));
       return;
     }
 
-    Party party = Party.getParty(p);
+    Party party = Party.getParty(player);
 
     Player requested = Bukkit.getPlayer(playerName);
 
     if (requested == null) {
-      p.sendMessage(Lang.getComponent("unknown-opponent"));
+      player.sendMessage(Lang.getComponent("unknown-opponent"));
       return;
     }
 
     Party opponentParty = Party.getParty(requested);
 
     if (opponentParty == null) {
-      p.sendMessage(Lang.getComponent("unknown-party"));
+      player.sendMessage(Lang.getComponent("unknown-party"));
       return;
     }
 
@@ -61,7 +61,7 @@ public class PartyDuelCommands extends BaseCommand {
     Location loc = Duel.getDuelLobby();
 
     if (loc == null) {
-      WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(p.getWorld());
+      WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(player.getWorld());
 
       if (worldSpawn != null) {
         loc = worldSpawn.getSpawn();
@@ -76,6 +76,6 @@ public class PartyDuelCommands extends BaseCommand {
       }
     }
 
-    new Request(p, new TeamDuel(team1, team2, loc, false));
+    new Request(player, new TeamDuel(team1, team2, loc, false));
   }
 }

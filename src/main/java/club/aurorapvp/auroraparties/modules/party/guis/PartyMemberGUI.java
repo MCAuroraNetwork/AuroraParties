@@ -57,11 +57,11 @@ public class PartyMemberGUI extends PartyGUI {
 
     event.setCancelled(true);
 
-    Player p = (Player) event.getWhoClicked();
+    Player player = (Player) event.getWhoClicked();
 
     if (event.getSlot() == 53) {
-      party.leave(p);
-      p.closeInventory();
+      party.leave(player);
+      player.closeInventory();
     }
   }
 

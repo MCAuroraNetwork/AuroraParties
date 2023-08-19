@@ -62,9 +62,9 @@ public class PartyInvite {
             Config.get().getInt("invites.timeout-time"));
   }
 
-  public static PartyInvite getInvite(Player p) {
+  public static PartyInvite getInvite(Player player) {
     for (PartyInvite invite : PENDING_INVITES) {
-      if (invite.partyLeader == p || invite.invited == p) {
+      if (invite.partyLeader == player || invite.invited == player) {
         return invite;
       }
     }
@@ -80,11 +80,11 @@ public class PartyInvite {
     return null;
   }
 
-  public static Set<PartyInvite> getInvites(Player p) {
+  public static Set<PartyInvite> getInvites(Player player) {
     Set<PartyInvite> matchingRequests = new HashSet<>();
 
     for (PartyInvite invite : PENDING_INVITES) {
-      if (invite.partyLeader == p && invite.invited == p) {
+      if (invite.partyLeader == player && invite.invited == player) {
         matchingRequests.add(invite);
       }
     }
@@ -101,9 +101,9 @@ public class PartyInvite {
     return false;
   }
 
-  public static boolean hasPendingInvite(Player p) {
+  public static boolean hasPendingInvite(Player player) {
     for (PartyInvite invite : PENDING_INVITES) {
-      if (invite.partyLeader == p || invite.invited == p) {
+      if (invite.partyLeader == player || invite.invited == player) {
         return true;
       }
     }

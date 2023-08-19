@@ -126,14 +126,14 @@ public class PartyManageGUI extends PartyGUI {
     String playerName =
         PlainTextComponentSerializer.plainText().serialize(clickedItem.displayName());
 
-    Player p = Bukkit.getPlayer(playerName.substring(1, playerName.length() - 1));
+    Player player = Bukkit.getPlayer(playerName.substring(1, playerName.length() - 1));
 
-    if (party.isLeader(p)) {
+    if (party.isLeader(player)) {
       return;
     }
 
-    assert p != null;
-    party.kick(p);
+    assert player != null;
+    party.kick(player);
   }
 
   @Override

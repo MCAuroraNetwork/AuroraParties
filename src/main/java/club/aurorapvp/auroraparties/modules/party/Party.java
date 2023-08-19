@@ -60,14 +60,14 @@ public class Party {
     PARTIES.add(this);
   }
 
-  public static boolean inParty(Player p) {
+  public static boolean inParty(Player player) {
     for (Party party : PARTIES) {
-      if (party.getLeader() == p) {
+      if (party.getLeader() == player) {
         return true;
       }
 
       for (Player member : party.getMembers()) {
-        if (member == p) {
+        if (member == player) {
           return true;
         }
       }
@@ -79,17 +79,17 @@ public class Party {
     return PARTIES;
   }
 
-  public static Party getParty(Player p) {
+  public static Party getParty(Player player) {
     for (Party party : PARTIES) {
-      if (party.contains(p)) {
+      if (party.contains(player)) {
         return party;
       }
     }
     return null;
   }
 
-  public ItemStack getSkull(Player p) {
-    return memberSkulls.get(p);
+  public ItemStack getSkull(Player player) {
+    return memberSkulls.get(player);
   }
 
   public PartyLeaderGUI getLeaderGUI() {
@@ -197,33 +197,33 @@ public class Party {
     return displayItem;
   }
 
-  public boolean isLeader(Player p) {
-    return partyLeader == p;
+  public boolean isLeader(Player player) {
+    return partyLeader == player;
   }
 
-  public boolean contains(Player p) {
-    if (this.getLeader() == p) {
+  public boolean contains(Player player) {
+    if (this.getLeader() == player) {
       return true;
     }
 
     for (Player member : this.getMembers()) {
-      if (member == p) {
+      if (member == player) {
         return true;
       }
     }
     return false;
   }
 
-  public void addMember(Player p) {
-    p.sendMessage(Lang.formatComponent("player-joined-party", p.getName()));
+  public void addMember(Player player) {
+    player.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
 
-    for (Player player : this.getMembers()) {
-      player.sendMessage(Lang.formatComponent("player-joined-party", p.getName()));
+    for (Player partyMember : this.getMembers()) {
+      partyMember.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
     }
 
-    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", p.getName()));
+    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
 
-    partyMembers.add(p);
+    partyMembers.add(player);
 
     ItemMeta meta = displayItem.getItemMeta();
 
@@ -244,9 +244,9 @@ public class Party {
     displayItem.setItemMeta(meta);
 
     incrementIndex();
-    ItemStack memberSkull = PlayerHeadUtil.getPlayerSkull(p);
+    ItemStack memberSkull = PlayerHeadUtil.getPlayerSkull(player);
 
-    memberSkulls.put(p, memberSkull);
+    memberSkulls.put(player, memberSkull);
 
     partyLeaderGUI.addMember(index, memberSkull);
     partyManageGUI.addMember(index, memberSkull);
@@ -255,27 +255,27 @@ public class Party {
     teamDuelGUI.addMember(memberSkull);
   }
 
-  public void leave(Player p) {
-    this.removeMember(p);
+  public void leave(Player player) {
+    this.removeMember(player);
 
-    p.sendMessage(Lang.getComponent("left-party"));
+    player.sendMessage(Lang.getComponent("left-party"));
 
-    partyLeader.sendMessage(Lang.formatComponent("player-left-party", p.getName()));
+    partyLeader.sendMessage(Lang.formatComponent("player-left-party", player.getName()));
 
-    for (Player player : this.getMembers()) {
-      player.sendMessage(Lang.formatComponent("player-left-party", p.getName()));
+    for (Player partyMember : this.getMembers()) {
+      partyMember.sendMessage(Lang.formatComponent("player-left-party", player.getName()));
     }
   }
 
-  public void kick(Player p) {
-    this.removeMember(p);
+  public void kick(Player player) {
+    this.removeMember(player);
 
-    p.sendMessage(Lang.getComponent("removed-from-party"));
+    player.sendMessage(Lang.getComponent("removed-from-party"));
 
-    partyLeader.sendMessage(Lang.formatComponent("player-removed-from-party", p.getName()));
+    partyLeader.sendMessage(Lang.formatComponent("player-removed-from-party", player.getName()));
 
-    for (Player player : this.getMembers()) {
-      player.sendMessage(Lang.formatComponent("player-removed-from-party", p.getName()));
+    for (Player partyMember : this.getMembers()) {
+      partyMember.sendMessage(Lang.formatComponent("player-removed-from-party", player.getName()));
     }
 
     ItemMeta meta = displayItem.getItemMeta();
@@ -297,12 +297,12 @@ public class Party {
     displayItem.setItemMeta(meta);
   }
 
-  public void removeMember(Player p) {
-    partyMembers.remove(p);
+  public void removeMember(Player player) {
+    partyMembers.remove(player);
 
     decrementIndex();
 
-    ItemStack memberSkull = memberSkulls.get(p);
+    ItemStack memberSkull = memberSkulls.get(player);
 
     int slot = InventoryUtil.findSkullSlot(memberSkull, publicPartyGUI.getInventory());
     ItemStack lastSkull = InventoryUtil.getLastSkull(publicPartyGUI.getInventory());
@@ -318,8 +318,8 @@ public class Party {
     partyLeader.sendMessage(
         Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
 
-    for (Player p : partyMembers) {
-      p.sendMessage(Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
+    for (Player player : partyMembers) {
+      player.sendMessage(Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
     }
 
     PARTIES.remove(this);

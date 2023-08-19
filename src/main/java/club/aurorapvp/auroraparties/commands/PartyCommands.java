@@ -23,50 +23,50 @@ public class PartyCommands extends BaseCommand {
   @Default
   @Description("Opens the party menu")
   @SuppressWarnings("unused")
-  public void onOpenGUI(Player p) {
-    if (!Party.inParty(p)) {
-      PartySelectGUI.open(p);
+  public void onOpenGUI(Player player) {
+    if (!Party.inParty(player)) {
+      PartySelectGUI.open(player);
       return;
     }
 
-    if (Duel.inDuel(p)) {
+    if (Duel.inDuel(player)) {
       return;
     }
 
-    Party party = Party.getParty(p);
+    Party party = Party.getParty(player);
 
     assert party != null;
 
-    if (party.isLeader(p)) {
-      p.openInventory(party.getLeaderGUI().getInventory());
+    if (party.isLeader(player)) {
+      player.openInventory(party.getLeaderGUI().getInventory());
     } else {
-      p.openInventory(party.getMemberGUI().getInventory());
+      player.openInventory(party.getMemberGUI().getInventory());
     }
   }
 
   @Subcommand("create")
   @Description("Creates a new party")
   @SuppressWarnings("unused")
-  public void onCreate(Player p) {
-    if (Party.inParty(p)) {
-      p.sendMessage(Lang.getComponent("already-in-party"));
+  public void onCreate(Player player) {
+    if (Party.inParty(player)) {
+      player.sendMessage(Lang.getComponent("already-in-party"));
       return;
     }
 
-    new Party(p);
+    new Party(player);
   }
 
   @Subcommand("disband")
   @Description("Disbands the current party")
   @SuppressWarnings("unused")
-  public void onDisband(Player p) {
-    Party party = Party.getParty(p);
+  public void onDisband(Player player) {
+    Party party = Party.getParty(player);
 
     if (party == null) {
-      p.sendMessage(Lang.getComponent("not-in-party"));
+      player.sendMessage(Lang.getComponent("not-in-party"));
       return;
-    } else if (!party.isLeader(p)) {
-      p.sendMessage(Lang.getComponent("no-permission"));
+    } else if (!party.isLeader(player)) {
+      player.sendMessage(Lang.getComponent("no-permission"));
       return;
     }
 
@@ -78,25 +78,25 @@ public class PartyCommands extends BaseCommand {
   @Syntax("[player]")
   @Description("Invites a player to a party")
   @SuppressWarnings("unused")
-  public void onInvite(Player p, String player) {
-    Party party = Party.getParty(p);
+  public void onInvite(Player player, String playerName) {
+    Party party = Party.getParty(player);
 
     if (party == null) {
-      p.sendMessage(Lang.getComponent("not-in-party"));
+      player.sendMessage(Lang.getComponent("not-in-party"));
       return;
     }
 
-    Player invited = Bukkit.getPlayer(player);
+    Player invited = Bukkit.getPlayer(playerName);
 
     if (invited == null) {
-      p.sendMessage(Lang.getComponent("unknown-player"));
+      player.sendMessage(Lang.getComponent("unknown-player"));
       return;
     } else if (party.contains(invited)) {
-      p.sendMessage(Lang.getComponent("already-in-party"));
+      player.sendMessage(Lang.getComponent("already-in-party"));
       return;
     }
 
-    new PartyInvite(p, invited);
+    new PartyInvite(player, invited);
   }
 
   @Subcommand("accept")
@@ -104,8 +104,8 @@ public class PartyCommands extends BaseCommand {
   @CommandCompletion("@players")
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
-  public void onAccept(Player p, @Optional String inviterName) {
-    if (PartyInvite.hasPendingInvite(p)) {
+  public void onAccept(Player player, @Optional String inviterName) {
+    if (PartyInvite.hasPendingInvite(player)) {
       Player inviter = null;
 
       if (inviterName != null) {
@@ -113,9 +113,9 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (inviter == null) {
-        PartyInvite invite = PartyInvite.getInvite(p);
+        PartyInvite invite = PartyInvite.getInvite(player);
 
-        for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
+        for (PartyInvite pendingInvite : PartyInvite.getInvites(player)) {
           if (pendingInvite != invite) {
             pendingInvite.deny();
           }
@@ -126,14 +126,14 @@ public class PartyCommands extends BaseCommand {
         return;
       }
 
-      if (!PartyInvite.hasPendingInvite(inviter, p)) {
-        p.sendMessage(Lang.getComponent("no-invites"));
+      if (!PartyInvite.hasPendingInvite(inviter, player)) {
+        player.sendMessage(Lang.getComponent("no-invites"));
         return;
       }
 
-      PartyInvite invite = PartyInvite.getInvite(inviter, p);
+      PartyInvite invite = PartyInvite.getInvite(inviter, player);
 
-      for (PartyInvite pendingInvite : PartyInvite.getInvites(p)) {
+      for (PartyInvite pendingInvite : PartyInvite.getInvites(player)) {
         if (pendingInvite != invite) {
           pendingInvite.deny();
         }
@@ -141,12 +141,12 @@ public class PartyCommands extends BaseCommand {
 
       assert invite != null;
       invite.accept();
-    } else if (PartyJoinRequest.hasRequest(Party.getParty(p))) {
-      Party party = Party.getParty(p);
+    } else if (PartyJoinRequest.hasRequest(Party.getParty(player))) {
+      Party party = Party.getParty(player);
 
       assert party != null;
-      if (!party.isLeader(p)) {
-        p.sendMessage(Lang.getComponent("no-permission"));
+      if (!party.isLeader(player)) {
+        player.sendMessage(Lang.getComponent("no-permission"));
         return;
       }
 
@@ -162,7 +162,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyJoinRequest.hasRequest(party, requester)) {
-        p.sendMessage(Lang.getComponent("no-requests"));
+        player.sendMessage(Lang.getComponent("no-requests"));
         return;
       }
 
@@ -175,8 +175,8 @@ public class PartyCommands extends BaseCommand {
   @CommandCompletion("@players")
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
-  public void onDeny(Player p, @Optional String inviterName) {
-    if (PartyInvite.hasPendingInvite(p)) {
+  public void onDeny(Player player, @Optional String inviterName) {
+    if (PartyInvite.hasPendingInvite(player)) {
       Player inviter = null;
 
       if (inviterName != null) {
@@ -184,22 +184,22 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (inviter == null) {
-        Objects.requireNonNull(PartyInvite.getInvite(p)).deny();
+        Objects.requireNonNull(PartyInvite.getInvite(player)).deny();
         return;
       }
 
-      if (!PartyInvite.hasPendingInvite(inviter, p)) {
-        p.sendMessage(Lang.getComponent("no-invites"));
+      if (!PartyInvite.hasPendingInvite(inviter, player)) {
+        player.sendMessage(Lang.getComponent("no-invites"));
         return;
       }
 
-      Objects.requireNonNull(PartyInvite.getInvite(inviter, p)).deny();
-    } else if (PartyJoinRequest.hasRequest(Party.getParty(p))) {
-      Party party = Party.getParty(p);
+      Objects.requireNonNull(PartyInvite.getInvite(inviter, player)).deny();
+    } else if (PartyJoinRequest.hasRequest(Party.getParty(player))) {
+      Party party = Party.getParty(player);
 
       assert party != null;
-      if (!party.isLeader(p)) {
-        p.sendMessage(Lang.getComponent("no-permission"));
+      if (!party.isLeader(player)) {
+        player.sendMessage(Lang.getComponent("no-permission"));
         return;
       }
 
@@ -215,7 +215,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyJoinRequest.hasRequest(party, requester)) {
-        p.sendMessage(Lang.getComponent("no-requests"));
+        player.sendMessage(Lang.getComponent("no-requests"));
         return;
       }
 

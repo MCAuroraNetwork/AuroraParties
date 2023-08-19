@@ -29,7 +29,7 @@ public class PluginCommands extends BaseCommand {
   @Subcommand("help")
   @Description("Lists all available plugin commands and their function")
   @SuppressWarnings("unused")
-  public void onHelp(Player p) {
-    p.sendMessage(Lang.getComponent("help-command"));
+  public void onHelp(Player player) {
+    player.sendMessage(Lang.getComponent("help-command"));
   }
 }

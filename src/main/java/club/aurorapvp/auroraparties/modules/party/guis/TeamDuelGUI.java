@@ -129,9 +129,9 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       this.startTeamDuel();
       return;
     } else if (event.getSlot() == 40) {
-      Player p = (Player) event.getWhoClicked();
+      Player player = (Player) event.getWhoClicked();
 
-      p.openInventory(party.getLeaderGUI().getInventory());
+      player.openInventory(party.getLeaderGUI().getInventory());
 
       event.setCancelled(true);
       return;

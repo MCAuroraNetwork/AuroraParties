@@ -104,7 +104,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
     event.setCancelled(true);
 
-    Player p = (Player) event.getWhoClicked();
+    Player player = (Player) event.getWhoClicked();
 
     Set<Player> players = null;
     Location loc = null;
@@ -112,18 +112,18 @@ public class PartyLeaderGUI extends PartyGUI {
     switch (event.getSlot()) {
       case 53 -> {
         party.disband();
-        p.closeInventory();
+        player.closeInventory();
       }
 
-      case 45 -> p.openInventory(party.getManageGUI().getInventory());
+      case 45 -> player.openInventory(party.getManageGUI().getInventory());
 
       case 49 -> {
         if (party.getMembers().isEmpty()) {
-          p.sendMessage(Lang.getComponent("not-enough-players"));
+          player.sendMessage(Lang.getComponent("not-enough-players"));
           return;
         }
 
-        p.openInventory(party.getTeamDuelGUI().getInventory());
+        player.openInventory(party.getTeamDuelGUI().getInventory());
       }
       case 47, 51 -> {
         if (party.getMembers().isEmpty()) {
@@ -181,11 +181,11 @@ public class PartyLeaderGUI extends PartyGUI {
       Player[] team1 = temp;
       Player[] team2 = new HashSet<>(Iterables.getLast(partitions)).toArray(new Player[0]);
 
-      new PendingDuel(p, new TeamDuel(team1, team2, loc, false));
+      new PendingDuel(player, new TeamDuel(team1, team2, loc, false));
     }
 
     if (event.getSlot() == 51) {
-      new PendingDuel(p, new FFADuel(players, loc, false));
+      new PendingDuel(player, new FFADuel(players, loc, false));
     }
   }
 

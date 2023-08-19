@@ -23,8 +23,8 @@ public class PartySelectGUI {
   private static Page[] pages;
   private static int index;
 
-  public static Inventory getCurrentPage(Player p) {
-    int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
+  public static Inventory getCurrentPage(Player player) {
+    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
     return pages[currentPage].getInventory();
   }
 
@@ -57,8 +57,8 @@ public class PartySelectGUI {
     }
   }
 
-  public static void nextPage(Player p) {
-    int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
+  public static void nextPage(Player player) {
+    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
 
     if (currentPage < index - 1) {
       currentPage++;
@@ -66,12 +66,12 @@ public class PartySelectGUI {
       currentPage = 0;
     }
 
-    PLAYER_PAGES.put(p, currentPage);
-    PartySelectGUI.open(p);
+    PLAYER_PAGES.put(player, currentPage);
+    PartySelectGUI.open(player);
   }
 
-  public static void previousPage(Player p) {
-    int currentPage = PLAYER_PAGES.getOrDefault(p, 0);
+  public static void previousPage(Player player) {
+    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
 
     if (currentPage > 1) {
       currentPage--;
@@ -79,8 +79,8 @@ public class PartySelectGUI {
       currentPage = index - 1;
     }
 
-    PLAYER_PAGES.put(p, currentPage);
-    PartySelectGUI.open(p);
+    PLAYER_PAGES.put(player, currentPage);
+    PartySelectGUI.open(player);
   }
 
   public static void reload() {
@@ -127,7 +127,7 @@ public class PartySelectGUI {
   }
 
   public static void onInventoryClicked(InventoryClickEvent event) {
-    Player p = (Player) event.getWhoClicked();
+    Player player = (Player) event.getWhoClicked();
 
     if (!(event.getInventory() instanceof Page)) {
       return;
@@ -136,10 +136,10 @@ public class PartySelectGUI {
     event.setCancelled(true);
 
     if (event.getSlot() == 45) {
-      PartySelectGUI.previousPage(p);
+      PartySelectGUI.previousPage(player);
       return;
     } else if (event.getSlot() == 53) {
-      PartySelectGUI.nextPage(p);
+      PartySelectGUI.nextPage(player);
       return;
     }
 
@@ -155,18 +155,18 @@ public class PartySelectGUI {
 
       if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
         if (party.getStatus() == Party.Status.ANYONE_CAN_JOIN) {
-          party.addMember(p);
+          party.addMember(player);
         } else if (party.getStatus() == Party.Status.INVITE_ONLY) {
-          new PartyJoinRequest(p, party);
+          new PartyJoinRequest(player, party);
         }
       }
     }
   }
 
-  public static void open(Player p) {
+  public static void open(Player player) {
     reload();
 
-    p.openInventory(PartySelectGUI.getCurrentPage(p));
+    player.openInventory(PartySelectGUI.getCurrentPage(player));
   }
 
   public static class Page implements InventoryHolder {

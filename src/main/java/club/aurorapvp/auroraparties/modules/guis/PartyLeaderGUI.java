@@ -2,6 +2,7 @@ package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
+import club.aurorapvp.auroraduels.modules.duels.RandomTeamDuel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
@@ -156,32 +157,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
     if (event.getSlot() == 47) {
       assert players != null;
-      int size = players.size();
-      Player extra = null;
-
-      if (size % 2 == 1) {
-        Iterator<Player> iterator = players.iterator();
-        for (int i = 0; i < size - 1; i++) {
-          iterator.next();
-        }
-        extra = iterator.next();
-        iterator.remove();
-        size--;
-      }
-
-      Iterable<List<Player>> partitions = Iterables.partition(players, (size / 2));
-
-      Player[] temp = new HashSet<>(partitions.iterator().next()).toArray(new Player[0]);
-
-      if (extra != null) {
-        temp = Arrays.copyOf(temp, temp.length + 1);
-        temp[temp.length - 1] = extra;
-      }
-
-      Player[] team1 = temp;
-      Player[] team2 = new HashSet<>(Iterables.getLast(partitions)).toArray(new Player[0]);
-
-      new PendingDuel(player, new TeamDuel(team1, team2, loc, false));
+      new PendingDuel(player, new RandomTeamDuel(players, loc, false));
     }
 
     if (event.getSlot() == 51) {

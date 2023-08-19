@@ -4,7 +4,7 @@ import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.events.EventManager;
-import club.aurorapvp.auroraparties.modules.party.guis.PartySelectGUI;
+import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

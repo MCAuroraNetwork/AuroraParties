@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.modules.party.guis;
+package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;

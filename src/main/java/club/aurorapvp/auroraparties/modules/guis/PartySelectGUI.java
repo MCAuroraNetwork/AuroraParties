@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.modules.party.guis;
+package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;

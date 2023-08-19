@@ -1,9 +1,7 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Lang;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 import org.bukkit.entity.Player;
 
 public class PartyJoinRequest {

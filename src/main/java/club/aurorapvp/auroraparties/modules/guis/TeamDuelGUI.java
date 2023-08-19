@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.modules.party.guis;
+package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroracombat.modules.Rating;
 import club.aurorapvp.auroraduels.modules.duels.Duel;

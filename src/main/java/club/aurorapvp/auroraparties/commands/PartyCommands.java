@@ -3,7 +3,7 @@ package club.aurorapvp.auroraparties.commands;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
-import club.aurorapvp.auroraparties.modules.party.guis.PartySelectGUI;
+import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import co.aikar.commands.BaseCommand;

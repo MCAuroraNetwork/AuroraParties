@@ -1,7 +1,7 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
-import club.aurorapvp.auroraparties.modules.party.guis.PartySelectGUI;
-import club.aurorapvp.auroraparties.modules.party.guis.TeamDuelGUI;
+import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
+import club.aurorapvp.auroraparties.modules.guis.TeamDuelGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

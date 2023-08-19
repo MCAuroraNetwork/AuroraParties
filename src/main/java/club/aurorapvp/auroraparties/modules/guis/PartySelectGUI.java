@@ -3,10 +3,9 @@ package club.aurorapvp.auroraparties.modules.guis;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,19 +21,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class PartySelectGUI implements Listener {
   private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
-  private static Page[] pages;
+  private static List<Page> pages = new ArrayList<>();
   private static int index;
 
   public static Inventory getCurrentPage(Player player) {
     int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
-    return pages[currentPage].getInventory();
+    return pages.get(currentPage).getInventory();
   }
 
   public static void addParty(Party party) {
-    Page lastPage = pages[index - 1];
+    Page lastPage = pages.get(index - 1);
 
     if (lastPage.getInventory().getContents()[44] != null) {
-      pages[index] = new Page(party);
+      pages.add(new Page(party));
       index++;
     } else {
       lastPage.getInventory().addItem(party.getDisplayItem());
@@ -96,8 +95,6 @@ public class PartySelectGUI implements Listener {
       }
     }
 
-    pages = new Page[index + 1];
-
     int currentPages = index + 1;
 
     for (int i = 0; i < currentPages; i++) {
@@ -123,7 +120,7 @@ public class PartySelectGUI implements Listener {
         counter++;
       }
 
-      pages[index] = new Page(parties);
+      pages.add(new Page(parties));
       index++;
     }
   }

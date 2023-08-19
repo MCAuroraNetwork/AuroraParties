@@ -4,10 +4,10 @@ import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraduels.modules.duels.DuelKitGui;
 import java.util.HashSet;
 import java.util.Set;
 
+import club.aurorapvp.auroraduels.modules.duels.DuelKitGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +36,7 @@ public class PendingDuel implements Listener {
     duel.setQueue(event.getQueue());
 
     if (AuroraParties.isAuroraKitsInstalled()) {
-      DuelKitGui.getGui(event.getPlayer()).open();
+      DuelKitGUI.getGUI(event.getPlayer()).open();
       return;
     }
 

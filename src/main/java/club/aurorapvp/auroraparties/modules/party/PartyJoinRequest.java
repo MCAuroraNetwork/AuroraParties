@@ -13,7 +13,6 @@ public class PartyJoinRequest {
   public PartyJoinRequest(Player requester, Party party) {
     this.party = party;
     this.requester = requester;
-
     requester.sendMessage(Lang.getComponent("request-sent"));
     party.getLeader().sendMessage(Lang.formatComponent("request-received", requester.getName()));
 

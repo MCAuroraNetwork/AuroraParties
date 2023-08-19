@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import java.util.*;
 import org.bukkit.entity.Player;
@@ -16,6 +17,23 @@ public class PartyJoinRequest {
     requester.sendMessage(Lang.getComponent("request-sent"));
     party.getLeader().sendMessage(Lang.formatComponent("request-received", requester.getName()));
 
+    PartyJoinRequest thisRequest = this;
+
+    new Timer()
+            .schedule(
+                    new TimerTask() {
+                      @Override
+                      public void run() {
+                        if (PENDING_REQUESTS.contains(thisRequest)) {
+                          requester.sendMessage(Lang.getComponent("invite-timed-out"));
+                          party.getLeader().sendMessage(Lang.getComponent("invite-timed-out"));
+                          PENDING_REQUESTS.remove(thisRequest);
+                          this.cancel();
+                        }
+                      }
+                    },
+                    Config.get().getInt("invites.timeout-time"));
+    
     PENDING_REQUESTS.add(this);
   }
 

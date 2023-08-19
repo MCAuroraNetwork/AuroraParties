@@ -52,7 +52,6 @@ public final class AuroraParties extends JavaPlugin {
     // Initialize classes
     CommandManager.init();
     EventManager.init();
-    PartySelectGUI.reload();
 
     getLogger().info("AuroraParties enabled in " + (System.currentTimeMillis() - startTime) + "ms");
   }

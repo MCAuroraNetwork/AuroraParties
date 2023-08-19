@@ -105,7 +105,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
   }
 
   @EventHandler
-  public void onInventoryClick(InventoryClickEvent event) {
+  public void onInventoryClicked(InventoryClickEvent event) {
     if (!Objects.equals(event.getInventory().getHolder(), this)) {
       return;
     }
@@ -156,21 +156,9 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     }
   }
 
-  public static void itemDropped(PlayerDropItemEvent event) {
-    Player p = event.getPlayer();
-
-    if (!Party.inParty(p)) {
-      return;
-    }
-
-    Party party = Party.getParty(p);
-
-    assert party != null;
-    if (!party.isLeader(p)) {
-      return;
-    }
-
-    Inventory topInventory = p.getOpenInventory().getTopInventory();
+  @EventHandler
+  public static void onItemDropped(PlayerDropItemEvent event) {
+    Inventory topInventory = event.getPlayer().getOpenInventory().getTopInventory();
 
     if (!(topInventory.getHolder() instanceof TeamDuelGUI)) {
       return;

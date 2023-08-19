@@ -126,7 +126,7 @@ public class PartySelectGUI {
     }
   }
 
-  public static void onInventoryClick(InventoryClickEvent event) {
+  public static void onInventoryClicked(InventoryClickEvent event) {
     Player p = (Player) event.getWhoClicked();
 
     if (!(event.getInventory() instanceof Page)) {

@@ -10,11 +10,11 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 public class InventoryEventListener implements Listener {
   @EventHandler
   public void onInventoryClicked(InventoryClickEvent event) {
-    PartySelectGUI.onInventoryClick(event);
+    PartySelectGUI.onInventoryClicked(event);
   }
 
   @EventHandler
   public void onItemDrop(PlayerDropItemEvent event) {
-    TeamDuelGUI.itemDropped(event);
+    TeamDuelGUI.onItemDropped(event);
   }
 }

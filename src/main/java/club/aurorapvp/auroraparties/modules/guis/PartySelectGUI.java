@@ -133,7 +133,7 @@ public class PartySelectGUI implements Listener {
   public static void onInventoryClicked(InventoryClickEvent event) {
     Player player = (Player) event.getWhoClicked();
 
-    if (!(event.getInventory() instanceof Page)) {
+    if (!(event.getInventory().getHolder() instanceof Page)) {
       return;
     }
 

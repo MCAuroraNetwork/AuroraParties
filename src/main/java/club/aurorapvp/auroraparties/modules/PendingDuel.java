@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.modules.duels;
+package club.aurorapvp.auroraparties.modules;
 
 import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
@@ -8,6 +8,7 @@ import club.aurorapvp.auroraduels.modules.duels.DuelKitGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.HashSet;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,8 @@ public class PendingDuel implements Listener {
     AuroraDuels.getQueueGUI().open(partyLeader);
 
     PENDING_DUELS.add(this);
+
+    Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
   }
 
   @EventHandler

@@ -5,7 +5,7 @@ import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
+import club.aurorapvp.auroraparties.modules.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;

@@ -59,6 +59,8 @@ public class Party {
     partyLeader.sendMessage(Lang.getComponent("party-created"));
 
     PARTIES.add(this);
+
+    partyLeader.openInventory(this.getLeaderGUI().getInventory());
   }
 
   public static boolean inParty(Player player) {
@@ -209,6 +211,8 @@ public class Party {
 
   public void addMember(Player player) {
     player.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
+
+    player.openInventory(this.getMemberGUI().getInventory());
 
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));

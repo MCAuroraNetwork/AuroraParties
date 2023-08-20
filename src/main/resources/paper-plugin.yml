@@ -60,6 +60,7 @@ permissions:
     default: true
     children:
       auroraparties.command.party: true
+      auroraparties.command.parties: true
 
   auroraparties.admin:
     description: Allows for use of admin commands

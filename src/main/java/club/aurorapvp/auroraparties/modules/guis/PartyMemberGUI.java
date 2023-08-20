@@ -22,11 +22,11 @@ public class PartyMemberGUI extends PartyGUI {
   public PartyMemberGUI(Party party, ItemStack leaderSkull) {
     super(party);
 
-    inventory = Bukkit.createInventory(
-        this,
-        54,
-        MiniMessage.miniMessage()
-            .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + party.getName()));
+    inventory =
+        Bukkit.createInventory(
+            this,
+            54,
+            Lang.formatComponent("party-name", party.getName()));
 
     inventory.setItem(10, leaderSkull);
 

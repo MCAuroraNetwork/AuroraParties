@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,8 +36,7 @@ public class PartyLeaderGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            MiniMessage.miniMessage()
-                .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + party.getName()));
+            Lang.formatComponent("party-name", party.getName()));
 
     inventory.setItem(10, leaderSkull);
 

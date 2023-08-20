@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
+import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -16,11 +17,11 @@ public class PublicPartyGUI extends PartyGUI {
   public PublicPartyGUI(Party party, ItemStack leaderSkull) {
     super(party);
 
-    inventory = Bukkit.createInventory(
-        this,
-        54,
-        MiniMessage.miniMessage()
-            .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + party.getName()));
+    inventory =
+        Bukkit.createInventory(
+            this,
+            54,
+            Lang.formatComponent("party-name", party.getName()));
 
     inventory.setItem(10, leaderSkull);
   }

@@ -8,6 +8,7 @@ import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import org.bukkit.Bukkit;
 
 public class EventManager {
+
   public static void init() {
     Bukkit.getPluginManager().registerEvents(new InventoryEventListener(), AuroraParties.INSTANCE);
     Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), AuroraParties.INSTANCE);

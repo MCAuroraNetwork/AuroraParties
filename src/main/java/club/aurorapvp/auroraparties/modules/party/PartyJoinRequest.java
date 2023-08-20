@@ -2,10 +2,15 @@ package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.bukkit.entity.Player;
 
 public class PartyJoinRequest {
+
   private static final LinkedList<PartyJoinRequest> PENDING_REQUESTS = new LinkedList<>();
   private final Party party;
   private final Player requester;
@@ -19,20 +24,20 @@ public class PartyJoinRequest {
     PartyJoinRequest thisRequest = this;
 
     new Timer()
-            .schedule(
-                    new TimerTask() {
-                      @Override
-                      public void run() {
-                        if (PENDING_REQUESTS.contains(thisRequest)) {
-                          requester.sendMessage(Lang.getComponent("request-timed-out"));
-                          party.getLeader().sendMessage(Lang.getComponent("request-timed-out"));
-                          PENDING_REQUESTS.remove(thisRequest);
-                          this.cancel();
-                        }
-                      }
-                    },
-                    Config.get().getInt("join-requests.timeout-time"));
-    
+        .schedule(
+            new TimerTask() {
+              @Override
+              public void run() {
+                if (PENDING_REQUESTS.contains(thisRequest)) {
+                  requester.sendMessage(Lang.getComponent("request-timed-out"));
+                  party.getLeader().sendMessage(Lang.getComponent("request-timed-out"));
+                  PENDING_REQUESTS.remove(thisRequest);
+                  this.cancel();
+                }
+              }
+            },
+            Config.get().getInt("join-requests.timeout-time"));
+
     PENDING_REQUESTS.add(this);
   }
 

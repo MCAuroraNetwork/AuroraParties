@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Party {
+
   private static final Set<Party> PARTIES = new HashSet<>();
   private final HashMap<Player, ItemStack> memberSkulls = new HashMap<>();
   private final String name;
@@ -311,7 +312,8 @@ public class Party {
         Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
 
     for (Player player : partyMembers) {
-      player.sendMessage(Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
+      player.sendMessage(
+          Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
     }
 
     PARTIES.remove(this);

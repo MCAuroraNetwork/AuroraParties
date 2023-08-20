@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import org.bukkit.entity.Player;
 
 public class PartyInvite {
+
   private static final LinkedList<PartyInvite> PENDING_INVITES = new LinkedList<>();
   private final Player partyLeader;
   private final Player invited;

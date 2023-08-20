@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class PartyManageGUI extends PartyGUI {
+
   private final Inventory inventory;
 
   public PartyManageGUI(Party party, ItemStack leaderSkull) {

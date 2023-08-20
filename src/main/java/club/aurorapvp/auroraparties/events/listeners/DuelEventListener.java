@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class DuelEventListener implements Listener {
+
   @EventHandler
   public static void onDuelQueue(DuelRequestAcceptEvent event) {
     if (Party.inParty(event.getPlayer())) {

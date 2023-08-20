@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class InventoryUtil {
+
   public static int findSkullSlot(ItemStack itemStack, Inventory inventory) {
     if (!(itemStack.getItemMeta() instanceof SkullMeta meta)) {
       return -1;

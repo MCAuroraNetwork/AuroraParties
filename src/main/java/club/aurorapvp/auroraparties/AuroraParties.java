@@ -4,11 +4,11 @@ import club.aurorapvp.auroraparties.commands.CommandManager;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.events.EventManager;
-import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AuroraParties extends JavaPlugin {
+
   public static AuroraParties INSTANCE;
   private static boolean auroraCombatInstalled = false;
   private static boolean auroraWarpsInstalled = false;
@@ -17,9 +17,11 @@ public final class AuroraParties extends JavaPlugin {
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
   }
+
   public static boolean isAuroraWarpsInstalled() {
     return auroraWarpsInstalled;
   }
+
   public static boolean isAuroraKitsInstalled() {
     return auroraKitsInstalled;
   }

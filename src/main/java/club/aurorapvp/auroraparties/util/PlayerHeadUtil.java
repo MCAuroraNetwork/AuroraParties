@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class PlayerHeadUtil {
+
   public static ItemStack getPlayerSkull(Player player) {
     ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
     SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();

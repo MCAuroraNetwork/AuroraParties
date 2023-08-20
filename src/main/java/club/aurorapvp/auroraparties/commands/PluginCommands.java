@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 @CommandAlias("auroraparties")
 @CommandPermission("auroraparties.command.auroraparties")
 public class PluginCommands extends BaseCommand {
+
   // TODO
   @Subcommand("reload")
   @CommandPermission("auroraparties.command.auroraparties.reload")

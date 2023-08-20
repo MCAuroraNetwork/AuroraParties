@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 @CommandAlias("partyduel")
 @CommandPermission("auroraparties.command.partyduel")
 public class PartyDuelCommands extends BaseCommand {
+
   @Default
   @CommandCompletion("@players")
   @Syntax("<player>")

@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 @CommandAlias("party")
 @CommandPermission("auroraparties.command.party")
 public class PartyCommands extends BaseCommand {
+
   @Default
   @Description("Opens the party menu")
   @SuppressWarnings("unused")

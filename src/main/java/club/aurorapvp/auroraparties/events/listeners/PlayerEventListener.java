@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerEventListener implements Listener {
+
   @EventHandler
   public void onPlayerQuit(PlayerQuitEvent event) {
     if (!Party.inParty(event.getPlayer())) {

@@ -34,6 +34,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public class TeamDuelGUI implements InventoryHolder, Listener {
+
   private static final NamespacedKey key = new NamespacedKey(AuroraParties.INSTANCE, "ui-item");
   private final Inventory inventory;
   private final Party party;
@@ -94,8 +95,8 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
               Component.text(
                   "ELO: "
                       + Rating.getRating("default_duels")
-                          .getScore(party.getLeader())
-                          .getPoints())));
+                      .getScore(party.getLeader())
+                      .getPoints())));
       leaderSkull.setItemMeta(meta);
     }
 
@@ -278,8 +279,8 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
               Component.text(
                   "ELO: "
                       + Rating.getRating("default_duels")
-                          .getScore(party.getLeader())
-                          .getPoints())));
+                      .getScore(party.getLeader())
+                      .getPoints())));
 
       meta.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
 

@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class PartyMemberGUI extends PartyGUI {
+
   private final Inventory inventory;
 
   public PartyMemberGUI(Party party, ItemStack leaderSkull) {
@@ -24,7 +25,8 @@ public class PartyMemberGUI extends PartyGUI {
     inventory = Bukkit.createInventory(
         this,
         54,
-        MiniMessage.miniMessage().deserialize("<gradient:#FFAA00:#FF55FF><bold>" + party.getName()));
+        MiniMessage.miniMessage()
+            .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + party.getName()));
 
     inventory.setItem(10, leaderSkull);
 

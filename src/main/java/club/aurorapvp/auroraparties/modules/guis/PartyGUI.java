@@ -10,6 +10,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class PartyGUI implements InventoryHolder, Listener {
+
   protected final Party party;
 
   public PartyGUI(Party party) {

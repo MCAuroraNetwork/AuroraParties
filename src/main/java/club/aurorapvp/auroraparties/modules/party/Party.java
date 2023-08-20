@@ -22,7 +22,6 @@ public class Party {
 
   private static final Set<Party> PARTIES = new HashSet<>();
   private final HashMap<Player, ItemStack> memberSkulls = new HashMap<>();
-  private final String name;
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
   private final PartyLeaderGUI partyLeaderGUI;
@@ -35,7 +34,6 @@ public class Party {
   private final ItemStack displayItem;
 
   public Party(Player partyLeader) {
-    this.name = partyLeader.getName() + "'s Party";
     this.partyLeader = partyLeader;
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);
@@ -105,10 +103,6 @@ public class Party {
 
   public TeamDuelGUI getTeamDuelGUI() {
     return teamDuelGUI;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public Player getLeader() {
@@ -313,11 +307,11 @@ public class Party {
 
   public void disband() {
     partyLeader.sendMessage(
-        Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
+        Lang.formatComponent("party-disbanded", partyLeader.getName()));
 
     for (Player player : partyMembers) {
       player.sendMessage(
-          Lang.formatComponent("party-disbanded", this.getName(), partyLeader.getName()));
+          Lang.formatComponent("party-disbanded", partyLeader.getName()));
     }
 
     PARTIES.remove(this);

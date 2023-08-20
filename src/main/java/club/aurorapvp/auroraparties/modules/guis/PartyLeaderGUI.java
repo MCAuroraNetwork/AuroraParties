@@ -36,7 +36,7 @@ public class PartyLeaderGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            Lang.formatComponent("party-name", party.getName()));
+            Lang.formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
 

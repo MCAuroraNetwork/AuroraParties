@@ -28,6 +28,10 @@ public class PartySelectGUI implements Listener {
   private static final List<Page> pages = new ArrayList<>();
   private static int index;
 
+  public static void init() {
+    reload();
+  }
+
   public static Inventory getCurrentPage(Player player) {
     int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
     return pages.get(currentPage).getInventory();

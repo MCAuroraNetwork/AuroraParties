@@ -10,11 +10,12 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import org.bukkit.entity.Player;
 
-// TODO
 @CommandAlias("auroraparties")
+@CommandPermission("auroraparties.command.auroraparties")
 public class PluginCommands extends BaseCommand {
+  // TODO
   @Subcommand("reload")
-  @CommandPermission("auroraparties.admin")
+  @CommandPermission("auroraparties.command.auroraparties.reload")
   @Description("Reloads all plugin data")
   @SuppressWarnings("unused")
   public void onReload() {
@@ -27,6 +28,7 @@ public class PluginCommands extends BaseCommand {
 
   @CatchUnknown
   @Subcommand("help")
+  @CommandPermission("auroraparties.command.auroraparties.help")
   @Description("Lists all available plugin commands and their function")
   @SuppressWarnings("unused")
   public void onHelp(Player player) {

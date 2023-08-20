@@ -6,6 +6,67 @@ authors: [Villagers654]
 description: A Parties Plugin to Integrate various Aurora Network Plugin Features
 website: aurorapvp.club
 
+permissions:
+  auroraparties.command.auroraparties:
+    default: false
+    children:
+      auroraparties.command.auroraparties.reload: false
+      auroraparties.command.auroraparties.help: true
+  auroraparties.command.auroraparties.reload:
+    default: false
+
+  auroraparties.command.parties:
+    default: false
+
+  auroraparties.command.partyduel:
+    default: false
+
+  auroraparties.command.party:
+    default: false
+    children:
+      auroraparties.command.party.create: true
+      auroraparties.command.party.disband: true
+      auroraparties.command.party.invite: true
+      auroraparties.command.party.accept: true
+      auroraparties.command.party.deny: true
+      auroraparties.command.party.help: true
+  auroraparties.command.party.create:
+    default: false
+  auroraparties.command.party.disband:
+    default: false
+  auroraparties.party.invite:
+    default: false
+  auroraparties.party.accept:
+    default: false
+  auroraparties.party.deny:
+    default: false
+  auroraparties.party.help:
+    default: false
+
+  auroraparties.default:
+    description: Enables use of basic AuroraParties commands
+    default: true
+    children:
+      auroraparties.command.auroraparties: true
+
+  auroraparties.partyduels:
+    description: Allows for party vs party duels
+    default: true
+    children:
+      auroraparties.command.partyduel: true
+
+  auroraparties.party:
+    description: Allows for all party commands
+    default: true
+    children:
+      auroraparties.command.party: true
+
+  auroraparties.admin:
+    description: Allows for use of admin commands
+    default: op
+    children:
+      auroraparties.command.auroraparties.reload: true
+
 dependencies:
   server:
     AuroraDuels:

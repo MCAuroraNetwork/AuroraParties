@@ -9,9 +9,9 @@ import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Split;
 import co.aikar.commands.annotation.Syntax;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -19,6 +19,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @CommandAlias("partyduel")
+@CommandPermission("auroraparties.command.partyduel")
 public class PartyDuelCommands extends BaseCommand {
   @Default
   @CommandCompletion("@players")

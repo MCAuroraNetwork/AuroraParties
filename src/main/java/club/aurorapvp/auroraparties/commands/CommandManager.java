@@ -10,6 +10,7 @@ public class CommandManager {
     MANAGER.registerCommand(new PluginCommands());
     MANAGER.registerCommand(new PartyCommands());
     MANAGER.registerCommand(new PartyDuelCommands());
+    MANAGER.registerCommand(new PartyGUICommand());
 
     // TODO command completions
   }

@@ -1,14 +1,14 @@
 package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.config.Lang;
-import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CatchUnknown;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Optional;
@@ -18,23 +18,18 @@ import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-@CommandAlias("party|parties")
+@CommandAlias("party")
+@CommandPermission("auroraparties.command.party")
 public class PartyCommands extends BaseCommand {
   @Default
   @Description("Opens the party menu")
   @SuppressWarnings("unused")
   public void onOpenGUI(Player player) {
     if (!Party.inParty(player)) {
-      PartySelectGUI.open(player);
-      return;
-    }
-
-    if (Duel.inDuel(player)) {
       return;
     }
 
     Party party = Party.getParty(player);
-
     assert party != null;
 
     if (party.isLeader(player)) {
@@ -45,6 +40,7 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("create")
+  @CommandPermission("auroraparties.command.party.create")
   @Description("Creates a new party")
   @SuppressWarnings("unused")
   public void onCreate(Player player) {
@@ -57,6 +53,7 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("disband")
+  @CommandPermission("auroraparties.command.party.disband")
   @Description("Disbands the current party")
   @SuppressWarnings("unused")
   public void onDisband(Player player) {
@@ -74,6 +71,7 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("invite")
+  @CommandPermission("auroraparties.command.party.invite")
   @CommandCompletion("@players")
   @Syntax("<player>")
   @Description("Invites a player to a party")
@@ -100,8 +98,9 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("accept")
-  @Syntax("[player]")
+  @CommandPermission("auroraparties.command.party.accept")
   @CommandCompletion("@players")
+  @Syntax("[player]")
   @Description("Accepts a party invite")
   @SuppressWarnings("unused")
   public void onAccept(Player player, @Optional String inviterName) {
@@ -171,8 +170,9 @@ public class PartyCommands extends BaseCommand {
   }
 
   @Subcommand("deny")
-  @Syntax("[player]")
+  @CommandPermission("auroraparties.command.party.deny")
   @CommandCompletion("@players")
+  @Syntax("[player]")
   @Description("Denies a party invite")
   @SuppressWarnings("unused")
   public void onDeny(Player player, @Optional String inviterName) {
@@ -221,5 +221,13 @@ public class PartyCommands extends BaseCommand {
 
       Objects.requireNonNull(PartyJoinRequest.getRequest(party, requester)).deny();
     }
+  }
+
+  // TODO
+  @CatchUnknown
+  @Subcommand("help")
+  @CommandPermission("auroraparties.command.party.help")
+  @SuppressWarnings("unused")
+  public void onHelp(Player player) {
   }
 }

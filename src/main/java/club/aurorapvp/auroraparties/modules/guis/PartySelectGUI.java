@@ -131,13 +131,13 @@ public class PartySelectGUI implements Listener {
 
   @EventHandler
   public static void onInventoryClicked(InventoryClickEvent event) {
-    Player player = (Player) event.getWhoClicked();
-
     if (!(event.getInventory().getHolder() instanceof Page)) {
       return;
     }
 
     event.setCancelled(true);
+
+    Player player = (Player) event.getWhoClicked();
 
     if (event.getSlot() == 45) {
       PartySelectGUI.previousPage(player);
@@ -178,7 +178,7 @@ public class PartySelectGUI implements Listener {
     private final Inventory inventory;
 
     private Page(Party[] parties) {
-      inventory = Bukkit.createInventory(null, 54, Lang.getComponent("parties-gui"));
+      inventory = Bukkit.createInventory(this, 54, Lang.getComponent("parties-gui"));
 
       for (Party party : parties) {
         if (party.getStatus() != Party.Status.PRIVATE) {

@@ -4,6 +4,7 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import co.aikar.commands.PaperCommandManager;
 
 public class CommandManager {
+
   public static PaperCommandManager MANAGER = new PaperCommandManager(AuroraParties.INSTANCE);
 
   public static void init() {
@@ -11,7 +12,5 @@ public class CommandManager {
     MANAGER.registerCommand(new PartyCommands());
     MANAGER.registerCommand(new PartyDuelCommands());
     MANAGER.registerCommand(new PartyGUICommand());
-
-    // TODO command completions
   }
 }

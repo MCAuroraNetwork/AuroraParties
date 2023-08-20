@@ -9,7 +9,7 @@ public class CommandManager {
   public static void init() {
     MANAGER.registerCommand(new PluginCommands());
     MANAGER.registerCommand(new PartyCommands());
-    MANAGER.registerCommand(new PartyCommands());
+    MANAGER.registerCommand(new PartyDuelCommands());
 
     // TODO command completions
   }

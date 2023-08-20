@@ -1,6 +1,7 @@
 package club.aurorapvp.auroraparties.commands;
 
 import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CatchUnknown;
@@ -21,6 +22,9 @@ public class PluginCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onReload() {
     long startTime = System.currentTimeMillis();
+
+    Config.reload();
+    Lang.reload();
 
     AuroraParties.INSTANCE
         .getLogger()

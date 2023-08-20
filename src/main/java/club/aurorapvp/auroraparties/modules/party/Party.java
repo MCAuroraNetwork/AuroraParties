@@ -42,7 +42,7 @@ public class Party {
     memberSkulls.put(partyLeader, leaderSkull);
 
     this.teamDuelGUI = new TeamDuelGUI(this, leaderSkull);
-    this.partyManageGUI = new PartyManageGUI(this, leaderSkull);
+    this.partyManageGUI = new PartyManageGUI(this, leaderSkull.clone());
     this.partyLeaderGUI = new PartyLeaderGUI(this, leaderSkull);
     this.partyMemberGUI = new PartyMemberGUI(this, leaderSkull);
     this.publicPartyGUI = new PublicPartyGUI(this, leaderSkull);

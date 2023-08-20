@@ -229,5 +229,6 @@ public class PartyCommands extends BaseCommand {
   @CommandPermission("auroraparties.command.party.help")
   @SuppressWarnings("unused")
   public void onHelp(Player player) {
+    player.sendMessage(Lang.getComponent("unknown-party-command"));
   }
 }

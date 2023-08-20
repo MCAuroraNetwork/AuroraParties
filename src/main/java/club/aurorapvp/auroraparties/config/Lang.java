@@ -80,9 +80,18 @@ public class Lang {
     DEFAULTS.put("player-left-party", "prefix <red>%s left the party");
     DEFAULTS.put("player-joined-party", "prefix <green>%s joined the party");
     DEFAULTS.put("party-full", "prefix <red>This party is full!");
-    // TODO
-    DEFAULTS.put("help-command", """
-
+    DEFAULTS.put("unknown-party-command", "prefix <red>Unknown Party Command! Use /help");
+    DEFAULTS.put(
+        "help-command",
+        """
+        prefix <aqua><bold>All Commands:
+        
+        <blue><bold>/parties: <reset><yellow>Opens the GUI for all public parties
+        <blue><bold>/party: <reset><yellow>Opens the party GUI
+        <blue><bold>/party create [name]: <reset><yellow>Creates a party
+        <blue><bold>/party disband: <reset><yellow>Disbands your party
+        <blue><bold>/party invite [player]: <reset><yellow>Invites a player to your party
+        <blue><bold>/partyduel [player]: <reset><yellow>Sends a duel request to someone else's party
         """);
 
     for (String path : DEFAULTS.keySet()) {

@@ -34,6 +34,12 @@ public class PartyDuelCommands extends BaseCommand {
 
     Party party = Party.getParty(player);
 
+    assert party != null;
+    if (!party.isLeader(player)) {
+      player.sendMessage(club.aurorapvp.auroraparties.config.Lang.getComponent("no-permission"));
+      return;
+    }
+
     Player requested = Bukkit.getPlayer(playerName);
 
     if (requested == null) {
@@ -48,7 +54,6 @@ public class PartyDuelCommands extends BaseCommand {
       return;
     }
 
-    assert party != null;
     Set<Player> players = party.getMembers();
     players.add(party.getLeader());
 

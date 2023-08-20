@@ -20,7 +20,7 @@ public abstract class PartyGUI implements InventoryHolder, Listener {
 
   public abstract void addMember(int index, ItemStack memberSkull);
 
-  public abstract void removeMember(int slot, ItemStack lastSkull);
+  public abstract void removeMember(int slot, ItemStack removedSkull, ItemStack lastSkull);
 
   @EventHandler
   public abstract void onInventoryClick(InventoryClickEvent event);

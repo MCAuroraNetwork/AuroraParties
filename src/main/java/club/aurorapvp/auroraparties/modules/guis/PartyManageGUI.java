@@ -76,10 +76,10 @@ public class PartyManageGUI extends PartyGUI {
   }
 
   @Override
-  public void removeMember(int slot, ItemStack lastSkull) {
-    inventory.clear(slot);
-
+  public void removeMember(int slot, ItemStack removedSkull, ItemStack lastSkull) {
     InventoryUtil.moveItem(inventory, lastSkull, slot);
+
+    inventory.remove(removedSkull);
   }
 
   @Override

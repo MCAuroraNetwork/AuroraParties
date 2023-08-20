@@ -300,10 +300,10 @@ public class Party {
     int slot = InventoryUtil.findSkullSlot(memberSkull, publicPartyGUI.getInventory());
     ItemStack lastSkull = InventoryUtil.getLastSkull(publicPartyGUI.getInventory());
 
-    partyLeaderGUI.removeMember(slot, lastSkull);
-    partyManageGUI.removeMember(slot, lastSkull);
-    partyMemberGUI.removeMember(slot, lastSkull);
-    publicPartyGUI.removeMember(slot, lastSkull);
+    partyLeaderGUI.removeMember(slot, memberSkull, lastSkull);
+    partyManageGUI.removeMember(slot, memberSkull, lastSkull);
+    partyMemberGUI.removeMember(slot, memberSkull, lastSkull);
+    publicPartyGUI.removeMember(slot, memberSkull, lastSkull);
     teamDuelGUI.removeMember(memberSkull);
   }
 

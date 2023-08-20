@@ -125,6 +125,7 @@ public class PartyLeaderGUI extends PartyGUI {
       }
       case 47, 51 -> {
         if (party.getMembers().isEmpty()) {
+          player.sendMessage(Lang.getComponent("not-enough-players"));
           return;
         }
 

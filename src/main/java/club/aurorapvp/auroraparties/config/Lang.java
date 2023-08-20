@@ -41,7 +41,7 @@ public class Lang {
     DEFAULTS.put("invite-timed-out", "prefix <red>Invite expired");
     DEFAULTS.put("invite-accepted", "prefix <green>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <red>Invite denied");
-    DEFAULTS.put("no-invites", "prefix <red>No pending invites!");
+    DEFAULTS.put("no-invites", "prefix <red>No pending invites");
     DEFAULTS.put("already-sent-invite", "prefix <red>Invite already sent!");
     DEFAULTS.put("request-sent", "prefix <green>Request sent!");
     DEFAULTS.put(
@@ -52,7 +52,7 @@ public class Lang {
     DEFAULTS.put("request-denied", "prefix <red>Request denied");
     DEFAULTS.put("request-cancelled", "prefix <red>Party join request cancelled");
     DEFAULTS.put("no-requests", "prefix <red>No pending requests!");
-    DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that!");
+    DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that");
     DEFAULTS.put("party-disbanded", "prefix <red>%1$s disbanded by %2$s");
     DEFAULTS.put("leave-party", "<red><bold>Leave Party");
     DEFAULTS.put("disband-party", "<red><bold>Disband Party");
@@ -68,8 +68,8 @@ public class Lang {
     DEFAULTS.put("duel-kit-gui", "<aqua><bold>Select Duel Kit");
     DEFAULTS.put("next-page", "<aqua><bold>Next page");
     DEFAULTS.put("previous-page", "<aqua><bold>Previous page");
-    DEFAULTS.put("kit-invalid-name", "prefix <red>Invalid kit name!");
-    DEFAULTS.put("unknown-player", "prefix <red>Player not found!");
+    DEFAULTS.put("kit-invalid-name", "prefix <red>Invalid kit name");
+    DEFAULTS.put("unknown-player", "prefix <red>Player not found");
     DEFAULTS.put("already-in-party", "prefix <red>Player already in this party!");
     DEFAULTS.put("not-in-party", "prefix <red>You're not in a party!");
     DEFAULTS.put("unknown-party", "prefix <red>Party not found!");

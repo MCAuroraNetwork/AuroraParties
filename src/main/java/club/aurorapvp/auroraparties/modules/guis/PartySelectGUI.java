@@ -203,7 +203,7 @@ public class PartySelectGUI implements Listener {
     }
 
     private Page(Party party) {
-      inventory = Bukkit.createInventory(null, 54, Lang.getComponent("GUIName"));
+      inventory = Bukkit.createInventory(this, 54, Lang.getComponent("GUIName"));
       inventory.addItem(party.getDisplayItem());
 
       ItemMeta meta;

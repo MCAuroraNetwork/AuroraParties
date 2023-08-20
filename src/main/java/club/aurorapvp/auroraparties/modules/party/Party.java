@@ -41,11 +41,11 @@ public class Party {
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);
     memberSkulls.put(partyLeader, leaderSkull);
 
-    this.teamDuelGUI = new TeamDuelGUI(this, leaderSkull);
+    this.teamDuelGUI = new TeamDuelGUI(this, leaderSkull.clone());
     this.partyManageGUI = new PartyManageGUI(this, leaderSkull.clone());
-    this.partyLeaderGUI = new PartyLeaderGUI(this, leaderSkull);
-    this.partyMemberGUI = new PartyMemberGUI(this, leaderSkull);
-    this.publicPartyGUI = new PublicPartyGUI(this, leaderSkull);
+    this.partyLeaderGUI = new PartyLeaderGUI(this, leaderSkull.clone());
+    this.partyMemberGUI = new PartyMemberGUI(this, leaderSkull.clone());
+    this.publicPartyGUI = new PublicPartyGUI(this, leaderSkull.clone());
 
     ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
     ItemMeta meta = displayItem.getItemMeta();

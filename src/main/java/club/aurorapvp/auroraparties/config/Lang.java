@@ -115,17 +115,6 @@ public class Lang {
     }
   }
 
-  public static String getString(String message) {
-    String pathString = get().getString(message);
-    for (String placeholder : PLACEHOLDERS.keySet()) {
-      assert pathString != null;
-      if (pathString.contains(placeholder)) {
-        pathString = pathString.replace(placeholder, PLACEHOLDERS.get(placeholder));
-      }
-    }
-    return pathString;
-  }
-
   public static Component formatComponent(String message, Object... args) {
     String pathString = get().getString(message);
     assert pathString != null;

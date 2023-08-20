@@ -3,9 +3,12 @@ package club.aurorapvp.auroraparties.modules.guis;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,8 +23,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class PartySelectGUI implements Listener {
+
   private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
-  private static List<Page> pages = new ArrayList<>();
+  private static final List<Page> pages = new ArrayList<>();
   private static int index;
 
   public static Inventory getCurrentPage(Player player) {
@@ -170,6 +174,7 @@ public class PartySelectGUI implements Listener {
   }
 
   public static class Page implements InventoryHolder {
+
     private final Inventory inventory;
 
     private Page(Party[] parties) {

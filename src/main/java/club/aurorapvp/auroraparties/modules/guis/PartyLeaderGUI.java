@@ -3,17 +3,13 @@ package club.aurorapvp.auroraparties.modules.guis;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.RandomTeamDuel;
-import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
-import com.google.common.collect.Iterables;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -31,6 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class PartyLeaderGUI extends PartyGUI {
+
   private final Inventory inventory;
 
   public PartyLeaderGUI(Party party, ItemStack leaderSkull) {

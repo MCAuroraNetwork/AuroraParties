@@ -88,10 +88,6 @@ public class Party {
     return null;
   }
 
-  public ItemStack getSkull(Player player) {
-    return memberSkulls.get(player);
-  }
-
   public PartyLeaderGUI getLeaderGUI() {
     return partyLeaderGUI;
   }
@@ -102,10 +98,6 @@ public class Party {
 
   public PartyMemberGUI getMemberGUI() {
     return partyMemberGUI;
-  }
-
-  public PublicPartyGUI getPublicGUI() {
-    return publicPartyGUI;
   }
 
   public TeamDuelGUI getTeamDuelGUI() {

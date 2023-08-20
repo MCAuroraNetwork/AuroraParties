@@ -66,13 +66,13 @@ public class PartyJoinRequest {
     return false;
   }
 
-  public static boolean hasRequest(Party party, Player requester) {
+  public static boolean noRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
       if (request.requester == requester && request.party == party) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   public static PartyJoinRequest getRequest(Party party, Player requester) {

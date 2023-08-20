@@ -57,7 +57,7 @@ public class PartyManageGUI extends PartyGUI {
     ItemStack status = new ItemStack(Material.REDSTONE);
     meta = status.getItemMeta();
     meta.displayName(Lang.getComponent("status"));
-    meta.lore(List.of(Component.text("Private")));
+    meta.lore(List.of(Component.text("Invite Only")));
     status.setItemMeta(meta);
 
     inventory.setItem(49, status);

@@ -97,27 +97,31 @@ public class PartyManageGUI extends PartyGUI {
       return;
     }
 
-    if (event.getSlot() == 49) {
-      switch (party.getStatus()) {
-        case PRIVATE -> {
-          party.setStatus(Party.Status.ANYONE_CAN_JOIN);
-          ItemMeta meta = clickedItem.getItemMeta();
-          meta.lore(List.of(Component.text("Anyone can Join")));
-          clickedItem.setItemMeta(meta);
-        }
-        case ANYONE_CAN_JOIN -> {
-          party.setStatus(Party.Status.INVITE_ONLY);
-          ItemMeta meta = clickedItem.getItemMeta();
-          meta.lore(List.of(Component.text("Invite Only")));
-          clickedItem.setItemMeta(meta);
-        }
-        case INVITE_ONLY -> {
-          party.setStatus(Party.Status.PRIVATE);
-          ItemMeta meta = clickedItem.getItemMeta();
-          meta.lore(List.of(Component.text("Private")));
-          clickedItem.setItemMeta(meta);
+    switch (event.getSlot()) {
+      case 45 -> party.getLeader().openInventory(party.getLeaderGUI().getInventory());
+      case 49 -> {
+        switch (party.getStatus()) {
+          case PRIVATE -> {
+            party.setStatus(Party.Status.ANYONE_CAN_JOIN);
+            ItemMeta meta = clickedItem.getItemMeta();
+            meta.lore(List.of(Component.text("Anyone can Join")));
+            clickedItem.setItemMeta(meta);
+          }
+          case ANYONE_CAN_JOIN -> {
+            party.setStatus(Party.Status.INVITE_ONLY);
+            ItemMeta meta = clickedItem.getItemMeta();
+            meta.lore(List.of(Component.text("Invite Only")));
+            clickedItem.setItemMeta(meta);
+          }
+          case INVITE_ONLY -> {
+            party.setStatus(Party.Status.PRIVATE);
+            ItemMeta meta = clickedItem.getItemMeta();
+            meta.lore(List.of(Component.text("Private")));
+            clickedItem.setItemMeta(meta);
+          }
         }
       }
+      case 53 -> party.disband();
     }
 
     if (clickedItem.getType() != Material.PLAYER_HEAD) {

@@ -53,12 +53,12 @@ public class Lang {
     DEFAULTS.put("request-cancelled", "prefix <red>Party join request cancelled");
     DEFAULTS.put("no-requests", "prefix <red>No pending requests!");
     DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that");
-    DEFAULTS.put("party-disbanded", "prefix Party disbanded by %2$s");
+    DEFAULTS.put("party-disbanded", "prefix Party disbanded by %s");
     DEFAULTS.put("leave-party", "<red><bold>Leave Party");
     DEFAULTS.put("disband-party", "<red><bold>Disband Party");
     DEFAULTS.put("exit", "<red><bold>Exit");
     DEFAULTS.put("status", "<aqua><bold>Party Status");
-    DEFAULTS.put("party-name", "<aqua><bold>%s's Party");
+    DEFAULTS.put("party-name", "<aqua>%s's Party");
     DEFAULTS.put("parties-gui", "<aqua><bold>All Parties");
     DEFAULTS.put("create-team-duel", "<aqua><bold>Team Duel");
     DEFAULTS.put("start-team-duel", "<aqua><bold>Start Duel");

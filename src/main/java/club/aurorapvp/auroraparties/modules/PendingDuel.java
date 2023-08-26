@@ -30,6 +30,22 @@ public class PendingDuel implements Listener {
     Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
   }
 
+  public Duel getDuel() {
+    return duel;
+  }
+
+  public static boolean hasPendingDuel(Player player) {
+    for (PendingDuel pendingDuel : PENDING_DUELS) {
+      for (Player duelMember : pendingDuel.getDuel().getPlayers()) {
+        if (duelMember == player) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   @EventHandler
   public void onQueueSelect(QueueSelectEvent event) {
     if (partyLeader != event.getPlayer()) {

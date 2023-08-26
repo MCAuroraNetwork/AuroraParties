@@ -1,6 +1,7 @@
 package club.aurorapvp.auroraparties.commands;
 
 import club.aurorapvp.auroraparties.config.Lang;
+import club.aurorapvp.auroraparties.modules.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
@@ -33,10 +34,11 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(player);
     assert party != null;
 
-    if (party.isLeader(player)) {
-      player.openInventory(party.getLeaderGUI().getInventory());
-    } else {
+    if (!party.isLeader(player)) {
       player.openInventory(party.getMemberGUI().getInventory());
+    } else if (PendingDuel.hasPendingDuel(player)) {
+      player.openInventory(party.getLeaderGUI().getInventory());
+
     }
   }
 

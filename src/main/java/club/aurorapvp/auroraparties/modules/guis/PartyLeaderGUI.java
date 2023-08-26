@@ -154,13 +154,14 @@ public class PartyLeaderGUI extends PartyGUI {
     if (event.getSlot() == 47) {
       assert players != null;
       new PendingDuel(player, new RandomTeamDuel(players, loc, false));
+      player.closeInventory();
     }
 
     if (event.getSlot() == 51) {
       new PendingDuel(player, new FFADuel(players, loc, false));
+      player.closeInventory();
     }
   }
-
 
   @Override
   public @NotNull Inventory getInventory() {

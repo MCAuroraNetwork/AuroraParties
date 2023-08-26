@@ -36,7 +36,7 @@ public class PartyCommands extends BaseCommand {
 
     if (!party.isLeader(player)) {
       player.openInventory(party.getMemberGUI().getInventory());
-    } else if (PendingDuel.hasPendingDuel(player)) {
+    } else if (!PendingDuel.hasPendingDuel(player)) {
       player.openInventory(party.getLeaderGUI().getInventory());
 
     }

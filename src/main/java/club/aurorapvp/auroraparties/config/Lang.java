@@ -37,7 +37,7 @@ public class Lang {
     DEFAULTS.put("invite-sent", "prefix <green>Invite sent!");
     DEFAULTS.put(
         "invite-received",
-        "prefix <yellow>%1$s invited you to join %2$s! Type <bold>/party accept<reset><yellow> to join!");
+        "prefix <yellow>%s invited you to join their party! Type <bold>/party accept<reset><yellow> to join!");
     DEFAULTS.put("invite-timed-out", "prefix <red>Invite expired");
     DEFAULTS.put("invite-accepted", "prefix <green>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <red>Invite denied");

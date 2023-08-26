@@ -43,8 +43,7 @@ public class PartyInvite {
 
     partyLeader.sendMessage(Lang.getComponent("invite-sent"));
     invited.sendMessage(
-        Lang.formatComponent("invite-received", partyLeader.getName(),
-            party.getLeader().getName()));
+        Lang.formatComponent("invite-received", partyLeader.getName()));
 
     PartyInvite thisRequest = this;
 

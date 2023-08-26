@@ -37,7 +37,7 @@ public class Lang {
     DEFAULTS.put("invite-sent", "prefix <green>Invite sent!");
     DEFAULTS.put(
         "invite-received",
-        "prefix <aqua>%1$s invited you to join %2$s! Type /party accept to join!");
+        "prefix <yellow>%1$s invited you to join %2$s! Type <bold>/party accept<reset><yellow> to join!");
     DEFAULTS.put("invite-timed-out", "prefix <red>Invite expired");
     DEFAULTS.put("invite-accepted", "prefix <green>Invite accepted!");
     DEFAULTS.put("invite-denied", "prefix <red>Invite denied");
@@ -46,28 +46,28 @@ public class Lang {
     DEFAULTS.put("request-sent", "prefix <green>Request sent!");
     DEFAULTS.put(
         "request-received",
-        "prefix <aqua>%s requested to join your party! Type /party accept to let them join!");
+        "prefix <yellow>%s requested to join your party! Type <bold>/party accept<reset><yellow> to let them join!");
     DEFAULTS.put("request-timed-out", "prefix <red>Join request expired");
     DEFAULTS.put("request-accepted", "prefix <green>Request accepted!");
     DEFAULTS.put("request-denied", "prefix <red>Request denied");
     DEFAULTS.put("request-cancelled", "prefix <red>Party join request cancelled");
     DEFAULTS.put("no-requests", "prefix <red>No pending requests!");
     DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that");
-    DEFAULTS.put("party-disbanded", "prefix Party disbanded by %s");
+    DEFAULTS.put("party-disbanded", "prefix <red>Party disbanded by %s");
     DEFAULTS.put("leave-party", "<red><bold>Leave Party");
     DEFAULTS.put("disband-party", "<red><bold>Disband Party");
     DEFAULTS.put("exit", "<red><bold>Exit");
-    DEFAULTS.put("status", "<aqua><bold>Party Status");
-    DEFAULTS.put("party-name", "<aqua>%s's Party");
-    DEFAULTS.put("parties-gui", "<aqua><bold>All Parties");
-    DEFAULTS.put("create-team-duel", "<aqua><bold>Team Duel");
-    DEFAULTS.put("start-team-duel", "<aqua><bold>Start Duel");
-    DEFAULTS.put("start-ffa-duel", "<aqua><bold>FFA Duel");
-    DEFAULTS.put("start-random-team-duel", "<aqua><bold>Random Team Duel");
-    DEFAULTS.put("manage-party", "<aqua><bold>Manage Party");
-    DEFAULTS.put("duel-kit-gui", "<aqua><bold>Select Duel Kit");
-    DEFAULTS.put("next-page", "<aqua><bold>Next page");
-    DEFAULTS.put("previous-page", "<aqua><bold>Previous page");
+    DEFAULTS.put("status", "<yellow><bold>Party Status");
+    DEFAULTS.put("party-name", "<yellow>%s's Party");
+    DEFAULTS.put("parties-gui", "<yellow><bold>All Parties");
+    DEFAULTS.put("create-team-duel", "<yellow><bold>Team Duel");
+    DEFAULTS.put("start-team-duel", "<yellow><bold>Start Duel");
+    DEFAULTS.put("start-ffa-duel", "<yellow><bold>FFA Duel");
+    DEFAULTS.put("start-random-team-duel", "<yellow><bold>Random Team Duel");
+    DEFAULTS.put("manage-party", "<yellow><bold>Manage Party");
+    DEFAULTS.put("duel-kit-gui", "<yellow><bold>Select Duel Kit");
+    DEFAULTS.put("next-page", "<yellow><bold>Next page");
+    DEFAULTS.put("previous-page", "<yellow><bold>Previous page");
     DEFAULTS.put("kit-invalid-name", "prefix <red>Invalid kit name");
     DEFAULTS.put("unknown-player", "prefix <red>Player not found");
     DEFAULTS.put("already-in-party", "prefix <red>Player already in this party!");
@@ -84,7 +84,7 @@ public class Lang {
     DEFAULTS.put(
         "help-command",
         """
-            prefix <aqua><bold>All Commands:
+            prefix <yellow><bold>All Commands:
                     
             <blue><bold>/parties: <reset><yellow>Opens the GUI for all public parties
             <blue><bold>/party: <reset><yellow>Opens the party GUI

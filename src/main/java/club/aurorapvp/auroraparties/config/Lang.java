@@ -58,7 +58,7 @@ public class Lang {
     DEFAULTS.put("disband-party", "<red><bold>Disband Party");
     DEFAULTS.put("exit", "<red><bold>Exit");
     DEFAULTS.put("status", "<yellow><bold>Party Status");
-    DEFAULTS.put("party-name", "<yellow>%s's Party");
+    DEFAULTS.put("party-name", "<yellow><bold>%s's Party");
     DEFAULTS.put("parties-gui", "<yellow><bold>All Parties");
     DEFAULTS.put("create-team-duel", "<yellow><bold>Team Duel");
     DEFAULTS.put("start-team-duel", "<yellow><bold>Start Duel");

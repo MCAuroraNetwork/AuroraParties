@@ -28,7 +28,7 @@ public class PartyManageGUI extends PartyGUI {
     inventory = Bukkit.createInventory(
         this,
         54,
-        MiniMessage.miniMessage().deserialize("<aqua><bold>Manage Party"));
+        Lang.getComponent("manage-party"));
 
     ItemMeta meta = leaderSkull.getItemMeta();
     meta.lore(

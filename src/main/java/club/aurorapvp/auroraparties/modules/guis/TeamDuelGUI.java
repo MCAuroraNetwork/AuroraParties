@@ -62,8 +62,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
         Bukkit.createInventory(
             this,
             54,
-            MiniMessage.miniMessage()
-                .deserialize("<gradient:#FFAA00:#FF55FF><bold>" + "New Team Duel"));
+            Lang.getComponent("team-duel"));
 
     for (int row = 0; row < 6; row++) {
       int blueSlot = row * 9 + 3;

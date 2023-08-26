@@ -66,6 +66,7 @@ public class Lang {
     DEFAULTS.put("start-random-team-duel", "<yellow><bold>Random Team Duel");
     DEFAULTS.put("manage-party", "<yellow><bold>Manage Party");
     DEFAULTS.put("duel-kit-gui", "<yellow><bold>Select Duel Kit");
+    DEFAULTS.put("team-duel", "<yellow><bold>New Team Duel");
     DEFAULTS.put("next-page", "<yellow><bold>Next page");
     DEFAULTS.put("previous-page", "<yellow><bold>Previous page");
     DEFAULTS.put("kit-invalid-name", "prefix <red>Invalid kit name");

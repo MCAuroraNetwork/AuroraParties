@@ -286,7 +286,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       clone.setItemMeta(meta);
     }
 
-    inventory.setItem(index, memberSkull);
+    inventory.setItem(index, clone);
   }
 
   public void removeMember(ItemStack memberSkull) {

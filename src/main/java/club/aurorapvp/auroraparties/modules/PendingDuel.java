@@ -50,6 +50,10 @@ public class PendingDuel implements Listener {
 
   @EventHandler
   public void onInventoryClose(InventoryCloseEvent event) {
+    if (duelStarter != event.getPlayer()) {
+      return;
+    }
+
     if (!Objects.equals(event.getInventory().getHolder(), AuroraDuels.getQueueGUI())) {
       return;
     }

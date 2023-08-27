@@ -121,7 +121,7 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
-    if (party.contains(player)) {
+    if (party.contains(player) || Party.inParty(player)) {
       player.sendMessage(Lang.getComponent("already-in-party"));
       return;
     }

@@ -157,6 +157,11 @@ public class PartySelectGUI implements Listener {
       return;
     }
 
+    if (Party.inParty(player)) {
+      player.sendMessage(Lang.getComponent("already-in-party"));
+      return;
+    }
+
     for (Party party : Party.getParties()) {
       meta = (SkullMeta) clickedItem.getItemMeta();
       SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();

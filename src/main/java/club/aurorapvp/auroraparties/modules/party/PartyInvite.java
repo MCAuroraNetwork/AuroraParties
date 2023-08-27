@@ -67,6 +67,15 @@ public class PartyInvite {
             Config.get().getInt("invites.timeout-time"));
   }
 
+  public static PartyInvite getInvite(Party party) {
+    for (PartyInvite invite : PENDING_INVITES) {
+      if (invite.party == party) {
+        return invite;
+      }
+    }
+    return null;
+  }
+
   public static PartyInvite getInvite(Player player) {
     for (PartyInvite invite : PENDING_INVITES) {
       if (invite.partyLeader == player || invite.invited == player) {
@@ -95,6 +104,12 @@ public class PartyInvite {
     }
 
     return matchingRequests;
+  }
+
+  public static boolean hasPendingInvite(Player invited, Party party) {
+    PartyInvite invite = PartyInvite.getInvite(party);
+
+    return invite != null && invite.invited == invited;
   }
 
   public static boolean hasPendingInvite(Player inviter, Player invited) {

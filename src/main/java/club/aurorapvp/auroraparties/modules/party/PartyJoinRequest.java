@@ -19,7 +19,7 @@ public class PartyJoinRequest {
     this.party = party;
     this.requester = requester;
 
-    if (PartyInvite.hasPendingInvite(requester)) {
+    if (PartyInvite.hasPendingInvite(requester, party)) {
       party.addMember(requester);
       return;
     }
@@ -80,10 +80,10 @@ public class PartyJoinRequest {
   public static boolean hasRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
       if (request.requester == requester && request.party == party) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   public static PartyJoinRequest getRequest(Party party, Player requester) {

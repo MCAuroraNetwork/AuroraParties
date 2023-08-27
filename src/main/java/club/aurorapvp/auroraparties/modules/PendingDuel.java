@@ -9,6 +9,7 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,12 +29,14 @@ public class PendingDuel implements Listener {
     AuroraDuels.getQueueGUI().open(duelStarter);
 
     PENDING_DUELS.add(this);
-
-    Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
   }
 
   public Duel getDuel() {
     return duel;
+  }
+
+  public static Set<PendingDuel> getPendingDuels() {
+    return PENDING_DUELS;
   }
 
   public static boolean hasPendingDuel(Player player) {
@@ -48,7 +51,6 @@ public class PendingDuel implements Listener {
     return false;
   }
 
-  @EventHandler
   public void onInventoryClose(InventoryCloseEvent event) {
     if (duelStarter != event.getPlayer()) {
       return;
@@ -63,7 +65,6 @@ public class PendingDuel implements Listener {
     }
   }
 
-  @EventHandler
   public void onQueueSelect(QueueSelectEvent event) {
     if (duelStarter != event.getPlayer()) {
       return;
@@ -79,7 +80,6 @@ public class PendingDuel implements Listener {
     this.enterQueue();
   }
 
-  @EventHandler
   public void onKitSelect(DuelKitSelectEvent event) {
     if (duelStarter != event.getPlayer()) {
       return;

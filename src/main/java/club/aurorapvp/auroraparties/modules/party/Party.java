@@ -57,8 +57,6 @@ public class Party {
     partyLeader.sendMessage(Lang.getComponent("party-created"));
 
     PARTIES.add(this);
-
-    partyLeader.openInventory(this.getLeaderGUI().getInventory());
   }
 
   public static boolean inParty(Player player) {

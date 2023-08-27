@@ -27,6 +27,7 @@ permissions:
       auroraparties.command.party.create: true
       auroraparties.command.party.disband: true
       auroraparties.command.party.invite: true
+      auroraparties.command.party.join: true
       auroraparties.command.party.accept: true
       auroraparties.command.party.deny: true
       auroraparties.command.party.help: true
@@ -35,6 +36,8 @@ permissions:
   auroraparties.command.party.disband:
     default: false
   auroraparties.party.invite:
+    default: false
+  auroraparties.party.join:
     default: false
   auroraparties.party.accept:
     default: false

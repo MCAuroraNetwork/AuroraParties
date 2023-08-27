@@ -100,6 +100,35 @@ public class PartyCommands extends BaseCommand {
     new PartyInvite(player, invited);
   }
 
+  @Subcommand("join")
+  @CommandPermission("auroraparties.command.party.join")
+  @CommandCompletion("@players")
+  @Syntax("<player>")
+  @Description("Invites a player to a party")
+  @SuppressWarnings("unused")
+  public void onJoinRequest(Player player, String playerName) {
+    Player requested = Bukkit.getPlayer(playerName);
+
+    if (requested == null) {
+      player.sendMessage(Lang.getComponent("unknown-player"));
+      return;
+    }
+
+    Party party = Party.getParty(requested);
+
+    if (party == null) {
+      player.sendMessage(Lang.getComponent("unknown-party"));
+      return;
+    }
+
+    if (party.contains(player)) {
+      player.sendMessage(Lang.getComponent("already-in-party"));
+      return;
+    }
+
+    new PartyJoinRequest(player, party);
+  }
+
   @Subcommand("accept")
   @CommandPermission("auroraparties.command.party.accept")
   @CommandCompletion("@players")

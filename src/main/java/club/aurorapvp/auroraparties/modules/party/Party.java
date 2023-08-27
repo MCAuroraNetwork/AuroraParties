@@ -314,6 +314,8 @@ public class Party {
           Lang.formatComponent("party-disbanded", partyLeader.getName()));
     }
 
+    PartySelectGUI.removeParty(this);
+
     PARTIES.remove(this);
   }
 

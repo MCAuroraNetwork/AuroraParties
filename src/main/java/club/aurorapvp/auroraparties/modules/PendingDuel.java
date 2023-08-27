@@ -7,11 +7,13 @@ import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.DuelKitGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 
 public class PendingDuel implements Listener {
 
@@ -44,6 +46,17 @@ public class PendingDuel implements Listener {
     }
 
     return false;
+  }
+
+  @EventHandler
+  public void onInventoryClose(InventoryCloseEvent event) {
+    if (!Objects.equals(event.getInventory().getHolder(), AuroraDuels.getQueueGUI())) {
+      return;
+    }
+
+    if (duel.getQueue() == null) {
+      PENDING_DUELS.remove(this);
+    }
   }
 
   @EventHandler

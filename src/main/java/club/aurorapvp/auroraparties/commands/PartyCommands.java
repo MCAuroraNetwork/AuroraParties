@@ -192,7 +192,7 @@ public class PartyCommands extends BaseCommand {
         return;
       }
 
-      if (PartyJoinRequest.noRequest(party, requester)) {
+      if (!PartyJoinRequest.hasRequest(party, requester)) {
         player.sendMessage(Lang.getComponent("no-requests"));
         return;
       }
@@ -246,7 +246,7 @@ public class PartyCommands extends BaseCommand {
         return;
       }
 
-      if (PartyJoinRequest.noRequest(party, requester)) {
+      if (!PartyJoinRequest.hasRequest(party, requester)) {
         player.sendMessage(Lang.getComponent("no-requests"));
         return;
       }

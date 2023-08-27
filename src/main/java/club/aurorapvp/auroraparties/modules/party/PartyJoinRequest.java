@@ -18,6 +18,12 @@ public class PartyJoinRequest {
   public PartyJoinRequest(Player requester, Party party) {
     this.party = party;
     this.requester = requester;
+
+    if (PartyInvite.hasPendingInvite(requester)) {
+      party.addMember(requester);
+      return;
+    }
+
     requester.sendMessage(Lang.getComponent("request-sent"));
     party.getLeader().sendMessage(Lang.formatComponent("request-received", requester.getName()));
 
@@ -71,7 +77,7 @@ public class PartyJoinRequest {
     return false;
   }
 
-  public static boolean noRequest(Party party, Player requester) {
+  public static boolean hasRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
       if (request.requester == requester && request.party == party) {
         return false;

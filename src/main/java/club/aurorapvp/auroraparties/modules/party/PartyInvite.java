@@ -21,9 +21,10 @@ public class PartyInvite {
     this.invited = invited;
     this.party = Party.getParty(partyLeader);
 
-    assert party != null;
-
-    if (hasPendingInvite(partyLeader, invited)) {
+    if (party == null) {
+      partyLeader.sendMessage(Lang.getComponent("not-in-party"));
+      return;
+    } else if (hasPendingInvite(partyLeader, invited)) {
       partyLeader.sendMessage(
           club.aurorapvp.auroraduels.config.Lang.getComponent("already-sent-invite"));
       return;
@@ -36,6 +37,9 @@ public class PartyInvite {
       return;
     } else if (party.getMembers().size() >= 28) {
       partyLeader.sendMessage(Lang.getComponent("party-full"));
+      return;
+    } else if (PartyJoinRequest.hasRequest(party, invited)) {
+      party.addMember(invited);
       return;
     }
 

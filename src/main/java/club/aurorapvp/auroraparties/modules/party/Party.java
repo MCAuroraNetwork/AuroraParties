@@ -204,6 +204,10 @@ public class Party {
   }
 
   public void addMember(Player player) {
+    if (partyMembers.contains(player)) {
+      return;
+    }
+
     player.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
 
     player.openInventory(this.getMemberGUI().getInventory());

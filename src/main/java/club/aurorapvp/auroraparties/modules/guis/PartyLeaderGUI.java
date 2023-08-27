@@ -142,8 +142,8 @@ public class PartyLeaderGUI extends PartyGUI {
           }
 
           for (Player member : party.getMembers()) {
-            new PendingDuel(player, new StandardDuel(party.getLeader(), member, loc, false, 1));
             player.closeInventory();
+            new PendingDuel(player, new StandardDuel(party.getLeader(), member, loc, false, 1));
             return;
           }
         }
@@ -186,13 +186,13 @@ public class PartyLeaderGUI extends PartyGUI {
       if (players.size() == 2) {
         List<Player> list = new ArrayList<>(players);
 
-        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
         player.closeInventory();
+        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
         return;
       }
 
-      new PendingDuel(player, new RandomTeamDuel(players, loc, false));
       player.closeInventory();
+      new PendingDuel(player, new RandomTeamDuel(players, loc, false));
     }
 
     if (event.getSlot() == 51) {
@@ -201,13 +201,13 @@ public class PartyLeaderGUI extends PartyGUI {
       if (players.size() == 2) {
         List<Player> list = new ArrayList<>(players);
 
-        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
         player.closeInventory();
+        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
         return;
       }
 
-      new PendingDuel(player, new FFADuel(players, loc, false));
       player.closeInventory();
+      new PendingDuel(player, new FFADuel(players, loc, false));
     }
   }
 

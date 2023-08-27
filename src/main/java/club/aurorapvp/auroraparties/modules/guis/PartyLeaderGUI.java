@@ -143,6 +143,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
           for (Player member : party.getMembers()) {
             new PendingDuel(player, new StandardDuel(party.getLeader(), member, loc, false, 1));
+            return;
           }
         }
 

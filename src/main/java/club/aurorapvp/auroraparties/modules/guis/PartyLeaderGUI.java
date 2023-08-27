@@ -3,12 +3,14 @@ package club.aurorapvp.auroraparties.modules.guis;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.RandomTeamDuel;
+import club.aurorapvp.auroraduels.modules.duels.StandardDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -119,6 +121,31 @@ public class PartyLeaderGUI extends PartyGUI {
           return;
         }
 
+        if (party.getMembers().size() == 1) {
+          loc = Duel.getDuelLobby();
+
+          if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+
+            WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
+
+            if (worldSpawn != null) {
+              loc = worldSpawn.getSpawn();
+            }
+
+            if (loc == null) {
+              loc = WorldSpawn.getGlobalSpawn();
+            }
+          }
+
+          if (loc == null) {
+            loc = Bukkit.getWorlds().get(0).getSpawnLocation();
+          }
+
+          for (Player member : party.getMembers()) {
+            new PendingDuel(player, new StandardDuel(party.getLeader(), member, loc, false, 1));
+          }
+        }
+
         player.openInventory(party.getTeamDuelGUI().getInventory());
       }
       case 47, 51 -> {
@@ -153,11 +180,26 @@ public class PartyLeaderGUI extends PartyGUI {
 
     if (event.getSlot() == 47) {
       assert players != null;
+
+      if (players.size() == 2) {
+        List<Player> list = new ArrayList<>(players);
+
+        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
+      }
+
       new PendingDuel(player, new RandomTeamDuel(players, loc, false));
       player.closeInventory();
     }
 
     if (event.getSlot() == 51) {
+      assert players != null;
+
+      if (players.size() == 2) {
+        List<Player> list = new ArrayList<>(players);
+
+        new PendingDuel(player, new StandardDuel(list.get(0), list.get(1), loc, false, 1));
+      }
+
       new PendingDuel(player, new FFADuel(players, loc, false));
       player.closeInventory();
     }

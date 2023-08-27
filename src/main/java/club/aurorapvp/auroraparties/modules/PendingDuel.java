@@ -16,14 +16,14 @@ import org.bukkit.event.Listener;
 public class PendingDuel implements Listener {
 
   protected static final Set<PendingDuel> PENDING_DUELS = new HashSet<>();
-  private final Player partyLeader;
+  private final Player duelStarter;
   private final Duel duel;
 
-  public PendingDuel(Player partyLeader, Duel duel) {
-    this.partyLeader = partyLeader;
+  public PendingDuel(Player duelStarter, Duel duel) {
+    this.duelStarter = duelStarter;
     this.duel = duel;
 
-    AuroraDuels.getQueueGUI().open(partyLeader);
+    AuroraDuels.getQueueGUI().open(duelStarter);
 
     PENDING_DUELS.add(this);
 
@@ -48,7 +48,7 @@ public class PendingDuel implements Listener {
 
   @EventHandler
   public void onQueueSelect(QueueSelectEvent event) {
-    if (partyLeader != event.getPlayer()) {
+    if (duelStarter != event.getPlayer()) {
       return;
     }
 
@@ -64,7 +64,7 @@ public class PendingDuel implements Listener {
 
   @EventHandler
   public void onKitSelect(DuelKitSelectEvent event) {
-    if (partyLeader != event.getPlayer()) {
+    if (duelStarter != event.getPlayer()) {
       return;
     }
 

@@ -3,6 +3,7 @@ package club.aurorapvp.auroraparties.modules.guis;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
+import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -60,6 +61,11 @@ public class PartySelectGUI implements Listener {
         SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 
         if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
+          int slot = InventoryUtil.findSkullSlot(itemStack, page.getInventory());
+          ItemStack lastSkull = InventoryUtil.getLastSkull(page.getInventory());
+
+          InventoryUtil.moveItem(page.getInventory(), lastSkull, slot);
+
           page.getInventory().remove(itemStack);
         }
       }

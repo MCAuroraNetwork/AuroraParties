@@ -54,6 +54,8 @@ public class Lang {
     DEFAULTS.put("no-requests", "prefix <red>No pending requests!");
     DEFAULTS.put("no-permission", "prefix <red>You don't have permission to do that");
     DEFAULTS.put("party-disbanded", "prefix <red>Party disbanded by %s");
+    DEFAULTS.put("in-queue", "prefix <yellow>Player is already in a queue");
+    DEFAULTS.put("you-have-request", "prefix <red>You already have a pending request");
     DEFAULTS.put("leave-party", "<red><bold>Leave Party");
     DEFAULTS.put("disband-party", "<red><bold>Disband Party");
     DEFAULTS.put("exit", "<red><bold>Exit");

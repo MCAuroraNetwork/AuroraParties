@@ -3,20 +3,19 @@ package club.aurorapvp.auroraparties.modules;
 import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
+import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.DuelKitGUI;
+import club.aurorapvp.auroraduels.modules.queues.Queue;
 import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Level;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-public class PendingDuel implements Listener {
+public class PendingDuel {
 
   protected static final Set<PendingDuel> PENDING_DUELS = new HashSet<>();
   private final Player duelStarter;
@@ -25,6 +24,13 @@ public class PendingDuel implements Listener {
   public PendingDuel(Player duelStarter, Duel duel) {
     this.duelStarter = duelStarter;
     this.duel = duel;
+
+    if (Request.hasPendingRequest(duelStarter)) {
+      duelStarter.sendMessage(Lang.getComponent("you-have-request"));
+      return;
+    } else if (Queue.inQueue(duelStarter)) {
+      duelStarter.sendMessage(Lang.getComponent("in-queue"));
+    }
 
     AuroraDuels.getQueueGUI().open(duelStarter);
 
@@ -77,6 +83,7 @@ public class PendingDuel implements Listener {
       return;
     }
 
+    event.getPlayer().closeInventory();
     this.enterQueue();
   }
 

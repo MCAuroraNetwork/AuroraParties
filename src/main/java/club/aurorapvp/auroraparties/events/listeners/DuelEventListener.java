@@ -3,6 +3,7 @@ package club.aurorapvp.auroraparties.events.listeners;
 import club.aurorapvp.auroraduels.events.custom.DuelRequestAcceptEvent;
 import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -14,15 +15,17 @@ public class DuelEventListener implements Listener {
       return;
     }
 
-    if (Party.inParty(event.getPlayer())) {
-      Party party = Party.getParty(event.getPlayer());
+    for (Player player : event.getDuel().getPlayers()) {
+      if (Party.inParty(player)) {
+        Party party = Party.getParty(player);
 
-      assert party != null;
+        assert party != null;
 
-      if (party.isLeader(event.getPlayer())) {
-        party.disband();
-      } else {
-        party.leave(event.getPlayer());
+        if (party.isLeader(player)) {
+          party.disband();
+        } else {
+          party.leave(player);
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-package club.aurorapvp.auroraparties.modules;
+package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;

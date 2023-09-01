@@ -142,7 +142,13 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       return;
     }
 
-    PersistentDataContainer container = cursorItem.getItemMeta().getPersistentDataContainer();
+    ItemMeta meta = cursorItem.getItemMeta();
+
+    if (meta == null) {
+      return;
+    }
+
+    PersistentDataContainer container = meta.getPersistentDataContainer();
 
     if (!Boolean.TRUE.equals(container.get(key, PersistentDataType.BOOLEAN))) {
       return;

@@ -30,6 +30,7 @@ public class PendingDuel {
       return;
     } else if (Queue.inQueue(duelStarter)) {
       duelStarter.sendMessage(Lang.getComponent("in-queue"));
+      return;
     }
 
     AuroraDuels.getQueueGUI().open(duelStarter);

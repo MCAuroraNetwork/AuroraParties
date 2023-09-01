@@ -271,7 +271,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     return null;
   }
 
-  public void addMember(ItemStack memberSkull) {
+  public void addMember(ItemStack memberSkull, Player player) {
     incrementIndex();
 
     ItemStack clone = memberSkull.clone();
@@ -283,7 +283,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
               Component.text(
                   "ELO: "
                       + Rating.getRating("default_duels")
-                      .getScore(party.getLeader())
+                      .getScore(player)
                       .getPoints())));
 
       meta.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);

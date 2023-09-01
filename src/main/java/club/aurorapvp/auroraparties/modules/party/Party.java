@@ -245,7 +245,7 @@ public class Party {
     partyManageGUI.addMember(index, memberSkull);
     partyMemberGUI.addMember(index, memberSkull);
     publicPartyGUI.addMember(index, memberSkull);
-    teamDuelGUI.addMember(memberSkull);
+    teamDuelGUI.addMember(memberSkull, player);
   }
 
   public void leave(Player player) {

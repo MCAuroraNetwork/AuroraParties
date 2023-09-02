@@ -122,7 +122,7 @@ public class Party {
 
     switch (status) {
       case PRIVATE -> {
-        PartySelectGUI.removeParty(this);
+        PartySelectGUI.reload();
 
         meta.lore(
             List.of(
@@ -142,7 +142,7 @@ public class Party {
         PartySelectGUI.addParty(this);
       }
       case INVITE_ONLY -> {
-        PartySelectGUI.removeParty(this);
+        PartySelectGUI.reload();
 
         meta.lore(
             List.of(
@@ -316,7 +316,7 @@ public class Party {
           Lang.formatComponent("party-disbanded", partyLeader.getName()));
     }
 
-    PartySelectGUI.removeParty(this);
+    PartySelectGUI.reload();
 
     PARTIES.remove(this);
   }

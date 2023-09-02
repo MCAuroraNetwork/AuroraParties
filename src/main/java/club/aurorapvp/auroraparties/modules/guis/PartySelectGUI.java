@@ -2,6 +2,7 @@ package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
+import club.aurorapvp.auroraparties.modules.party.Party.Status;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.ArrayList;
@@ -49,29 +50,6 @@ public class PartySelectGUI implements Listener {
     }
   }
 
-  public static void removeParty(Party party) {
-    for (Page page : pages) {
-      for (ItemStack itemStack : page.getInventory().getContents()) {
-
-        if (itemStack == null || !(itemStack.getItemMeta() instanceof SkullMeta meta)) {
-          continue;
-        }
-
-        meta = (SkullMeta) itemStack.getItemMeta();
-        SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
-
-        if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-          int slot = InventoryUtil.findSkullSlot(itemStack, page.getInventory());
-          ItemStack lastSkull = InventoryUtil.getLastSkull(page.getInventory());
-
-          InventoryUtil.moveItem(page.getInventory(), lastSkull, slot);
-
-          page.getInventory().remove(itemStack);
-        }
-      }
-    }
-  }
-
   public static void nextPage(Player player) {
     int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
 
@@ -101,7 +79,10 @@ public class PartySelectGUI implements Listener {
   public static void reload() {
     Set<Party> partySet = Party.getParties();
 
+    partySet.removeIf(party -> party.getStatus() == Status.PRIVATE);
+
     index = 0;
+    pages.clear();
 
     for (int i = 0; i < partySet.size(); i++) {
       if (i % 44 == 0 && i != 0) {

@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -26,13 +27,13 @@ public class PartyMemberGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            Lang.formatComponent("party-name", party.getLeader().getName()));
+            AuroraParties.INSTANCE.getLang().formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
 
     ItemStack leaveParty = new ItemStack(Material.RED_WOOL);
     ItemMeta meta = leaveParty.getItemMeta();
-    meta.displayName(Lang.getComponent("leave-party"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("leave-party"));
     leaveParty.setItemMeta(meta);
 
     inventory.setItem(53, leaveParty);

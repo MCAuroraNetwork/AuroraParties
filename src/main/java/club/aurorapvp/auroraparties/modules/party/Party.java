@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.guis.PartyLeaderGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartyManageGUI;
@@ -47,14 +48,14 @@ public class Party {
 
     ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
     ItemMeta meta = displayItem.getItemMeta();
-    meta.displayName(Lang.formatComponent("party-name", partyLeader.getName()));
+    meta.displayName(AuroraParties.INSTANCE.getLang().formatComponent("party-name", partyLeader.getName()));
     displayItem.setItemMeta(meta);
 
     this.displayItem = displayItem;
 
     this.setStatus(Status.INVITE_ONLY);
 
-    partyLeader.sendMessage(Lang.getComponent("party-created"));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("party-created"));
 
     PARTIES.add(this);
   }
@@ -138,8 +139,6 @@ public class Party {
                 Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
-
-        PartySelectGUI.addParty(this);
       }
       case INVITE_ONLY -> {
         PartySelectGUI.reload();
@@ -150,8 +149,6 @@ public class Party {
                 Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
-
-        PartySelectGUI.addParty(this);
       }
     }
   }
@@ -206,15 +203,15 @@ public class Party {
       return;
     }
 
-    player.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
+    player.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-joined-party", player.getName()));
 
     player.openInventory(this.getMemberGUI().getInventory());
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-joined-party", player.getName()));
     }
 
-    partyLeader.sendMessage(Lang.formatComponent("player-joined-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-joined-party", player.getName()));
 
     partyMembers.add(player);
 
@@ -251,24 +248,24 @@ public class Party {
   public void leave(Player player) {
     this.removeMember(player);
 
-    player.sendMessage(Lang.getComponent("left-party"));
+    player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("left-party"));
 
-    partyLeader.sendMessage(Lang.formatComponent("player-left-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-left-party", player.getName()));
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(Lang.formatComponent("player-left-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-left-party", player.getName()));
     }
   }
 
   public void kick(Player player) {
     this.removeMember(player);
 
-    player.sendMessage(Lang.getComponent("removed-from-party"));
+    player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("removed-from-party"));
 
-    partyLeader.sendMessage(Lang.formatComponent("player-removed-from-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-removed-from-party", player.getName()));
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(Lang.formatComponent("player-removed-from-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("player-removed-from-party", player.getName()));
     }
 
     ItemMeta meta = displayItem.getItemMeta();
@@ -309,11 +306,11 @@ public class Party {
 
   public void disband() {
     partyLeader.sendMessage(
-        Lang.formatComponent("party-disbanded", partyLeader.getName()));
+        AuroraParties.INSTANCE.getLang().formatComponent("party-disbanded", partyLeader.getName()));
 
     for (Player player : partyMembers) {
       player.sendMessage(
-          Lang.formatComponent("party-disbanded", partyLeader.getName()));
+          AuroraParties.INSTANCE.getLang().formatComponent("party-disbanded", partyLeader.getName()));
     }
 
     PartySelectGUI.reload();

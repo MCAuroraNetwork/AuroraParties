@@ -1,12 +1,13 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.Party.Status;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
-import club.aurorapvp.auroraparties.util.InventoryUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -39,17 +40,6 @@ public class PartySelectGUI implements Listener {
     return pages.get(currentPage).getInventory();
   }
 
-  public static void addParty(Party party) {
-    Page lastPage = pages.get(index - 1);
-
-    if (lastPage.getInventory().getContents()[44] != null) {
-      pages.add(new Page(party));
-      index++;
-    } else {
-      lastPage.getInventory().addItem(party.getDisplayItem());
-    }
-  }
-
   public static void nextPage(Player player) {
     int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
 
@@ -77,7 +67,7 @@ public class PartySelectGUI implements Listener {
   }
 
   public static void reload() {
-    Set<Party> partySet = Party.getParties();
+    Set<Party> partySet = new HashSet<>(Party.getParties());
 
     partySet.removeIf(party -> party.getStatus() == Status.PRIVATE);
 
@@ -145,7 +135,7 @@ public class PartySelectGUI implements Listener {
     }
 
     if (Party.inParty(player)) {
-      player.sendMessage(Lang.getComponent("already-in-party"));
+      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("already-in-party"));
       return;
     }
 
@@ -174,7 +164,7 @@ public class PartySelectGUI implements Listener {
     private final Inventory inventory;
 
     private Page(Party[] parties) {
-      inventory = Bukkit.createInventory(this, 54, Lang.getComponent("parties-gui"));
+      inventory = Bukkit.createInventory(this, 54, AuroraParties.INSTANCE.getLang().getComponent("parties-gui"));
 
       for (Party party : parties) {
         if (party.getStatus() != Party.Status.PRIVATE) {
@@ -186,35 +176,15 @@ public class PartySelectGUI implements Listener {
 
       ItemStack nextPage = new ItemStack(Material.PAPER);
       meta = nextPage.getItemMeta();
-      meta.displayName(Lang.getComponent("next-page"));
+      meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("next-page"));
       nextPage.setItemMeta(meta);
 
       ItemStack previousPage = new ItemStack(Material.PAPER);
       meta = previousPage.getItemMeta();
-      meta.displayName(Lang.getComponent("previous-page"));
+      meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("previous-page"));
       previousPage.setItemMeta(meta);
 
       inventory.setItem(45, previousPage);
-      inventory.setItem(53, nextPage);
-    }
-
-    private Page(Party party) {
-      inventory = Bukkit.createInventory(this, 54, Lang.getComponent("GUIName"));
-      inventory.addItem(party.getDisplayItem());
-
-      ItemMeta meta;
-
-      ItemStack nextPage = new ItemStack(Material.PAPER);
-      meta = nextPage.getItemMeta();
-      meta.displayName(Lang.getComponent("next-page"));
-      nextPage.setItemMeta(meta);
-
-      ItemStack previousPage = new ItemStack(Material.PAPER);
-      meta = previousPage.getItemMeta();
-      meta.displayName(Lang.getComponent("previous-page"));
-      previousPage.setItemMeta(meta);
-
-      inventory.setItem(45, nextPage);
       inventory.setItem(53, nextPage);
     }
 

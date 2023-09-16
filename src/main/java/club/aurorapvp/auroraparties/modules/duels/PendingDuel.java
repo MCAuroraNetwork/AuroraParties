@@ -26,10 +26,10 @@ public class PendingDuel {
     this.duel = duel;
 
     if (Request.hasPendingRequest(duelStarter)) {
-      duelStarter.sendMessage(Lang.getComponent("you-have-request"));
+      duelStarter.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("you-have-request"));
       return;
     } else if (Queue.inQueue(duelStarter)) {
-      duelStarter.sendMessage(Lang.getComponent("in-queue"));
+      duelStarter.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("in-queue"));
       return;
     }
 

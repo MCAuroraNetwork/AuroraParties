@@ -6,6 +6,7 @@ import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.events.EventManager;
 import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AuroraParties extends JavaPlugin {
@@ -14,6 +15,8 @@ public final class AuroraParties extends JavaPlugin {
   private static boolean auroraCombatInstalled = false;
   private static boolean auroraWarpsInstalled = false;
   private static boolean auroraKitsInstalled = false;
+  private Config config;
+  private Lang lang;
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
@@ -27,6 +30,14 @@ public final class AuroraParties extends JavaPlugin {
     return auroraKitsInstalled;
   }
 
+  public YamlConfiguration getConfig() {
+    return config.getYaml();
+  }
+
+  public Lang getLang() {
+    return lang;
+  }
+
   @Override
   public void onEnable() {
     long startTime = System.currentTimeMillis();
@@ -34,21 +45,21 @@ public final class AuroraParties extends JavaPlugin {
     INSTANCE = this;
 
     // Initialize configs
-    Config.init();
-    Lang.init();
+    config = new Config();
+    lang = new Lang();
 
     if (Bukkit.getPluginManager().getPlugin("AuroraCombat") != null
-        && Config.get().getBoolean("optional-plugins.auroracombat-compatibility")) {
+        && getConfig().getBoolean("optional-plugins.auroracombat-compatibility")) {
       auroraCombatInstalled = true;
     }
 
     if (Bukkit.getPluginManager().getPlugin("AuroraWarps") != null
-        && Config.get().getBoolean("optional-plugins.aurorawarps-compatibility")) {
+        && getConfig().getBoolean("optional-plugins.aurorawarps-compatibility")) {
       auroraWarpsInstalled = true;
     }
 
     if ((Bukkit.getPluginManager().getPlugin("AuroraKits") != null)
-        && Config.get().getBoolean("optional-plugins.aurorakits-compatibility")) {
+        && getConfig().getBoolean("optional-plugins.aurorakits-compatibility")) {
       auroraKitsInstalled = true;
     }
 
@@ -62,7 +73,10 @@ public final class AuroraParties extends JavaPlugin {
 
   @Override
   public void onDisable() {
-    // Plugin shutdown logic
     getLogger().info("AuroraParties disabled");
+  }
+
+  public void reloadConfig() {
+    config.reload();
   }
 }

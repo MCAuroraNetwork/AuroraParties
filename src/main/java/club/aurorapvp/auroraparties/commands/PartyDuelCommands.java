@@ -3,6 +3,7 @@ package club.aurorapvp.auroraparties.commands;
 import club.aurorapvp.auroraduels.config.Lang;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
@@ -37,21 +38,21 @@ public class PartyDuelCommands extends BaseCommand {
 
     assert party != null;
     if (!party.isLeader(player)) {
-      player.sendMessage(club.aurorapvp.auroraparties.config.Lang.getComponent("no-permission"));
+      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
       return;
     }
 
     Player requested = Bukkit.getPlayer(playerName);
 
     if (requested == null) {
-      player.sendMessage(Lang.getComponent("unknown-opponent"));
+      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-opponent"));
       return;
     }
 
     Party opponentParty = Party.getParty(requested);
 
     if (opponentParty == null) {
-      player.sendMessage(Lang.getComponent("unknown-party"));
+      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-party"));
       return;
     }
 

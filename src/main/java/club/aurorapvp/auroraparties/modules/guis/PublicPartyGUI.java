@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -21,7 +22,7 @@ public class PublicPartyGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            Lang.formatComponent("party-name", party.getLeader().getName()));
+            AuroraParties.INSTANCE.getLang().formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
   }

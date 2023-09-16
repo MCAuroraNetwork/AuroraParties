@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public class PartyInvite {
     this.party = Party.getParty(partyLeader);
 
     if (party == null) {
-      partyLeader.sendMessage(Lang.getComponent("not-in-party"));
+      partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-in-party"));
       return;
     } else if (hasPendingInvite(partyLeader, invited)) {
       partyLeader.sendMessage(
@@ -33,10 +34,10 @@ public class PartyInvite {
           club.aurorapvp.auroraduels.config.Lang.getComponent("already-in-party"));
       return;
     } else if (!party.isLeader(partyLeader)) {
-      partyLeader.sendMessage(Lang.getComponent("no-permission"));
+      partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
       return;
     } else if (party.getMembers().size() >= 28) {
-      partyLeader.sendMessage(Lang.getComponent("party-full"));
+      partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("party-full"));
       return;
     } else if (PartyJoinRequest.hasRequest(party, invited)) {
       party.addMember(invited);
@@ -45,9 +46,9 @@ public class PartyInvite {
 
     PENDING_INVITES.add(this);
 
-    partyLeader.sendMessage(Lang.getComponent("invite-sent"));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-sent"));
     invited.sendMessage(
-        Lang.formatComponent("invite-received", partyLeader.getName()));
+        AuroraParties.INSTANCE.getLang().formatComponent("invite-received", partyLeader.getName()));
 
     PartyInvite thisRequest = this;
 
@@ -57,14 +58,14 @@ public class PartyInvite {
               @Override
               public void run() {
                 if (PENDING_INVITES.contains(thisRequest)) {
-                  partyLeader.sendMessage(Lang.getComponent("invite-timed-out"));
-                  invited.sendMessage(Lang.getComponent("invite-timed-out"));
+                  partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-timed-out"));
+                  invited.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-timed-out"));
                   PENDING_INVITES.remove(thisRequest);
                   this.cancel();
                 }
               }
             },
-            Config.get().getInt("invites.timeout-time"));
+            AuroraParties.INSTANCE.getConfig().getInt("invites.timeout-time"));
   }
 
   public static PartyInvite getInvite(Party party) {
@@ -140,14 +141,14 @@ public class PartyInvite {
       }
     }
 
-    partyLeader.sendMessage(Lang.getComponent("invite-accepted"));
-    invited.sendMessage(Lang.getComponent("invite-accepted"));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-accepted"));
+    invited.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-accepted"));
   }
 
   public void deny() {
     PENDING_INVITES.remove(this);
 
-    partyLeader.sendMessage(Lang.getComponent("invite-denied"));
-    invited.sendMessage(Lang.getComponent("invite-denied"));
+    partyLeader.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-denied"));
+    invited.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("invite-denied"));
   }
 }

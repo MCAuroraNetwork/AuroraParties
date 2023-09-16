@@ -61,7 +61,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
         Bukkit.createInventory(
             this,
             54,
-            Lang.getComponent("team-duel"));
+            AuroraParties.INSTANCE.getLang().getComponent("team-duel"));
 
     for (int row = 0; row < 6; row++) {
       int blueSlot = row * 9 + 3;
@@ -75,12 +75,12 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     ItemStack startDuel = new ItemStack(Material.GREEN_WOOL);
     meta = startDuel.getItemMeta();
-    meta.displayName(Lang.getComponent("start-team-duel"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("start-team-duel"));
     startDuel.setItemMeta(meta);
 
     ItemStack exit = new ItemStack(Material.RED_WOOL);
     meta = exit.getItemMeta();
-    meta.displayName(Lang.getComponent("exit"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("exit"));
     exit.setItemMeta(meta);
 
     inventory.setItem(49, startDuel);
@@ -216,7 +216,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     }
 
     if (leftItemNames.isEmpty() || rightItemNames.isEmpty()) {
-      party.getLeader().sendMessage(Lang.getComponent("not-enough-players"));
+      party.getLeader().sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-enough-players"));
       party.getLeader().closeInventory();
       return;
     }

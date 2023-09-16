@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
+import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -28,7 +29,7 @@ public class PartyManageGUI extends PartyGUI {
     inventory = Bukkit.createInventory(
         this,
         54,
-        Lang.getComponent("manage-party"));
+        AuroraParties.INSTANCE.getLang().getComponent("manage-party"));
 
     ItemMeta meta = leaderSkull.getItemMeta();
     meta.lore(
@@ -42,21 +43,21 @@ public class PartyManageGUI extends PartyGUI {
 
     ItemStack disbandParty = new ItemStack(Material.RED_WOOL);
     meta = disbandParty.getItemMeta();
-    meta.displayName(Lang.getComponent("disband-party"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("disband-party"));
     disbandParty.setItemMeta(meta);
 
     inventory.setItem(53, disbandParty);
 
     ItemStack exit = new ItemStack(Material.ENDER_PEARL);
     meta = exit.getItemMeta();
-    meta.displayName(Lang.getComponent("exit"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("exit"));
     exit.setItemMeta(meta);
 
     inventory.setItem(45, exit);
 
     ItemStack status = new ItemStack(Material.REDSTONE);
     meta = status.getItemMeta();
-    meta.displayName(Lang.getComponent("status"));
+    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("status"));
     meta.lore(List.of(Component.text("Invite Only")));
     status.setItemMeta(meta);
 

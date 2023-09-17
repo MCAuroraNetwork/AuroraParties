@@ -8,13 +8,14 @@ import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public final class AuroraParties extends JavaPlugin {
 
   private static AuroraParties INSTANCE;
-  private static boolean auroraCombatInstalled = false;
-  private static boolean auroraWarpsInstalled = false;
-  private static boolean auroraKitsInstalled = false;
+  private boolean auroraCombatInstalled = false;
+  private boolean auroraWarpsInstalled = false;
+  private boolean auroraKitsInstalled = false;
   private Config config;
   private Lang lang;
 
@@ -22,19 +23,19 @@ public final class AuroraParties extends JavaPlugin {
     return INSTANCE;
   }
 
-  public static boolean isAuroraCombatInstalled() {
+  public boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;
   }
 
-  public static boolean isAuroraWarpsInstalled() {
+  public boolean isAuroraWarpsInstalled() {
     return auroraWarpsInstalled;
   }
 
-  public static boolean isAuroraKitsInstalled() {
+  public boolean isAuroraKitsInstalled() {
     return auroraKitsInstalled;
   }
 
-  public YamlConfiguration getConfig() {
+  public @NotNull YamlConfiguration getConfig() {
     return config.getYaml();
   }
 

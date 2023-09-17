@@ -79,7 +79,7 @@ public class PendingDuel {
 
     duel.setQueue(event.getQueue());
 
-    if (AuroraParties.isAuroraKitsInstalled()) {
+    if (AuroraParties.getInstance().isAuroraKitsInstalled()) {
       DuelKitGUI.getGUI(event.getPlayer()).open();
       return;
     }

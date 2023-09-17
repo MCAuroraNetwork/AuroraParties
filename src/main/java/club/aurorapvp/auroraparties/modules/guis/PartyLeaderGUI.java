@@ -124,7 +124,7 @@ public class PartyLeaderGUI extends PartyGUI {
         if (party.getMembers().size() == 1) {
           loc = Duel.getDuelLobby();
 
-          if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+          if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
 
             WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
@@ -161,7 +161,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
         loc = Duel.getDuelLobby();
 
-        if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+        if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
 
           WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 

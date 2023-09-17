@@ -86,7 +86,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     inventory.setItem(49, startDuel);
     inventory.setItem(40, exit);
 
-    if (AuroraParties.isAuroraCombatInstalled()) {
+    if (AuroraParties.getInstance().isAuroraCombatInstalled()) {
       meta = leaderSkull.getItemMeta();
       meta.lore(
           List.of(
@@ -234,7 +234,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     Location loc = Duel.getDuelLobby();
 
-    if (AuroraParties.isAuroraWarpsInstalled() && loc == null) {
+    if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
 
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
@@ -270,7 +270,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     ItemStack clone = memberSkull.clone();
 
-    if (AuroraParties.isAuroraCombatInstalled()) {
+    if (AuroraParties.getInstance().isAuroraCombatInstalled()) {
       ItemMeta meta = memberSkull.getItemMeta();
       meta.lore(
           List.of(

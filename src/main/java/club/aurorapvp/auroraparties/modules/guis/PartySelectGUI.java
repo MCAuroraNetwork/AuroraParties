@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules.guis;
 
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.Party.Status;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;

@@ -220,15 +220,15 @@ public class Party {
     switch (status) {
       case PRIVATE -> meta.lore(
           List.of(
-              Component.text("Private"), Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text("Private"), Component.text(this.getMembers().size() + 1 + " Members")));
       case ANYONE_CAN_JOIN -> meta.lore(
           List.of(
               Component.text("Anyone Can Join"),
-              Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text(this.getMembers().size() + 1 + " Members")));
       case INVITE_ONLY -> meta.lore(
           List.of(
               Component.text("Invite Only"),
-              Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text(this.getMembers().size() + 1 + " Members")));
     }
 
     displayItem.setItemMeta(meta);
@@ -273,15 +273,15 @@ public class Party {
     switch (status) {
       case PRIVATE -> meta.lore(
           List.of(
-              Component.text("Private"), Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text("Private"), Component.text(this.getMembers().size() + 1 + " Members")));
       case ANYONE_CAN_JOIN -> meta.lore(
           List.of(
               Component.text("Anyone Can Join"),
-              Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text(this.getMembers().size() + 1 + " Members")));
       case INVITE_ONLY -> meta.lore(
           List.of(
               Component.text("Invite Only"),
-              Component.text(this.getMembers().size() + 1 + "Members")));
+              Component.text(this.getMembers().size() + 1 + " Members")));
     }
 
     displayItem.setItemMeta(meta);

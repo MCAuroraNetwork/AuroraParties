@@ -4,6 +4,7 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.config.Config;
 import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.Timer;
@@ -61,7 +62,8 @@ public class PartyJoinRequest {
   }
 
   public static PartyJoinRequest getRequest(Party party) {
-    for (PartyJoinRequest request : PENDING_REQUESTS) {
+    for (Iterator<PartyJoinRequest> it = PENDING_REQUESTS.descendingIterator(); it.hasNext(); ) {
+      PartyJoinRequest request = it.next();
       if (request.getParty() == party) {
         return request;
       }

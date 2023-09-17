@@ -1,8 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Config;
-import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -27,11 +25,11 @@ public class PartyInvite {
       return;
     } else if (hasPendingInvite(partyLeader, invited)) {
       partyLeader.sendMessage(
-          club.aurorapvp.auroraduels.config.Lang.getComponent("already-sent-invite"));
+          AuroraParties.getInstance().getLang().getComponent("already-sent-invite"));
       return;
     } else if (Party.inParty(invited)) {
       partyLeader.sendMessage(
-          club.aurorapvp.auroraduels.config.Lang.getComponent("already-in-party"));
+          AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
     } else if (!party.isLeader(partyLeader)) {
       partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
@@ -48,7 +46,8 @@ public class PartyInvite {
 
     partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-sent"));
     invited.sendMessage(
-        AuroraParties.getInstance().getLang().formatComponent("invite-received", partyLeader.getName()));
+        AuroraParties.getInstance().getLang()
+            .formatComponent("invite-received", partyLeader.getName()));
 
     PartyInvite thisRequest = this;
 
@@ -58,8 +57,10 @@ public class PartyInvite {
               @Override
               public void run() {
                 if (PENDING_INVITES.contains(thisRequest)) {
-                  partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
-                  invited.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
+                  partyLeader.sendMessage(
+                      AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
+                  invited.sendMessage(
+                      AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
                   PENDING_INVITES.remove(thisRequest);
                   this.cancel();
                 }

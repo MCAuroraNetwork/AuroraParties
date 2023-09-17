@@ -25,8 +25,8 @@ public class PartyJoinRequest {
       return;
     }
 
-    requester.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-sent"));
-    party.getLeader().sendMessage(AuroraParties.INSTANCE.getLang().formatComponent("request-received", requester.getName()));
+    requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-sent"));
+    party.getLeader().sendMessage(AuroraParties.getInstance().getLang().formatComponent("request-received", requester.getName()));
 
     PartyJoinRequest thisRequest = this;
 
@@ -36,14 +36,14 @@ public class PartyJoinRequest {
               @Override
               public void run() {
                 if (PENDING_REQUESTS.contains(thisRequest)) {
-                  requester.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-timed-out"));
-                  party.getLeader().sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-timed-out"));
+                  requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
+                  party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
                   PENDING_REQUESTS.remove(thisRequest);
                   this.cancel();
                 }
               }
             },
-            AuroraParties.INSTANCE.getConfig().getInt("join-requests.timeout-time"));
+            AuroraParties.getInstance().getConfig().getInt("join-requests.timeout-time"));
 
     PENDING_REQUESTS.add(this);
   }
@@ -107,19 +107,19 @@ public class PartyJoinRequest {
       }
     }
 
-    requester.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-accepted"));
+    requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-accepted"));
 
     party.addMember(requester);
     PENDING_REQUESTS.remove(this);
   }
 
   public void deny() {
-    requester.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-denied"));
+    requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-denied"));
     PENDING_REQUESTS.remove(this);
   }
 
   public void cancel() {
-    party.getLeader().sendMessage(AuroraParties.INSTANCE.getLang().getComponent("request-cancelled"));
+    party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("request-cancelled"));
     PENDING_REQUESTS.remove(this);
   }
 }

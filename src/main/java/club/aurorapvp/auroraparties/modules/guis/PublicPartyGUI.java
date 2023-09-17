@@ -22,7 +22,7 @@ public class PublicPartyGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            AuroraParties.INSTANCE.getLang().formatComponent("party-name", party.getLeader().getName()));
+            AuroraParties.getInstance().getLang().formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
   }

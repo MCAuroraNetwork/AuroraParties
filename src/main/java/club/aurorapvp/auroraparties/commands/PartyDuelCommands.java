@@ -38,21 +38,21 @@ public class PartyDuelCommands extends BaseCommand {
 
     assert party != null;
     if (!party.isLeader(player)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
       return;
     }
 
     Player requested = Bukkit.getPlayer(playerName);
 
     if (requested == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-opponent"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-opponent"));
       return;
     }
 
     Party opponentParty = Party.getParty(requested);
 
     if (opponentParty == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-party"));
       return;
     }
 

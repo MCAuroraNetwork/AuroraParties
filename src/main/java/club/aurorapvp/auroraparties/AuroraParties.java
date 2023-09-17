@@ -11,12 +11,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AuroraParties extends JavaPlugin {
 
-  public static AuroraParties INSTANCE;
+  private static AuroraParties INSTANCE;
   private static boolean auroraCombatInstalled = false;
   private static boolean auroraWarpsInstalled = false;
   private static boolean auroraKitsInstalled = false;
   private Config config;
   private Lang lang;
+
+  public static AuroraParties getInstance() {
+    return INSTANCE;
+  }
 
   public static boolean isAuroraCombatInstalled() {
     return auroraCombatInstalled;

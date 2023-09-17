@@ -29,7 +29,7 @@ public class PartyManageGUI extends PartyGUI {
     inventory = Bukkit.createInventory(
         this,
         54,
-        AuroraParties.INSTANCE.getLang().getComponent("manage-party"));
+        AuroraParties.getInstance().getLang().getComponent("manage-party"));
 
     ItemMeta meta = leaderSkull.getItemMeta();
     meta.lore(
@@ -43,21 +43,21 @@ public class PartyManageGUI extends PartyGUI {
 
     ItemStack disbandParty = new ItemStack(Material.RED_WOOL);
     meta = disbandParty.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("disband-party"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("disband-party"));
     disbandParty.setItemMeta(meta);
 
     inventory.setItem(53, disbandParty);
 
     ItemStack exit = new ItemStack(Material.ENDER_PEARL);
     meta = exit.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("exit"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("exit"));
     exit.setItemMeta(meta);
 
     inventory.setItem(45, exit);
 
     ItemStack status = new ItemStack(Material.REDSTONE);
     meta = status.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("status"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("status"));
     meta.lore(List.of(Component.text("Invite Only")));
     status.setItemMeta(meta);
 

@@ -22,10 +22,10 @@ public class PluginCommands extends BaseCommand {
   public void onReload() {
     long startTime = System.currentTimeMillis();
 
-    AuroraParties.INSTANCE.reloadConfig();
-    AuroraParties.INSTANCE.getLang().reload();
+    AuroraParties.getInstance().reloadConfig();
+    AuroraParties.getInstance().getLang().reload();
 
-    AuroraParties.INSTANCE
+    AuroraParties.getInstance()
         .getLogger()
         .info("AuroraParties reloaded in " + (System.currentTimeMillis() - startTime) + "ms");
   }
@@ -36,6 +36,6 @@ public class PluginCommands extends BaseCommand {
   @Description("Lists all available plugin commands and their function")
   @SuppressWarnings("unused")
   public void onHelp(Player player) {
-    player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("help-command"));
+    player.sendMessage(AuroraParties.getInstance().getLang().getComponent("help-command"));
   }
 }

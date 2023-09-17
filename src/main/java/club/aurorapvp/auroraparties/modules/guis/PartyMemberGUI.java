@@ -27,13 +27,13 @@ public class PartyMemberGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            AuroraParties.INSTANCE.getLang().formatComponent("party-name", party.getLeader().getName()));
+            AuroraParties.getInstance().getLang().formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
 
     ItemStack leaveParty = new ItemStack(Material.RED_WOOL);
     ItemMeta meta = leaveParty.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("leave-party"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("leave-party"));
     leaveParty.setItemMeta(meta);
 
     inventory.setItem(53, leaveParty);

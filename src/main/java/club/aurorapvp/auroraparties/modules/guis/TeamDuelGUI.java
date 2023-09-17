@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeamDuelGUI implements InventoryHolder, Listener {
 
-  private static final NamespacedKey key = new NamespacedKey(AuroraParties.INSTANCE, "ui-item");
+  private static final NamespacedKey key = new NamespacedKey(AuroraParties.getInstance(), "ui-item");
   private final Inventory inventory;
   private final Party party;
   private int index = 0;
@@ -61,7 +61,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
         Bukkit.createInventory(
             this,
             54,
-            AuroraParties.INSTANCE.getLang().getComponent("team-duel"));
+            AuroraParties.getInstance().getLang().getComponent("team-duel"));
 
     for (int row = 0; row < 6; row++) {
       int blueSlot = row * 9 + 3;
@@ -75,12 +75,12 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     ItemStack startDuel = new ItemStack(Material.GREEN_WOOL);
     meta = startDuel.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("start-team-duel"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("start-team-duel"));
     startDuel.setItemMeta(meta);
 
     ItemStack exit = new ItemStack(Material.RED_WOOL);
     meta = exit.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("exit"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("exit"));
     exit.setItemMeta(meta);
 
     inventory.setItem(49, startDuel);
@@ -100,7 +100,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     inventory.setItem(0, leaderSkull);
 
-    Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
+    Bukkit.getPluginManager().registerEvents(this, AuroraParties.getInstance());
   }
 
   @EventHandler
@@ -136,13 +136,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       return;
     }
 
-    ItemStack cursorItem = event.getCursor();
-
-    if (cursorItem == null) {
-      return;
-    }
-
-    ItemMeta meta = cursorItem.getItemMeta();
+    ItemMeta meta = event.getCursor().getItemMeta();
 
     if (meta == null) {
       return;
@@ -216,7 +210,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     }
 
     if (leftItemNames.isEmpty() || rightItemNames.isEmpty()) {
-      party.getLeader().sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-enough-players"));
+      party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("not-enough-players"));
       party.getLeader().closeInventory();
       return;
     }

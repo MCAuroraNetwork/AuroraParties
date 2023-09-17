@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Config {
 
-  private final File FILE = new File(AuroraParties.INSTANCE.getDataFolder(), "config.yml");
+  private final File FILE = new File(AuroraParties.getInstance().getDataFolder(), "config.yml");
   private YamlConfiguration config;
 
   public Config() {
@@ -35,7 +35,7 @@ public class Config {
     try {
       getYaml().save(FILE);
     } catch (IOException e) {
-      AuroraParties.INSTANCE.getLogger().log(Level.SEVERE, "Failed to save config file", e);
+      AuroraParties.getInstance().getLogger().log(Level.SEVERE, "Failed to save config file", e);
     }
   }
 
@@ -54,10 +54,10 @@ public class Config {
 
         this.generateDefaults();
       } catch (IOException e) {
-        AuroraParties.INSTANCE.getLogger().log(Level.SEVERE, "Failed to generate config file", e);
+        AuroraParties.getInstance().getLogger().log(Level.SEVERE, "Failed to generate config file", e);
       }
     }
     config = YamlConfiguration.loadConfiguration(FILE);
-    AuroraParties.INSTANCE.getLogger().info("Config reloaded!");
+    AuroraParties.getInstance().getLogger().info("Config reloaded!");
   }
 }

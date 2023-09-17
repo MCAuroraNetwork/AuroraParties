@@ -10,9 +10,9 @@ import org.bukkit.Bukkit;
 public class EventManager {
 
   public static void init() {
-    Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), AuroraParties.INSTANCE);
-    Bukkit.getPluginManager().registerEvents(new DuelEventListener(), AuroraParties.INSTANCE);
-    Bukkit.getPluginManager().registerEvents(new PartySelectGUI(), AuroraParties.INSTANCE);
-    Bukkit.getPluginManager().registerEvents(new PendingDuelEventListener(), AuroraParties.INSTANCE);
+    Bukkit.getPluginManager().registerEvents(new PlayerEventListener(), AuroraParties.getInstance());
+    Bukkit.getPluginManager().registerEvents(new DuelEventListener(), AuroraParties.getInstance());
+    Bukkit.getPluginManager().registerEvents(new PartySelectGUI(), AuroraParties.getInstance());
+    Bukkit.getPluginManager().registerEvents(new PendingDuelEventListener(), AuroraParties.getInstance());
   }
 }

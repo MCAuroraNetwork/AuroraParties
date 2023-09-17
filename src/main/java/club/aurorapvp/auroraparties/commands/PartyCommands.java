@@ -49,7 +49,7 @@ public class PartyCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onCreate(Player player) {
     if (Party.inParty(player)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("already-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
     }
 
@@ -64,10 +64,10 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(player);
 
     if (party == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-in-party"));
       return;
     } else if (!party.isLeader(player)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
       return;
     }
 
@@ -84,17 +84,17 @@ public class PartyCommands extends BaseCommand {
     Party party = Party.getParty(player);
 
     if (party == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-in-party"));
       return;
     }
 
     Player invited = Bukkit.getPlayer(playerName);
 
     if (invited == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-player"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-player"));
       return;
     } else if (party.contains(invited)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("already-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
     }
 
@@ -111,19 +111,19 @@ public class PartyCommands extends BaseCommand {
     Player requested = Bukkit.getPlayer(playerName);
 
     if (requested == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-player"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-player"));
       return;
     }
 
     Party party = Party.getParty(requested);
 
     if (party == null) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-party"));
       return;
     }
 
     if (party.contains(player) || Party.inParty(player)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("already-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
     }
 
@@ -159,7 +159,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyInvite.hasPendingInvite(inviter, player)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-invites"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-invites"));
         return;
       }
 
@@ -178,7 +178,7 @@ public class PartyCommands extends BaseCommand {
 
       assert party != null;
       if (!party.isLeader(player)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
         return;
       }
 
@@ -194,7 +194,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyJoinRequest.hasRequest(party, requester)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-requests"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-requests"));
         return;
       }
 
@@ -222,7 +222,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyInvite.hasPendingInvite(inviter, player)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-invites"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-invites"));
         return;
       }
 
@@ -232,7 +232,7 @@ public class PartyCommands extends BaseCommand {
 
       assert party != null;
       if (!party.isLeader(player)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-permission"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
         return;
       }
 
@@ -248,7 +248,7 @@ public class PartyCommands extends BaseCommand {
       }
 
       if (!PartyJoinRequest.hasRequest(party, requester)) {
-        player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("no-requests"));
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-requests"));
         return;
       }
 
@@ -262,6 +262,6 @@ public class PartyCommands extends BaseCommand {
   @CommandPermission("auroraparties.command.party.help")
   @SuppressWarnings("unused")
   public void onHelp(Player player) {
-    player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("unknown-party-command"));
+    player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-party-command"));
   }
 }

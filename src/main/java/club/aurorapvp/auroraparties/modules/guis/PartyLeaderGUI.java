@@ -38,20 +38,20 @@ public class PartyLeaderGUI extends PartyGUI {
         Bukkit.createInventory(
             this,
             54,
-            AuroraParties.INSTANCE.getLang().formatComponent("party-name", party.getLeader().getName()));
+            AuroraParties.getInstance().getLang().formatComponent("party-name", party.getLeader().getName()));
 
     inventory.setItem(10, leaderSkull);
 
     ItemStack disbandParty = new ItemStack(Material.RED_WOOL);
     ItemMeta meta = disbandParty.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("disband-party"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("disband-party"));
     disbandParty.setItemMeta(meta);
 
     inventory.setItem(53, disbandParty);
 
     ItemStack manageParty = new ItemStack(Material.ENDER_PEARL);
     meta = manageParty.getItemMeta();
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("manage-party"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("manage-party"));
     manageParty.setItemMeta(meta);
 
     inventory.setItem(45, manageParty);
@@ -59,7 +59,7 @@ public class PartyLeaderGUI extends PartyGUI {
     ItemStack teamDuel = new ItemStack(Material.NETHERITE_SWORD);
     meta = teamDuel.getItemMeta();
     meta.lore(List.of(Component.text("")));
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("create-team-duel"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("create-team-duel"));
     teamDuel.setItemMeta(meta);
 
     inventory.setItem(49, teamDuel);
@@ -67,7 +67,7 @@ public class PartyLeaderGUI extends PartyGUI {
     ItemStack partyDuel = new ItemStack(Material.DIAMOND_AXE);
     meta = partyDuel.getItemMeta();
     meta.lore(List.of(Component.text("")));
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("start-random-team-duel"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("start-random-team-duel"));
     partyDuel.setItemMeta(meta);
 
     inventory.setItem(47, partyDuel);
@@ -75,7 +75,7 @@ public class PartyLeaderGUI extends PartyGUI {
     ItemStack ffaDuel = new ItemStack(Material.DIAMOND_SWORD);
     meta = ffaDuel.getItemMeta();
     meta.lore(List.of(Component.text("")));
-    meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("start-ffa-duel"));
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("start-ffa-duel"));
     ffaDuel.setItemMeta(meta);
 
     inventory.setItem(51, ffaDuel);
@@ -117,7 +117,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
       case 49 -> {
         if (party.getMembers().isEmpty()) {
-          player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-enough-players"));
+          player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-enough-players"));
           return;
         }
 
@@ -152,7 +152,7 @@ public class PartyLeaderGUI extends PartyGUI {
       }
       case 47, 51 -> {
         if (party.getMembers().isEmpty()) {
-          player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("not-enough-players"));
+          player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-enough-players"));
           return;
         }
 

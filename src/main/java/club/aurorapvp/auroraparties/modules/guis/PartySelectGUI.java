@@ -135,7 +135,7 @@ public class PartySelectGUI implements Listener {
     }
 
     if (Party.inParty(player)) {
-      player.sendMessage(AuroraParties.INSTANCE.getLang().getComponent("already-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
     }
 
@@ -164,7 +164,7 @@ public class PartySelectGUI implements Listener {
     private final Inventory inventory;
 
     private Page(Party[] parties) {
-      inventory = Bukkit.createInventory(this, 54, AuroraParties.INSTANCE.getLang().getComponent("parties-gui"));
+      inventory = Bukkit.createInventory(this, 54, AuroraParties.getInstance().getLang().getComponent("parties-gui"));
 
       for (Party party : parties) {
         if (party.getStatus() != Party.Status.PRIVATE) {
@@ -176,12 +176,12 @@ public class PartySelectGUI implements Listener {
 
       ItemStack nextPage = new ItemStack(Material.PAPER);
       meta = nextPage.getItemMeta();
-      meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("next-page"));
+      meta.displayName(AuroraParties.getInstance().getLang().getComponent("next-page"));
       nextPage.setItemMeta(meta);
 
       ItemStack previousPage = new ItemStack(Material.PAPER);
       meta = previousPage.getItemMeta();
-      meta.displayName(AuroraParties.INSTANCE.getLang().getComponent("previous-page"));
+      meta.displayName(AuroraParties.getInstance().getLang().getComponent("previous-page"));
       previousPage.setItemMeta(meta);
 
       inventory.setItem(45, previousPage);

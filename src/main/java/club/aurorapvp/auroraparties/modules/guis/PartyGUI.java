@@ -15,7 +15,7 @@ public abstract class PartyGUI implements InventoryHolder, Listener {
 
   public PartyGUI(Party party) {
     this.party = party;
-    Bukkit.getPluginManager().registerEvents(this, AuroraParties.INSTANCE);
+    Bukkit.getPluginManager().registerEvents(this, AuroraParties.getInstance());
   }
 
   public abstract void addMember(int index, ItemStack memberSkull);

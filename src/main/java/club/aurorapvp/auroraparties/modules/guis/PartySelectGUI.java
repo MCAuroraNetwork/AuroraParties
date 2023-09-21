@@ -109,6 +109,38 @@ public class PartySelectGUI implements Listener {
     }
   }
 
+  public static void refresh() {
+    Set<Party> partySet = new HashSet<>(Party.getParties());
+
+    partySet.removeIf(party -> party.getStatus() == Status.PRIVATE);
+
+    for (int i = 0; i < index; i++) {
+      int numParties = partySet.size() - i * 45;
+      Party[] parties = new Party[Math.max(numParties, 0)];
+
+      Iterator<Party> iterator = partySet.iterator();
+
+      int counter = 0;
+
+      while (iterator.hasNext()) {
+        if (counter < i * 45) {
+          iterator.next();
+          counter++;
+          continue;
+        }
+
+        if (counter - i * 45 >= parties.length) {
+          break;
+        }
+
+        parties[counter - i * 45] = iterator.next();
+        counter++;
+      }
+
+      pages.get(i).update(parties);
+    }
+  }
+
   @EventHandler
   public static void onInventoryClicked(InventoryClickEvent event) {
     if (!(event.getInventory().getHolder() instanceof Page)) {
@@ -164,6 +196,31 @@ public class PartySelectGUI implements Listener {
 
     private Page(Party[] parties) {
       inventory = Bukkit.createInventory(this, 54, AuroraParties.getInstance().getLang().getComponent("parties-gui"));
+
+      for (Party party : parties) {
+        if (party.getStatus() != Party.Status.PRIVATE) {
+          inventory.addItem(party.getDisplayItem());
+        }
+      }
+
+      ItemMeta meta;
+
+      ItemStack nextPage = new ItemStack(Material.PAPER);
+      meta = nextPage.getItemMeta();
+      meta.displayName(AuroraParties.getInstance().getLang().getComponent("next-page"));
+      nextPage.setItemMeta(meta);
+
+      ItemStack previousPage = new ItemStack(Material.PAPER);
+      meta = previousPage.getItemMeta();
+      meta.displayName(AuroraParties.getInstance().getLang().getComponent("previous-page"));
+      previousPage.setItemMeta(meta);
+
+      inventory.setItem(45, previousPage);
+      inventory.setItem(53, nextPage);
+    }
+
+    public void update(Party[] parties) {
+      inventory.clear();
 
       for (Party party : parties) {
         if (party.getStatus() != Party.Status.PRIVATE) {

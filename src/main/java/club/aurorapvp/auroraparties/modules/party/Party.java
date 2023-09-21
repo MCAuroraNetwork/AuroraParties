@@ -123,14 +123,14 @@ public class Party {
 
     switch (status) {
       case PRIVATE -> {
-        PartySelectGUI.reload();
-
         meta.lore(
             List.of(
                 Component.text("Private"),
                 Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
+
+        PartySelectGUI.refresh();
       }
       case ANYONE_CAN_JOIN -> {
         meta.lore(
@@ -139,16 +139,18 @@ public class Party {
                 Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
+
+        PartySelectGUI.refresh();
       }
       case INVITE_ONLY -> {
-        PartySelectGUI.reload();
-
         meta.lore(
             List.of(
                 Component.text("Invite Only"),
                 Component.text(this.getMembers().size() + 1 + " Members")));
 
         displayItem.setItemMeta(meta);
+
+        PartySelectGUI.refresh();
       }
     }
   }

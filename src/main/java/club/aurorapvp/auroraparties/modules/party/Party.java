@@ -1,7 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.guis.PartyLeaderGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartyManageGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartyMemberGUI;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Party {
 
   private static final Set<Party> PARTIES = new HashSet<>();
-  private final HashMap<Player, ItemStack> memberSkulls = new HashMap<>();
+  private final HashMap<UUID, ItemStack> memberSkulls = new HashMap<>();
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
   private final PartyLeaderGUI partyLeaderGUI;
@@ -38,7 +38,7 @@ public class Party {
     this.partyLeader = partyLeader;
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);
-    memberSkulls.put(partyLeader, leaderSkull);
+    memberSkulls.put(partyLeader.getUniqueId(), leaderSkull);
 
     this.teamDuelGUI = new TeamDuelGUI(this, leaderSkull.clone());
     this.partyManageGUI = new PartyManageGUI(this, leaderSkull.clone());
@@ -238,7 +238,7 @@ public class Party {
     incrementIndex();
     ItemStack memberSkull = PlayerHeadUtil.getPlayerSkull(player);
 
-    memberSkulls.put(player, memberSkull);
+    memberSkulls.put(player.getUniqueId(), memberSkull);
 
     partyLeaderGUI.addMember(index, memberSkull);
     partyManageGUI.addMember(index, memberSkull);
@@ -294,7 +294,7 @@ public class Party {
 
     decrementIndex();
 
-    ItemStack memberSkull = memberSkulls.get(player);
+    ItemStack memberSkull = memberSkulls.get(player.getUniqueId());
 
     int slot = InventoryUtil.findSkullSlot(memberSkull, publicPartyGUI.getInventory());
     ItemStack lastSkull = InventoryUtil.getLastSkull(publicPartyGUI.getInventory());

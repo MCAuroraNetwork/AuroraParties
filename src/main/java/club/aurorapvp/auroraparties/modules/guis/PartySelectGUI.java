@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PartySelectGUI implements Listener {
 
-  private static final Map<Player, Integer> PLAYER_PAGES = new HashMap<>();
+  private static final Map<UUID, Integer> PLAYER_PAGES = new HashMap<>();
   private static final List<Page> pages = new ArrayList<>();
   private static int index;
 
@@ -35,12 +36,12 @@ public class PartySelectGUI implements Listener {
   }
 
   public static Inventory getCurrentPage(Player player) {
-    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
+    int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
     return pages.get(currentPage).getInventory();
   }
 
   public static void nextPage(Player player) {
-    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
+    int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
 
     if (currentPage < index - 1) {
       currentPage++;
@@ -48,12 +49,12 @@ public class PartySelectGUI implements Listener {
       currentPage = 0;
     }
 
-    PLAYER_PAGES.put(player, currentPage);
+    PLAYER_PAGES.put(player.getUniqueId(), currentPage);
     PartySelectGUI.open(player);
   }
 
   public static void previousPage(Player player) {
-    int currentPage = PLAYER_PAGES.getOrDefault(player, 0);
+    int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
 
     if (currentPage > 1) {
       currentPage--;
@@ -61,7 +62,7 @@ public class PartySelectGUI implements Listener {
       currentPage = index - 1;
     }
 
-    PLAYER_PAGES.put(player, currentPage);
+    PLAYER_PAGES.put(player.getUniqueId(), currentPage);
     PartySelectGUI.open(player);
   }
 

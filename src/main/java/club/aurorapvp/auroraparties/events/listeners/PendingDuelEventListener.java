@@ -1,7 +1,7 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
-import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
+import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +23,7 @@ public class PendingDuelEventListener implements Listener {
   }
 
   @EventHandler
-  public void onKitSelect(DuelKitSelectEvent event) {
+  public void onKitSelect(KitSelectEvent event) {
     for (PendingDuel pendingDuel : PendingDuel.getPendingDuels()) {
       pendingDuel.onKitSelect(event);
     }

@@ -1,14 +1,13 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroraduels.AuroraDuels;
-import club.aurorapvp.auroraduels.events.custom.DuelKitSelectEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraduels.modules.duels.DuelKitGUI;
 import club.aurorapvp.auroraduels.modules.queues.Queue;
+import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
+import club.aurorapvp.aurorakits.modules.kits.KitsGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -26,7 +25,8 @@ public class PendingDuel {
     this.duel = duel;
 
     if (Request.hasPendingRequest(duelStarter)) {
-      duelStarter.sendMessage(AuroraParties.getInstance().getLang().getComponent("you-have-request"));
+      duelStarter.sendMessage(
+          AuroraParties.getInstance().getLang().getComponent("you-have-request"));
       return;
     } else if (Queue.inQueue(duelStarter)) {
       duelStarter.sendMessage(AuroraParties.getInstance().getLang().getComponent("in-queue"));
@@ -80,7 +80,7 @@ public class PendingDuel {
     duel.setQueue(event.getQueue());
 
     if (AuroraParties.getInstance().isAuroraKitsInstalled()) {
-      DuelKitGUI.getGUI(event.getPlayer()).open();
+      event.getPlayer().openInventory(KitsGUI.getGUI(event.getPlayer()).getCurrentPage());
       return;
     }
 
@@ -88,7 +88,7 @@ public class PendingDuel {
     this.enterQueue();
   }
 
-  public void onKitSelect(DuelKitSelectEvent event) {
+  public void onKitSelect(KitSelectEvent event) {
     if (duelStarter != event.getPlayer()) {
       return;
     }

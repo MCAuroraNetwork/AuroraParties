@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.auroraduels.config.Lang;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.AuroraParties;
@@ -30,7 +29,7 @@ public class PartyDuelCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onNewRequest(Player player, String playerName) {
     if (!Party.inParty(player)) {
-      player.sendMessage(Lang.getComponent("not-in-party"));
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-in-party"));
       return;
     }
 

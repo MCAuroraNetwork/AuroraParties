@@ -71,7 +71,7 @@ public class PartyDuelCommands extends BaseCommand {
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(player.getWorld());
 
       if (worldSpawn != null) {
-        loc = worldSpawn.getSpawn();
+        loc = worldSpawn.getLocation();
       }
 
       if (loc == null) {

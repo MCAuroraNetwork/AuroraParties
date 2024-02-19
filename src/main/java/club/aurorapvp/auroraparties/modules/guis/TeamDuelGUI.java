@@ -239,7 +239,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
 
       if (worldSpawn != null) {
-        loc = worldSpawn.getSpawn();
+        loc = worldSpawn.getLocation();
       }
 
       if (loc == null) {

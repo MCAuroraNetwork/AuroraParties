@@ -84,7 +84,6 @@ public class Lang {
     DEFAULTS.put("player-left-party", "prefix <red>%s left the party");
     DEFAULTS.put("player-joined-party", "prefix <green>%s joined the party!");
     DEFAULTS.put("party-full", "prefix <red>This party is full!");
-    DEFAULTS.put("unknown-party-command", "prefix <red>Unknown Party Command! Use /help");
     DEFAULTS.put(
         "help-command",
         """

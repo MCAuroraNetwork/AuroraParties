@@ -255,13 +255,4 @@ public class PartyCommands extends BaseCommand {
       Objects.requireNonNull(PartyJoinRequest.getRequest(party, requester)).deny();
     }
   }
-
-  // TODO
-  @CatchUnknown
-  @Subcommand("help")
-  @CommandPermission("auroraparties.command.party.help")
-  @SuppressWarnings("unused")
-  public void onHelp(Player player) {
-    player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-party-command"));
-  }
 }

@@ -33,6 +33,7 @@ public class Lang {
     }
 
     DEFAULTS.put("prefix", "~<gradient:#FFAA00:#FF55FF><bold>AuroraParties ><reset>~");
+    DEFAULTS.put("reloaded", "prefix <green>Reloaded");
     DEFAULTS.put("party-created", "prefix <green>Party created! Use <bold>/party<reset><green> to manage it!");
     DEFAULTS.put("invite-sent", "prefix <green>Invite sent!");
     DEFAULTS.put(

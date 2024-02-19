@@ -19,11 +19,13 @@ public class PluginCommands extends BaseCommand {
   @CommandPermission("auroraparties.command.auroraparties.reload")
   @Description("Reloads all plugin data")
   @SuppressWarnings("unused")
-  public void onReload() {
+  public void onReload(Player player) {
     long startTime = System.currentTimeMillis();
 
     AuroraParties.getInstance().reloadConfig();
     AuroraParties.getInstance().getLang().reload();
+
+    player.sendMessage(AuroraParties.getInstance().getLang().getComponent("reloaded"));
 
     AuroraParties.getInstance()
         .getLogger()

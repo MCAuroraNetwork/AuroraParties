@@ -34,8 +34,7 @@ public class PartyManageGUI extends PartyGUI {
     ItemMeta meta = leaderSkull.getItemMeta();
     meta.lore(
         List.of(
-            MiniMessage.miniMessage()
-                .deserialize("<gradient:#FFAA00:#FF55FF><italic>This is the party leader"),
+            Component.text("This is the party leader"),
             Component.text("Cannot be removed")));
     leaderSkull.setItemMeta(meta);
 

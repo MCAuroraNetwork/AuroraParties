@@ -78,7 +78,9 @@ public final class AuroraParties extends JavaPlugin {
 
   @Override
   public void onDisable() {
-    getLogger().info("AuroraParties disabled");
+    long startTime = System.currentTimeMillis();
+
+    getLogger().info("AuroraParties disabled in " + (System.currentTimeMillis() - startTime) + "ms");
   }
 
   public void reloadConfig() {

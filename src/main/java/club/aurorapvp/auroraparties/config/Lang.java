@@ -89,11 +89,17 @@ public class Lang {
         """
             prefix <yellow><bold>All Commands:
                     
+                    
             <blue><bold>/parties: <reset><yellow>Opens the GUI for all public parties
+            
             <blue><bold>/party: <reset><yellow>Opens the party GUI
+            
             <blue><bold>/party create [name]: <reset><yellow>Creates a party
+            
             <blue><bold>/party disband: <reset><yellow>Disbands your party
+            
             <blue><bold>/party invite [player]: <reset><yellow>Invites a player to your party
+            
             <blue><bold>/partyduel [player]: <reset><yellow>Sends a duel request to someone else's party
             """);
 

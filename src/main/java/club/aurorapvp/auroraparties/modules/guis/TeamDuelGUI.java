@@ -215,21 +215,16 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       return;
     }
 
-    Player[] team1 = new Player[leftItemNames.size()];
-    Player[] team2 = new Player[rightItemNames.size()];
+    Set<Player> team1 = new HashSet<>();
+    Set<Player> team2 = new HashSet<>();
 
-    int index = 0;
     for (String name : leftItemNames) {
       Player player = Bukkit.getPlayer(name);
-      team1[index] = player;
-      index++;
+      team1.add(player);
     }
-
-    index = 0;
     for (String name : rightItemNames) {
       Player player = Bukkit.getPlayer(name);
-      team2[index] = player;
-      index++;
+      team2.add(player);
     }
 
     Location loc = Duel.getDuelLobby();

@@ -2,8 +2,8 @@ package club.aurorapvp.auroraparties.commands;
 
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
+import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
 import co.aikar.commands.BaseCommand;
@@ -13,6 +13,7 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Syntax;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -72,6 +73,6 @@ public class PartyDuelCommands extends BaseCommand {
       }
     }
 
-    new Request(player, new TeamDuel(party.getMembers(), opponentParty.getMembers(), loc, false));
+    new Request(player, new PartyDuel(party.getMembers(), opponentParty.getMembers(), loc, false));
   }
 }

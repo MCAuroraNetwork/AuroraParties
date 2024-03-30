@@ -29,7 +29,7 @@ dependencies {
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
-    compileOnly ':AuroraDuels:1.12.17'
+    compileOnly ':AuroraDuels:1.13.0'
     compileOnly ':AuroraKits:1.7.7'
     compileOnly ':AuroraWarps:1.2.0'
     compileOnly ':AuroraCombat:1.7.8'

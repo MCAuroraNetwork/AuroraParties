@@ -24,7 +24,7 @@ public class Lang {
   public void generateDefaults() {
     final HashMap<String, String> DEFAULTS = new HashMap<>();
 
-    for (Object path : getYaml().getKeys(false).toArray()) {
+    for (var path : getYaml().getKeys(false).toArray()) {
       if (Objects.requireNonNull(getYaml().getString((String) path)).startsWith("~")
           && Objects.requireNonNull(getYaml().getString((String) path)).endsWith("~")) {
         PLACEHOLDERS.put(
@@ -115,7 +115,7 @@ public class Lang {
       AuroraParties.getInstance().getLogger().log(Level.SEVERE, "Failed to save lang file", e);
     }
 
-    for (Object path : getYaml().getKeys(false).toArray()) {
+    for (var path : getYaml().getKeys(false).toArray()) {
       if (Objects.requireNonNull(getYaml().getString((String) path)).startsWith("~")
           && Objects.requireNonNull(getYaml().getString((String) path)).endsWith("~")) {
         PLACEHOLDERS.put(
@@ -127,9 +127,9 @@ public class Lang {
   public Component formatComponent(String message, Object... args) {
     String pathString = getYaml().getString(message);
     assert pathString != null;
-    for (String placeholder : PLACEHOLDERS.keySet()) {
-      if (pathString.contains(placeholder)) {
-        pathString = pathString.replace(placeholder, PLACEHOLDERS.get(placeholder));
+    for (var placeholder : PLACEHOLDERS.entrySet()) {
+      if (pathString.contains(placeholder.getKey())) {
+        pathString = pathString.replace(placeholder.getKey(), placeholder.getValue());
       }
     }
 
@@ -142,9 +142,9 @@ public class Lang {
     String pathString = getYaml().getString(message);
     assert pathString != null;
 
-    for (String placeholder : PLACEHOLDERS.keySet()) {
-      if (pathString.contains(placeholder)) {
-        pathString = pathString.replace(placeholder, PLACEHOLDERS.get(placeholder));
+    for (var placeholder : PLACEHOLDERS.entrySet()) {
+      if (pathString.contains(placeholder.getKey())) {
+        pathString = pathString.replace(placeholder.getKey(), placeholder.getValue());
       }
     }
     return MiniMessage.miniMessage().deserialize(pathString);

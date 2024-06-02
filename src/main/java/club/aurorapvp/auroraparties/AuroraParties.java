@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public final class AuroraParties extends JavaPlugin {
 
   private static AuroraParties INSTANCE;
+  private boolean luckPermsInstalled = false;
   private boolean auroraCombatInstalled = false;
   private boolean auroraWarpsInstalled = false;
   private boolean auroraKitsInstalled = false;
@@ -21,6 +22,10 @@ public final class AuroraParties extends JavaPlugin {
 
   public static AuroraParties getInstance() {
     return INSTANCE;
+  }
+
+  public boolean isLuckPermsInstalled() {
+    return luckPermsInstalled;
   }
 
   public boolean isAuroraCombatInstalled() {
@@ -52,6 +57,11 @@ public final class AuroraParties extends JavaPlugin {
     // Initialize configs
     config = new Config();
     lang = new Lang();
+
+    if ((Bukkit.getPluginManager().getPlugin("LuckPerms") != null)
+        && getConfig().getBoolean("optional-plugins.luckperms-compatibility")) {
+      luckPermsInstalled = true;
+    }
 
     if (Bukkit.getPluginManager().getPlugin("AuroraCombat") != null
         && getConfig().getBoolean("optional-plugins.auroracombat-compatibility")) {

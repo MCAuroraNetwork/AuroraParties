@@ -20,6 +20,7 @@ public class Config {
   public void generateDefaults() {
     final HashMap<String, Object> DEFAULTS = new HashMap<>();
 
+    DEFAULTS.put("optional-plugins.luckperms-compatibility", true);
     DEFAULTS.put("optional-plugins.auroracombat-compatibility", true);
     DEFAULTS.put("optional-plugins.aurorakits-compatibility", true);
     DEFAULTS.put("optional-plugins.aurorawarps-compatibility", true);

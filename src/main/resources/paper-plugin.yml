@@ -24,15 +24,12 @@ permissions:
   auroraparties.command.party:
     default: false
     children:
-      auroraparties.command.party.create: true
       auroraparties.command.party.disband: true
       auroraparties.command.party.invite: true
       auroraparties.command.party.join: true
       auroraparties.command.party.accept: true
       auroraparties.command.party.deny: true
       auroraparties.command.party.help: true
-  auroraparties.command.party.create:
-    default: false
   auroraparties.command.party.disband:
     default: false
   auroraparties.party.invite:
@@ -44,6 +41,9 @@ permissions:
   auroraparties.party.deny:
     default: false
   auroraparties.party.help:
+    default: false
+
+  auroraparties.command.party.create:
     default: false
 
   auroraparties.default:
@@ -65,6 +65,16 @@ permissions:
       auroraparties.command.party: true
       auroraparties.command.parties: true
 
+  auroraparties.create:
+    description: Allows for creating parties
+    default: false
+    children:
+      auroraparties.command.party.create: true
+
+  auroraparties.size:
+    description: Allows for the limiting of max party size
+    default: false
+
   auroraparties.admin:
     description: Allows for use of admin commands
     default: op
@@ -73,6 +83,8 @@ permissions:
 
 dependencies:
   server:
+    LuckPerms:
+      required: false
     AuroraDuels:
       required: true
     AuroraCombat:

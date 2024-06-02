@@ -12,16 +12,22 @@ import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Party {
 
   private static final Set<Party> PARTIES = new HashSet<>();
+  private final int maxSize;
   private final HashMap<UUID, ItemStack> memberSkulls = new HashMap<>();
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
@@ -36,6 +42,17 @@ public class Party {
 
   public Party(Player partyLeader) {
     this.partyLeader = partyLeader;
+
+    if (AuroraParties.getInstance().isLuckPermsInstalled()) {
+      LuckPerms luckPerms = Objects.requireNonNull(
+          Bukkit.getServicesManager().getRegistration(LuckPerms.class)).getProvider();
+
+      User user = luckPerms.getPlayerAdapter(Player.class).getUser(partyLeader);
+
+      user.get
+    } else {
+      maxSize = Integer.MAX_VALUE;
+    }
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);
     memberSkulls.put(partyLeader.getUniqueId(), leaderSkull);

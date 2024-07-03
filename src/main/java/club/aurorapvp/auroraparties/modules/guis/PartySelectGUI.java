@@ -172,6 +172,10 @@ public class PartySelectGUI implements Listener {
     }
 
     for (Party party : Party.getParties()) {
+      if (party.getSize() == party.getMaxSize()) {
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+      }
+
       meta = (SkullMeta) clickedItem.getItemMeta();
       SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 

@@ -88,6 +88,10 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
+    if (party.getSize() == party.getMaxSize()) {
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+    }
+
     Player invited = Bukkit.getPlayer(playerName);
 
     if (invited == null) {
@@ -147,12 +151,6 @@ public class PartyCommands extends BaseCommand {
       if (inviter == null) {
         PartyInvite invite = PartyInvite.getInvite(player);
 
-        for (PartyInvite pendingInvite : PartyInvite.getInvites(player)) {
-          if (pendingInvite != invite) {
-            pendingInvite.deny();
-          }
-        }
-
         assert invite != null;
         invite.accept();
         return;
@@ -164,12 +162,6 @@ public class PartyCommands extends BaseCommand {
       }
 
       PartyInvite invite = PartyInvite.getInvite(inviter, player);
-
-      for (PartyInvite pendingInvite : PartyInvite.getInvites(player)) {
-        if (pendingInvite != invite) {
-          pendingInvite.deny();
-        }
-      }
 
       assert invite != null;
       invite.accept();

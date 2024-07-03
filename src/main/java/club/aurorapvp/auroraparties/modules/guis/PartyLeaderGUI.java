@@ -121,7 +121,7 @@ public class PartyLeaderGUI extends PartyGUI {
           return;
         }
 
-        if (party.getMembers().size() == 1) {
+        if (party.getSize() == 1) {
           loc = Duel.getDuelLobby();
 
           if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {

@@ -22,7 +22,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Party {
 
@@ -49,7 +48,13 @@ public class Party {
 
       User user = luckPerms.getPlayerAdapter(Player.class).getUser(partyLeader);
 
-      user.get
+      String meta = user.getCachedData().getMetaData().getMetaValue("auroraparties.size");
+
+      if (meta != null) {
+        maxSize = Integer.parseInt(meta);
+      } else {
+        maxSize = Integer.MAX_VALUE;
+      }
     } else {
       maxSize = Integer.MAX_VALUE;
     }
@@ -65,7 +70,8 @@ public class Party {
 
     ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
     ItemMeta meta = displayItem.getItemMeta();
-    meta.displayName(AuroraParties.getInstance().getLang().formatComponent("party-name", partyLeader.getName()));
+    meta.displayName(
+        AuroraParties.getInstance().getLang().formatComponent("party-name", partyLeader.getName()));
     displayItem.setItemMeta(meta);
 
     this.displayItem = displayItem;
@@ -133,17 +139,27 @@ public class Party {
     return status;
   }
 
+  public int getSize() {
+    return this.getMembers().size();
+  }
+
+  public int getMaxSize() {
+    return maxSize;
+  }
+
   public void setStatus(Status status) {
     this.status = status;
 
     ItemMeta meta = displayItem.getItemMeta();
 
+    // TODO this should be done in the lang file, like duh
     switch (status) {
       case PRIVATE -> {
         meta.lore(
             List.of(
                 Component.text("Private"),
-                Component.text(this.getMembers().size() + 1 + " Members")));
+                Component.text(
+                    this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
 
         displayItem.setItemMeta(meta);
 
@@ -153,7 +169,8 @@ public class Party {
         meta.lore(
             List.of(
                 Component.text("Anyone can Join"),
-                Component.text(this.getMembers().size() + 1 + " Members")));
+                Component.text(
+                    this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
 
         displayItem.setItemMeta(meta);
 
@@ -163,7 +180,8 @@ public class Party {
         meta.lore(
             List.of(
                 Component.text("Invite Only"),
-                Component.text(this.getMembers().size() + 1 + " Members")));
+                Component.text(
+                    this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
 
         displayItem.setItemMeta(meta);
 
@@ -222,32 +240,37 @@ public class Party {
       return;
     }
 
-    player.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-joined-party", player.getName()));
+    player.sendMessage(AuroraParties.getInstance().getLang()
+        .formatComponent("player-joined-party", player.getName()));
 
     player.openInventory(this.getMemberGUI().getInventory());
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-joined-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.getInstance().getLang()
+          .formatComponent("player-joined-party", player.getName()));
     }
 
-    partyLeader.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-joined-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.getInstance().getLang()
+        .formatComponent("player-joined-party", player.getName()));
 
     partyMembers.add(player);
 
     ItemMeta meta = displayItem.getItemMeta();
 
+    // TODO this should be done in the lang file, like duh
     switch (status) {
       case PRIVATE -> meta.lore(
           List.of(
-              Component.text("Private"), Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text("Private"),
+              Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
       case ANYONE_CAN_JOIN -> meta.lore(
           List.of(
               Component.text("Anyone Can Join"),
-              Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
       case INVITE_ONLY -> meta.lore(
           List.of(
               Component.text("Invite Only"),
-              Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
     }
 
     displayItem.setItemMeta(meta);
@@ -269,10 +292,12 @@ public class Party {
 
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("left-party"));
 
-    partyLeader.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-left-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.getInstance().getLang()
+        .formatComponent("player-left-party", player.getName()));
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-left-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.getInstance().getLang()
+          .formatComponent("player-left-party", player.getName()));
     }
   }
 
@@ -281,10 +306,12 @@ public class Party {
 
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("removed-from-party"));
 
-    partyLeader.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-removed-from-party", player.getName()));
+    partyLeader.sendMessage(AuroraParties.getInstance().getLang()
+        .formatComponent("player-removed-from-party", player.getName()));
 
     for (Player partyMember : this.getMembers()) {
-      partyMember.sendMessage(AuroraParties.getInstance().getLang().formatComponent("player-removed-from-party", player.getName()));
+      partyMember.sendMessage(AuroraParties.getInstance().getLang()
+          .formatComponent("player-removed-from-party", player.getName()));
     }
 
     ItemMeta meta = displayItem.getItemMeta();
@@ -292,15 +319,16 @@ public class Party {
     switch (status) {
       case PRIVATE -> meta.lore(
           List.of(
-              Component.text("Private"), Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text("Private"),
+              Component.text(this.getSize() + 1 + " Members")));
       case ANYONE_CAN_JOIN -> meta.lore(
           List.of(
               Component.text("Anyone Can Join"),
-              Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text(this.getSize() + 1 + " Members")));
       case INVITE_ONLY -> meta.lore(
           List.of(
               Component.text("Invite Only"),
-              Component.text(this.getMembers().size() + 1 + " Members")));
+              Component.text(this.getSize() + 1 + " Members")));
     }
 
     displayItem.setItemMeta(meta);
@@ -325,11 +353,13 @@ public class Party {
 
   public void disband() {
     partyLeader.sendMessage(
-        AuroraParties.getInstance().getLang().formatComponent("party-disbanded", partyLeader.getName()));
+        AuroraParties.getInstance().getLang()
+            .formatComponent("party-disbanded", partyLeader.getName()));
 
     for (Player player : partyMembers) {
       player.sendMessage(
-          AuroraParties.getInstance().getLang().formatComponent("party-disbanded", partyLeader.getName()));
+          AuroraParties.getInstance().getLang()
+              .formatComponent("party-disbanded", partyLeader.getName()));
     }
 
     PartySelectGUI.reload();

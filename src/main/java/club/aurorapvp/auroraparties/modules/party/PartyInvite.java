@@ -2,9 +2,7 @@ package club.aurorapvp.auroraparties.modules.party;
 
 import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.bukkit.entity.Player;
@@ -44,11 +42,12 @@ public class PartyInvite {
       PENDING_INVITES.put(party, new LinkedList<>());
     }
 
-    PENDING_INVITES.get(party).add(this);
+    PENDING_INVITES.getOrDefault(party, new LinkedList<>()).add(this);
 
     partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-sent"));
     invited.sendMessage(
-        AuroraParties.getInstance().getLang()
+        AuroraParties.getInstance()
+            .getLang()
             .formatComponent("invite-received", partyLeader.getName()));
 
     PartyInvite thisRequest = this;
@@ -58,12 +57,12 @@ public class PartyInvite {
             new TimerTask() {
               @Override
               public void run() {
-                if (PENDING_INVITES.get(party).contains(thisRequest)) {
+                if (PENDING_INVITES.getOrDefault(party, new LinkedList<>()).contains(thisRequest)) {
                   partyLeader.sendMessage(
                       AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
                   invited.sendMessage(
                       AuroraParties.getInstance().getLang().getComponent("invite-timed-out"));
-                  PENDING_INVITES.get(party).remove(thisRequest);
+                  PENDING_INVITES.getOrDefault(party, new LinkedList<>()).remove(thisRequest);
                   this.cancel();
                 }
               }
@@ -83,17 +82,9 @@ public class PartyInvite {
     return null;
   }
 
-  public static PartyInvite getInvite(Player player, Party party) {
-    for (PartyInvite invite : PENDING_INVITES.get(party)) {
-      if (invite.partyLeader == player || invite.invited == player) {
-        return invite;
-      }
-    }
-    return null;
-  }
-
   public static PartyInvite getInvite(Player inviter, Player invited) {
-    for (PartyInvite invite : PENDING_INVITES.get(Party.getParty(inviter))) {
+    for (PartyInvite invite :
+        PENDING_INVITES.getOrDefault(Party.getParty(inviter), new LinkedList<>())) {
       if (invite.partyLeader == inviter && invite.invited == invited) {
         return invite;
       }
@@ -101,22 +92,8 @@ public class PartyInvite {
     return null;
   }
 
-  public static Set<PartyInvite> getInvites(Player player, Party party) {
-    Set<PartyInvite> matchingRequests = new HashSet<>();
-
-    for (PartyInvite invite : PENDING_INVITES.get(party)) {
-      if (invite.partyLeader == player && invite.invited == player) {
-        matchingRequests.add(invite);
-      }
-    }
-
-    return matchingRequests;
-  }
-
   public static boolean hasPendingInvite(Player invited, Party party) {
-    LinkedList<PartyInvite> inviteList = PENDING_INVITES.get(party);
-
-    for (PartyInvite invite : inviteList) {
+    for (PartyInvite invite : PENDING_INVITES.getOrDefault(party, new LinkedList<>())) {
       if (invite.invited == invited) {
         return true;
       }
@@ -126,7 +103,8 @@ public class PartyInvite {
   }
 
   public static boolean hasPendingInvite(Player inviter, Player invited) {
-    for (PartyInvite invite : PENDING_INVITES.get(Party.getParty(inviter))) {
+    for (PartyInvite invite :
+        PENDING_INVITES.getOrDefault(Party.getParty(inviter), new LinkedList<>())) {
       if (invite.partyLeader == inviter && invite.invited == invited) {
         return true;
       }
@@ -149,7 +127,7 @@ public class PartyInvite {
 
   public void accept() {
     party.addMember(invited);
-    PENDING_INVITES.get(party).remove(this);
+    PENDING_INVITES.getOrDefault(party, new LinkedList<>()).remove(this);
 
     for (LinkedList<PartyInvite> inviteList : PENDING_INVITES.values()) {
       for (PartyInvite invite : inviteList) {
@@ -164,7 +142,7 @@ public class PartyInvite {
   }
 
   public void deny() {
-    PENDING_INVITES.get(party).remove(this);
+    PENDING_INVITES.getOrDefault(party, new LinkedList<>()).remove(this);
 
     partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-denied"));
     invited.sendMessage(AuroraParties.getInstance().getLang().getComponent("invite-denied"));

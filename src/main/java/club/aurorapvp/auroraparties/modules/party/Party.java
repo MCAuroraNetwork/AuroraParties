@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
@@ -48,15 +50,14 @@ public class Party {
 
       User user = luckPerms.getPlayerAdapter(Player.class).getUser(partyLeader);
 
-      String meta = user.getCachedData().getMetaData().getMetaValue("auroraparties.size");
-
+      String meta = user.getCachedData().getMetaData().getMetaValue("party-size");
       if (meta != null) {
         maxSize = Integer.parseInt(meta);
       } else {
-        maxSize = Integer.MAX_VALUE;
+        maxSize = 100;
       }
     } else {
-      maxSize = Integer.MAX_VALUE;
+      maxSize = 100;
     }
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);

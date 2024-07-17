@@ -1,7 +1,7 @@
 name: AuroraParties
 version: '${version}'
 main: club.aurorapvp.auroraparties.AuroraParties
-api-version: '1.20'
+api-version: '1.21'
 authors: [Villagers654]
 description: A Parties Plugin to Integrate various Aurora Network Plugin Features
 website: aurorapvp.club

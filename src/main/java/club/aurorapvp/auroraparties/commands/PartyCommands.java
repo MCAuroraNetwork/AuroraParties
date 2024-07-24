@@ -134,6 +134,21 @@ public class PartyCommands extends BaseCommand {
     new PartyJoinRequest(player, party);
   }
 
+  @Subcommand("leave")
+  @CommandPermission("auroraparties.command.party.leave")
+  @Description("Leaves a party")
+  @SuppressWarnings("unused")
+  public void onLeave(Player player) {
+    Party party = Party.getParty(player);
+
+    if (party == null) {
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("not-in-party"));
+      return;
+    }
+
+    party.leave(player);
+  }
+
   @Subcommand("accept")
   @CommandPermission("auroraparties.command.party.accept")
   @CommandCompletion("@players")

@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
+import club.aurorapvp.auroraduels.events.custom.DuelEndEvent;
 import club.aurorapvp.auroraduels.events.custom.DuelRequestAcceptEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueJoinEvent;
 import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
@@ -34,6 +35,15 @@ public class DuelEventListener implements Listener {
   @EventHandler
   public static void onDuelQueue(QueueJoinEvent event) {
     if (event.getDuel() instanceof PartyDuel) {
+      for (Player player : event.getDuel().getPlayers()) {
+        if (Party.inParty(player)) {
+          Party party = Party.getParty(player);
+
+          assert party != null;
+          party.setInDuel(true);
+        }
+      }
+
       return;
     }
 
@@ -43,11 +53,27 @@ public class DuelEventListener implements Listener {
 
         assert party != null;
 
+        if (party.isInDuel()) {
+          continue;
+        }
+
         if (party.isLeader(player)) {
           party.disband();
         } else {
           party.leave(player);
         }
+      }
+    }
+  }
+
+  @EventHandler
+  public static void onDuelEnd(DuelEndEvent event) {
+    for (Player player : event.getDuel().getPlayers()) {
+      if (Party.inParty(player)) {
+        Party party = Party.getParty(player);
+
+        assert party != null;
+        party.setInDuel(false);
       }
     }
   }

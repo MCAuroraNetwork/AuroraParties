@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
@@ -38,8 +37,9 @@ public class Party {
   private final PublicPartyGUI publicPartyGUI;
   private final TeamDuelGUI teamDuelGUI;
   private int index = 10;
-  private Status status;
   private final ItemStack displayItem;
+  private Status status;
+  private boolean inDuel;
 
   public Party(Player partyLeader) {
     this.partyLeader = partyLeader;
@@ -144,8 +144,16 @@ public class Party {
     return this.getMembers().size();
   }
 
+  public boolean isInDuel() {
+    return inDuel;
+  }
+
   public int getMaxSize() {
     return maxSize;
+  }
+
+  public void setInDuel(boolean inDuel) {
+    this.inDuel = inDuel;
   }
 
   public void setStatus(Status status) {

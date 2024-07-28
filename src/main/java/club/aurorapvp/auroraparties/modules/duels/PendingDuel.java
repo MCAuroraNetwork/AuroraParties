@@ -11,6 +11,8 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import club.aurorapvp.auroraparties.modules.party.Party;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
@@ -99,6 +101,11 @@ public class PendingDuel {
   }
 
   public void enterQueue() {
+    Party party = Party.getParty(duelStarter);
+
+      assert party != null;
+      party.setInDuel(true);
+
     duel.getQueue().enterDuelQueue(duel);
     PENDING_DUELS.remove(this);
   }

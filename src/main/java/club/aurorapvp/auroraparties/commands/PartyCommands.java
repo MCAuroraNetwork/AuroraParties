@@ -39,7 +39,6 @@ public class PartyCommands extends BaseCommand {
       player.openInventory(party.getMemberGUI().getInventory());
     } else if (!PendingDuel.hasPendingDuel(player)) {
       player.openInventory(party.getLeaderGUI().getInventory());
-
     }
   }
 
@@ -163,16 +162,16 @@ public class PartyCommands extends BaseCommand {
         inviter = Bukkit.getPlayer(inviterName);
       }
 
+      if (!PartyInvite.hasPendingInvite(inviter, player)) {
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-invites"));
+        return;
+      }
+
       if (inviter == null) {
         PartyInvite invite = PartyInvite.getInvite(player);
 
         assert invite != null;
         invite.accept();
-        return;
-      }
-
-      if (!PartyInvite.hasPendingInvite(inviter, player)) {
-        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-invites"));
         return;
       }
 

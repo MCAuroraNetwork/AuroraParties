@@ -79,7 +79,7 @@ public class PartyCommands extends BaseCommand {
   @Syntax("<player>")
   @Description("Invites a player to a party")
   @SuppressWarnings("unused")
-  public void onInvite(Player player, @Optional String playerName) {
+  public void onInvite(Player player, String playerName) {
     Party party = Party.getParty(player);
 
     if (party == null) {

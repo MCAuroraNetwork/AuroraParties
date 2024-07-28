@@ -156,17 +156,20 @@ public class PartyCommands extends BaseCommand {
   @SuppressWarnings("unused")
   public void onAccept(Player player, @Optional String inviterName) {
     if (PartyInvite.hasPendingInvite(player)) {
-      Player inviter = null;
+      Player inviter;
 
-      if (inviterName != null) {
-        inviter = Bukkit.getPlayer(inviterName);
-      }
-
-      if (inviter == null) {
+      if (inviterName == null) {
         PartyInvite invite = PartyInvite.getInvite(player);
 
         assert invite != null;
         invite.accept();
+        return;
+      }
+
+      inviter = Bukkit.getPlayer(inviterName);
+
+      if (inviter == null) {
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("unknown-player"));
         return;
       }
 

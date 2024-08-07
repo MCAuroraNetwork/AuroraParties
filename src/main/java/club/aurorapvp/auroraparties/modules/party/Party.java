@@ -54,10 +54,10 @@ public class Party {
       if (meta != null) {
         maxSize = Integer.parseInt(meta);
       } else {
-        maxSize = 100;
+        maxSize = 20;
       }
     } else {
-      maxSize = 100;
+      maxSize = 20;
     }
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);

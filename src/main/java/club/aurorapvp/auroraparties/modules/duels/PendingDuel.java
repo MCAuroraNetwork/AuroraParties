@@ -5,6 +5,7 @@ import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.queues.Queue;
+import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
 import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
 import club.aurorapvp.aurorakits.modules.kits.KitsGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
@@ -35,7 +36,7 @@ public class PendingDuel {
       return;
     }
 
-    AuroraDuels.getQueueGUI().open(duelStarter);
+    new QueueGUI("pending-duel").open(duelStarter);
 
     PENDING_DUELS.add(this);
   }
@@ -65,7 +66,11 @@ public class PendingDuel {
       return;
     }
 
-    if (!Objects.equals(event.getInventory().getHolder(), AuroraDuels.getQueueGUI())) {
+    if (!(event.getInventory().getHolder() instanceof QueueGUI queueGUI)) {
+      return;
+    }
+
+    if (!queueGUI.getName().equals("pending-duel")) {
       return;
     }
 
@@ -76,6 +81,11 @@ public class PendingDuel {
 
   public void onQueueSelect(QueueSelectEvent event) {
     if (duelStarter != event.getPlayer()) {
+      return;
+    }
+
+
+    if (!event.getName().equals("pending-duel")) {
       return;
     }
 

@@ -138,7 +138,7 @@ public class PartyLeaderGUI extends PartyGUI {
           }
 
           if (loc == null) {
-            loc = Bukkit.getWorlds().get(0).getSpawnLocation();
+            loc = Bukkit.getWorlds().getFirst().getSpawnLocation();
           }
 
           for (Player member : party.getMembers()) {

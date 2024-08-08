@@ -27,7 +27,16 @@ public class PartyJoinRequest {
     }
 
     requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-sent"));
-    party.getLeader().sendMessage(AuroraParties.getInstance().getLang().formatComponent("request-received", requester.getName()));
+    party
+        .getLeader()
+        .sendMessage(
+            AuroraParties.getInstance()
+                .getLang()
+                .getformattedComponentCommand(
+                    "request-received",
+                    "Click to Accept Join Request",
+                    "/party accept " + requester.getName(),
+                    requester.getName()));
 
     PartyJoinRequest thisRequest = this;
 
@@ -37,8 +46,12 @@ public class PartyJoinRequest {
               @Override
               public void run() {
                 if (PENDING_REQUESTS.contains(thisRequest)) {
-                  requester.sendMessage(AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
-                  party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
+                  requester.sendMessage(
+                      AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
+                  party
+                      .getLeader()
+                      .sendMessage(
+                          AuroraParties.getInstance().getLang().getComponent("request-timed-out"));
                   PENDING_REQUESTS.remove(thisRequest);
                   this.cancel();
                 }
@@ -121,7 +134,9 @@ public class PartyJoinRequest {
   }
 
   public void cancel() {
-    party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("request-cancelled"));
+    party
+        .getLeader()
+        .sendMessage(AuroraParties.getInstance().getLang().getComponent("request-cancelled"));
     PENDING_REQUESTS.remove(this);
   }
 }

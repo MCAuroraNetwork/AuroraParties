@@ -48,7 +48,11 @@ public class PartyInvite {
     invited.sendMessage(
         AuroraParties.getInstance()
             .getLang()
-            .formatComponent("invite-received", partyLeader.getName()));
+            .getformattedComponentCommand(
+                "invite-received",
+                "Click to Accept Invite",
+                "/party accept " + partyLeader.getName(),
+                partyLeader.getName()));
 
     PartyInvite thisRequest = this;
 

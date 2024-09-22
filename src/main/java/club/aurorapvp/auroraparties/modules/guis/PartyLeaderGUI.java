@@ -124,24 +124,9 @@ public class PartyLeaderGUI extends PartyGUI {
         if (party.getSize() == 1) {
           loc = Duel.getDuelLobby();
 
-          if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
+            loc = TeamDuelGUI.getRespawnPoint(loc, party);
 
-            WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
-
-            if (worldSpawn != null) {
-              loc = worldSpawn.getLocation();
-            }
-
-            if (loc == null) {
-              loc = WorldSpawn.getGlobalSpawn();
-            }
-          }
-
-          if (loc == null) {
-            loc = Bukkit.getWorlds().getFirst().getSpawnLocation();
-          }
-
-          for (Player member : party.getMembers()) {
+            for (Player member : party.getMembers()) {
             player.closeInventory();
             new PendingDuel(player, new StandardDuel(party.getLeader(), member, loc, false, 1));
             return;
@@ -161,22 +146,7 @@ public class PartyLeaderGUI extends PartyGUI {
 
         loc = Duel.getDuelLobby();
 
-        if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
-
-          WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
-
-          if (worldSpawn != null) {
-            loc = worldSpawn.getLocation();
-          }
-
-          if (loc == null) {
-            loc = WorldSpawn.getGlobalSpawn();
-          }
-        }
-
-        if (loc == null) {
-          loc = Bukkit.getWorlds().getFirst().getSpawnLocation();
-        }
+          loc = TeamDuelGUI.getRespawnPoint(loc, party);
       }
     }
 

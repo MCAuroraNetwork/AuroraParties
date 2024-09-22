@@ -228,6 +228,13 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     Location loc = Duel.getDuelLobby();
 
+    loc = getRespawnPoint(loc, party);
+
+    new PendingDuel(party.getLeader(), new TeamDuel(team1, team2, loc, false));
+  }
+
+  @NotNull
+  static Location getRespawnPoint(Location loc, Party party) {
     if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
 
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());
@@ -242,10 +249,9 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     }
 
     if (loc == null) {
-      loc = Bukkit.getWorlds().get(0).getSpawnLocation();
+      loc = Bukkit.getWorlds().getFirst().getSpawnLocation();
     }
-
-    new PendingDuel(party.getLeader(), new TeamDuel(team1, team2, loc, false));
+    return loc;
   }
 
   private String getStringName(ItemStack item) {
@@ -270,7 +276,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
           List.of(
               Component.text(
                   "ELO: "
-                      + Rating.getRating("default_duels")
+                      + Rating.getRating("overall_duels")
                       .getScore(player)
                       .getPoints())));
 

@@ -91,7 +91,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
           List.of(
               Component.text(
                   "ELO: "
-                      + Rating.getRating("random_duels")
+                      + Rating.getRating("overall_duels")
                       .getScore(party.getLeader())
                       .getPoints())));
       leaderSkull.setItemMeta(meta);

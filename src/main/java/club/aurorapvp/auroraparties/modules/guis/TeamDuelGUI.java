@@ -4,7 +4,6 @@ import club.aurorapvp.auroracombat.modules.Rating;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
@@ -92,7 +91,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
           List.of(
               Component.text(
                   "ELO: "
-                      + Rating.getRating("default_duels")
+                      + Rating.getRating("random_duels")
                       .getScore(party.getLeader())
                       .getPoints())));
       leaderSkull.setItemMeta(meta);

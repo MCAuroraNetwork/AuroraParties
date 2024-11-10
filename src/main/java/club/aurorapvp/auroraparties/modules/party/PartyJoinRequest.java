@@ -66,7 +66,7 @@ public class PartyJoinRequest {
     Set<PartyJoinRequest> matchingRequests = new HashSet<>();
 
     for (PartyJoinRequest request : PENDING_REQUESTS) {
-      if (request.requester == player) {
+      if (request.requester.equals(player)) {
         matchingRequests.add(request);
       }
     }
@@ -77,7 +77,7 @@ public class PartyJoinRequest {
   public static PartyJoinRequest getRequest(Party party) {
     for (Iterator<PartyJoinRequest> it = PENDING_REQUESTS.descendingIterator(); it.hasNext(); ) {
       PartyJoinRequest request = it.next();
-      if (request.getParty() == party) {
+      if (request.getParty().equals(party)) {
         return request;
       }
     }
@@ -86,7 +86,7 @@ public class PartyJoinRequest {
 
   public static boolean hasRequest(Party party) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
-      if (request.getParty() == party) {
+      if (request.getParty().equals(party)) {
         return true;
       }
     }
@@ -95,7 +95,7 @@ public class PartyJoinRequest {
 
   public static boolean hasRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
-      if (request.requester == requester && request.party == party) {
+      if (request.requester.equals(requester) && request.party.equals(party)) {
         return true;
       }
     }
@@ -104,7 +104,7 @@ public class PartyJoinRequest {
 
   public static PartyJoinRequest getRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
-      if (request.requester == requester && request.party == party) {
+      if (request.requester.equals(requester) && request.party.equals(party)) {
         return request;
       }
     }

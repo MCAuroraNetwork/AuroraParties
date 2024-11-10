@@ -77,7 +77,7 @@ public class PartyInvite {
   public static PartyInvite getInvite(Player player) {
     for (LinkedList<PartyInvite> inviteList : PENDING_INVITES.values()) {
       for (PartyInvite invite : inviteList) {
-        if (invite.partyLeader == player || invite.invited == player) {
+        if (invite.partyLeader.equals(player) || invite.invited.equals(player)) {
           return invite;
         }
       }
@@ -89,7 +89,7 @@ public class PartyInvite {
   public static PartyInvite getInvite(Player inviter, Player invited) {
     for (PartyInvite invite :
         PENDING_INVITES.getOrDefault(Party.getParty(inviter), new LinkedList<>())) {
-      if (invite.partyLeader == inviter && invite.invited == invited) {
+      if (invite.partyLeader.equals(inviter) && invite.invited.equals(invited)) {
         return invite;
       }
     }
@@ -98,7 +98,7 @@ public class PartyInvite {
 
   public static boolean hasPendingInvite(Player invited, Party party) {
     for (PartyInvite invite : PENDING_INVITES.getOrDefault(party, new LinkedList<>())) {
-      if (invite.invited == invited) {
+      if (invite.invited.equals(invited)) {
         return true;
       }
     }
@@ -109,7 +109,7 @@ public class PartyInvite {
   public static boolean hasPendingInvite(Player inviter, Player invited) {
     for (PartyInvite invite :
         PENDING_INVITES.getOrDefault(Party.getParty(inviter), new LinkedList<>())) {
-      if (invite.partyLeader == inviter && invite.invited == invited) {
+      if (invite.partyLeader.equals(inviter) && invite.invited.equals(invited)) {
         return true;
       }
     }
@@ -120,7 +120,7 @@ public class PartyInvite {
 
     for (LinkedList<PartyInvite> inviteList : PENDING_INVITES.values()) {
       for (PartyInvite invite : inviteList) {
-        if (invite.invited == invited) {
+        if (invite.invited.equals(invited)) {
           return true;
         }
       }
@@ -135,7 +135,7 @@ public class PartyInvite {
 
     for (LinkedList<PartyInvite> inviteList : PENDING_INVITES.values()) {
       for (PartyInvite invite : inviteList) {
-        if (invite.invited == invited) {
+        if (invite.invited.equals(invited)) {
           invite.deny();
         }
       }

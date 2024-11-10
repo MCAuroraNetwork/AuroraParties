@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
@@ -90,12 +89,12 @@ public class Party {
 
   public static boolean inParty(Player player) {
     for (Party party : PARTIES) {
-      if (party.getLeader() == player) {
+      if (party.getLeader().equals(player)) {
         return true;
       }
 
       for (Player member : party.getMembers()) {
-        if (member == player) {
+        if (member.equals(player)) {
           return true;
         }
       }
@@ -229,16 +228,16 @@ public class Party {
   }
 
   public boolean isLeader(Player player) {
-    return partyLeader == player;
+    return partyLeader.equals(player);
   }
 
   public boolean contains(Player player) {
-    if (this.getLeader() == player) {
+    if (this.getLeader().equals(player)) {
       return true;
     }
 
     for (Player member : this.getMembers()) {
-      if (member == player) {
+      if (member.equals(player)) {
         return true;
       }
     }

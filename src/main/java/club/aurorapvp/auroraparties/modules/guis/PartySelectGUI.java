@@ -69,7 +69,7 @@ public class PartySelectGUI implements Listener {
   public static void reload() {
     Set<Party> partySet = new HashSet<>(Party.getParties());
 
-    partySet.removeIf(party -> party.getStatus() == Status.PRIVATE);
+    partySet.removeIf(party -> party.getStatus().equals(Status.PRIVATE));
 
     index = 0;
     pages.clear();
@@ -113,7 +113,7 @@ public class PartySelectGUI implements Listener {
   public static void refresh() {
     Set<Party> partySet = new HashSet<>(Party.getParties());
 
-    partySet.removeIf(party -> party.getStatus() == Status.PRIVATE);
+    partySet.removeIf(party -> party.getStatus().equals(Status.PRIVATE));
 
     for (int i = 0; i < index; i++) {
       int numParties = partySet.size() - i * 45;
@@ -180,9 +180,9 @@ public class PartySelectGUI implements Listener {
       SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
 
       if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-        if (party.getStatus() == Party.Status.ANYONE_CAN_JOIN) {
+        if (party.getStatus().equals(Party.Status.ANYONE_CAN_JOIN)) {
           party.addMember(player);
-        } else if (party.getStatus() == Party.Status.INVITE_ONLY) {
+        } else if (party.getStatus().equals(Party.Status.INVITE_ONLY)) {
           new PartyJoinRequest(player, party);
         }
       }

@@ -114,9 +114,9 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       return;
     }
 
-    if (clickedItem.getType() == Material.BLACK_STAINED_GLASS_PANE
-        || clickedItem.getType() == Material.BLUE_STAINED_GLASS_PANE
-        || clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
+    if (clickedItem.getType().equals(Material.BLACK_STAINED_GLASS_PANE)
+        || clickedItem.getType().equals(Material.BLUE_STAINED_GLASS_PANE)
+        || clickedItem.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
       event.setCancelled(true);
       return;
     }

@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
-import club.aurorapvp.auroraduels.AuroraDuels;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
@@ -9,11 +8,9 @@ import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
 import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
 import club.aurorapvp.aurorakits.modules.kits.KitsGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import club.aurorapvp.auroraparties.modules.party.Party;
+import java.util.HashSet;
+import java.util.Set;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
@@ -52,7 +49,7 @@ public class PendingDuel {
   public static boolean hasPendingDuel(Player player) {
     for (PendingDuel pendingDuel : PENDING_DUELS) {
       for (Player duelMember : pendingDuel.getDuel().getPlayers()) {
-        if (duelMember == player) {
+        if (duelMember.equals(player)) {
           return true;
         }
       }

@@ -24,7 +24,7 @@ public class InventoryUtil {
         continue;
       }
 
-      if (meta.getOwningPlayer() == currentMeta.getOwningPlayer()) {
+      if (meta.getOwningPlayer().equals(currentMeta.getOwningPlayer())) {
         return i;
       }
     }
@@ -37,7 +37,7 @@ public class InventoryUtil {
 
     for (int i = 0; i < inventory.getSize(); i++) {
       ItemStack item = inventory.getItem(i);
-      if (item != null && item.getType() == Material.PLAYER_HEAD) {
+      if (item != null && item.getType().equals(Material.PLAYER_HEAD)) {
         lastSkull = item;
       }
     }

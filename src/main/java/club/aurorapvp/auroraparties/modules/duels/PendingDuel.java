@@ -3,8 +3,8 @@ package club.aurorapvp.auroraparties.modules.duels;
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.Request;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
-import club.aurorapvp.auroraduels.modules.queues.Queue;
-import club.aurorapvp.auroraduels.modules.queues.QueueGUI;
+import club.aurorapvp.auroraduels.modules.queues.DuelQueue;
+import club.aurorapvp.auroraduels.modules.queues.DuelQueueGUI;
 import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
 import club.aurorapvp.aurorakits.modules.kits.KitsGUI;
 import club.aurorapvp.auroraparties.AuroraParties;
@@ -28,12 +28,12 @@ public class PendingDuel {
       duelStarter.sendMessage(
           AuroraParties.getInstance().getLang().getComponent("you-have-request"));
       return;
-    } else if (Queue.inQueue(duelStarter)) {
+    } else if (DuelQueue.inQueue(duelStarter)) {
       duelStarter.sendMessage(AuroraParties.getInstance().getLang().getComponent("in-queue"));
       return;
     }
 
-    new QueueGUI("pending-duel").open(duelStarter);
+    new DuelQueueGUI("pending-duel").open(duelStarter);
 
     PENDING_DUELS.add(this);
   }
@@ -63,7 +63,7 @@ public class PendingDuel {
       return;
     }
 
-    if (!(event.getInventory().getHolder() instanceof QueueGUI queueGUI)) {
+    if (!(event.getInventory().getHolder() instanceof DuelQueueGUI queueGUI)) {
       return;
     }
 

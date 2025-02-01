@@ -27,12 +27,12 @@ repositories {
 dependencies {
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 
-    compileOnly 'io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
     compileOnly 'net.luckperms:api:5.4'
-    compileOnly ':AuroraDuels:1.14.4'
-    compileOnly ':AuroraKits:1.8.1'
-    compileOnly ':AuroraWarps:1.3.1'
-    compileOnly ':AuroraCombat:1.8.1'
+    compileOnly ':AuroraDuels:1.14.6'
+    compileOnly ':AuroraKits:1.8.2'
+    compileOnly ':AuroraWarps:1.3.2'
+    compileOnly ':AuroraCombat:1.8.8'
 }
 
 build {

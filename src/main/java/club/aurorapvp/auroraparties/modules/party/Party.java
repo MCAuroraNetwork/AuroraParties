@@ -270,28 +270,7 @@ public class Party {
 
     partyMembers.add(player);
 
-    ItemMeta meta = displayItem.getItemMeta();
-
-    // TODO this should be done in the lang file, like duh
-    switch (status) {
-      case PRIVATE ->
-          meta.lore(
-              List.of(
-                  Component.text("Private"),
-                  Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-      case ANYONE_CAN_JOIN ->
-          meta.lore(
-              List.of(
-                  Component.text("Anyone Can Join"),
-                  Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-      case INVITE_ONLY ->
-          meta.lore(
-              List.of(
-                  Component.text("Invite Only"),
-                  Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-    }
-
-    displayItem.setItemMeta(meta);
+    updateDisplayItem();
 
     incrementIndex();
     ItemStack memberSkull = PlayerHeadUtil.getPlayerSkull(player);
@@ -321,6 +300,8 @@ public class Party {
               .getLang()
               .formatComponent("player-left-party", player.getName()));
     }
+
+    updateDisplayItem();
   }
 
   public void kick(Player player) {
@@ -340,24 +321,7 @@ public class Party {
               .formatComponent("player-removed-from-party", player.getName()));
     }
 
-    ItemMeta meta = displayItem.getItemMeta();
-
-    switch (status) {
-      case PRIVATE ->
-          meta.lore(
-              List.of(Component.text("Private"), Component.text(this.getSize() + 1 + " Members")));
-      case ANYONE_CAN_JOIN ->
-          meta.lore(
-              List.of(
-                  Component.text("Anyone Can Join"),
-                  Component.text(this.getSize() + 1 + " Members")));
-      case INVITE_ONLY ->
-          meta.lore(
-              List.of(
-                  Component.text("Invite Only"), Component.text(this.getSize() + 1 + " Members")));
-    }
-
-    displayItem.setItemMeta(meta);
+    updateDisplayItem();
   }
 
   public void removeMember(Player player) {
@@ -393,6 +357,27 @@ public class Party {
     PartySelectGUI.reload();
 
     PARTIES.remove(this);
+  }
+
+  private void updateDisplayItem() {
+    ItemMeta meta = displayItem.getItemMeta();
+
+    switch (status) {
+      case PRIVATE ->
+              meta.lore(
+                      List.of(Component.text("Private"), Component.text(this.getSize() + 1 + " Members")));
+      case ANYONE_CAN_JOIN ->
+              meta.lore(
+                      List.of(
+                              Component.text("Anyone Can Join"),
+                              Component.text(this.getSize() + 1 + " Members")));
+      case INVITE_ONLY ->
+              meta.lore(
+                      List.of(
+                              Component.text("Invite Only"), Component.text(this.getSize() + 1 + " Members")));
+    }
+
+    displayItem.setItemMeta(meta);
   }
 
   public enum Status {

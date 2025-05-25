@@ -23,11 +23,7 @@ public class DuelEventListener implements Listener {
 
         assert party != null;
 
-        if (party.isLeader(player)) {
-          party.disband();
-        } else {
-          party.leave(player);
-        }
+        party.leave(player);
       }
     }
   }
@@ -57,11 +53,7 @@ public class DuelEventListener implements Listener {
           continue;
         }
 
-        if (party.isLeader(player)) {
-          party.disband();
-        } else {
-          party.leave(player);
-        }
+        party.leave(player);
       }
     }
   }

@@ -285,6 +285,11 @@ public class Party {
   }
 
   public void leave(Player player) {
+    if (player.equals(partyLeader)) {
+      this.disband();
+      return;
+    }
+
     this.removeMember(player);
 
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("left-party"));

@@ -16,11 +16,6 @@ public class PlayerEventListener implements Listener {
     Party party = Party.getParty(event.getPlayer());
     assert party != null;
 
-    if (party.isLeader(event.getPlayer())) {
-      party.disband();
-      return;
-    }
-
     party.leave(event.getPlayer());
   }
 }

@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.events.listeners;
 
+import club.aurorapvp.auroracombat.events.custom.CombatTagEvent;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,5 +18,20 @@ public class PlayerEventListener implements Listener {
     assert party != null;
 
     party.leave(event.getPlayer());
+  }
+
+  @EventHandler
+  public void onCombatTag(CombatTagEvent event) {
+    Party party = Party.getParty(event.getTagged());
+
+    if (party != null) {
+      party.leave(event.getTagged());
+    }
+
+    party = Party.getParty(event.getTagger());
+
+    if (party != null) {
+      party.leave(event.getTagged());
+    }
   }
 }

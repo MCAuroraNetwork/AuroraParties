@@ -2,6 +2,7 @@ package club.aurorapvp.auroraparties.events.listeners;
 
 import club.aurorapvp.auroraduels.events.custom.DuelEndEvent;
 import club.aurorapvp.auroraduels.events.custom.DuelRequestAcceptEvent;
+import club.aurorapvp.auroraduels.events.custom.DuelRequestSendEvent;
 import club.aurorapvp.auroraduels.events.custom.QueueJoinEvent;
 import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
@@ -24,6 +25,19 @@ public class DuelEventListener implements Listener {
         assert party != null;
 
         party.leave(player);
+      }
+    }
+  }
+
+  @EventHandler
+  public static void onDuelRequestSend(DuelRequestSendEvent event) {
+    if (Party.inParty(event.getPlayer())) {
+      Party party = Party.getParty(event.getPlayer());
+
+      assert party != null;
+
+      if (!(party.isLeader(event.getPlayer()) && event.getRequest().getDuel() instanceof PartyDuel)) {
+        party.leave(event.getPlayer());
       }
     }
   }

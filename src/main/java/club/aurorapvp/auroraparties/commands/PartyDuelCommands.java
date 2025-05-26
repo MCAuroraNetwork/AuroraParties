@@ -1,6 +1,6 @@
 package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.auroraduels.modules.Request;
+import club.aurorapvp.auroraduels.modules.DuelRequest;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.duels.PartyDuel;
@@ -69,10 +69,10 @@ public class PartyDuelCommands extends BaseCommand {
       }
 
       if (loc == null) {
-        loc = Bukkit.getWorlds().get(0).getSpawnLocation();
+        loc = Bukkit.getWorlds().getFirst().getSpawnLocation();
       }
     }
 
-    new Request(player, new PartyDuel(party.getMembers(), opponentParty.getMembers(), loc, false));
+    new DuelRequest(player, new PartyDuel(party.getMembers(), opponentParty.getMembers(), loc, false));
   }
 }

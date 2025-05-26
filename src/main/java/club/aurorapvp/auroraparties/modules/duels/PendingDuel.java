@@ -1,7 +1,7 @@
 package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
-import club.aurorapvp.auroraduels.modules.Request;
+import club.aurorapvp.auroraduels.modules.DuelRequest;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.queues.DuelQueue;
 import club.aurorapvp.auroraduels.modules.queues.DuelQueueGUI;
@@ -24,7 +24,7 @@ public class PendingDuel {
     this.duelStarter = duelStarter;
     this.duel = duel;
 
-    if (Request.hasPendingRequest(duelStarter)) {
+    if (DuelRequest.hasPendingRequest(duelStarter)) {
       duelStarter.sendMessage(
           AuroraParties.getInstance().getLang().getComponent("you-have-request"));
       return;

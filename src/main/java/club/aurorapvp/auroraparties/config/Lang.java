@@ -46,6 +46,8 @@ public class Lang {
     DEFAULTS.put("invite-denied", "prefix <red>Invite denied");
     DEFAULTS.put("no-invites", "prefix <red>No pending invites");
     DEFAULTS.put("already-sent-invite", "prefix <red>Invite already sent!");
+    DEFAULTS.put("player-in-duel-queue", "prefix <red>Player is in a duel queue!");
+    DEFAULTS.put("you-in-duel-queue", "prefix <red>You are in a duel queue!");
     DEFAULTS.put("request-sent", "prefix <green>Request sent!");
     DEFAULTS.put(
         "request-received",

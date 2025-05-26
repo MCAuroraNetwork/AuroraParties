@@ -93,6 +93,15 @@ public class PartyJoinRequest {
     return false;
   }
 
+  public static boolean hasRequest(Player player) {
+    for (PartyJoinRequest request : PENDING_REQUESTS) {
+      if (request.requester.equals(player)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public static boolean hasRequest(Party party, Player requester) {
     for (PartyJoinRequest request : PENDING_REQUESTS) {
       if (request.requester.equals(requester) && request.party.equals(party)) {

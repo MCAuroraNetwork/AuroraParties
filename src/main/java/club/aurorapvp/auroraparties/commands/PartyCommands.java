@@ -1,13 +1,13 @@
 package club.aurorapvp.auroraparties.commands;
 
+import club.aurorapvp.auroraduels.modules.DuelRequest;
+import club.aurorapvp.auroraduels.modules.queues.DuelQueue;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CatchUnknown;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
@@ -127,6 +127,11 @@ public class PartyCommands extends BaseCommand {
 
     if (party.contains(player) || Party.inParty(player)) {
       player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
+      return;
+    }
+
+    if (DuelQueue.inQueue(player)) {
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("you-in-duel-queue"));
       return;
     }
 

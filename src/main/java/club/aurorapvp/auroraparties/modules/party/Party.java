@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraduels.modules.DuelRequest;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.guis.PartyLeaderGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartyManageGUI;
@@ -247,6 +248,12 @@ public class Party {
   public void addMember(Player player) {
     if (partyMembers.contains(player)) {
       return;
+    }
+
+    if (DuelRequest.hasPendingRequest(player)) {
+      for (DuelRequest request : DuelRequest.getRequests(player)) {
+        request.deny();
+      }
     }
 
     player.sendMessage(

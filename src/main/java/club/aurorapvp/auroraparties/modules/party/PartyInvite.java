@@ -1,10 +1,11 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.auroraduels.modules.DuelRequest;
+import club.aurorapvp.auroraduels.modules.queues.DuelQueue;
 import club.aurorapvp.auroraparties.AuroraParties;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import java.util.*;
+
 import org.bukkit.entity.Player;
 
 public class PartyInvite {
@@ -35,6 +36,9 @@ public class PartyInvite {
       return;
     } else if (PartyJoinRequest.hasRequest(party, invited)) {
       party.addMember(invited);
+      return;
+    } else if (DuelQueue.inQueue(invited)) {
+      partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("in-duel-queue"));
       return;
     }
 
@@ -72,6 +76,20 @@ public class PartyInvite {
               }
             },
             AuroraParties.getInstance().getConfig().getInt("invites.timeout-time"));
+  }
+
+  public static LinkedList<PartyInvite> getInvites(Player player) {
+    LinkedList<PartyInvite> pendingInvites = new LinkedList<>();
+
+    for (Collection<PartyInvite> invites : PENDING_INVITES.values()) {
+      for (PartyInvite invite : invites) {
+        if (invite.partyLeader.equals(player) || invite.invited.equals(player)) {
+          pendingInvites.add(invite);
+        }
+      }
+    }
+
+    return pendingInvites;
   }
 
   public static PartyInvite getInvite(Player player) {

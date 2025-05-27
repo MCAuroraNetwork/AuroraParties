@@ -1,6 +1,5 @@
 package club.aurorapvp.auroraparties.commands;
 
-import club.aurorapvp.auroraduels.modules.DuelRequest;
 import club.aurorapvp.auroraduels.modules.queues.DuelQueue;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;

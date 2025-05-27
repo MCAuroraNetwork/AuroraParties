@@ -32,6 +32,8 @@ permissions:
       auroraparties.command.party.deny: true
       auroraparties.command.party.help: true
 
+  auroraparties.command.partychat:
+    default: false
   auroraparties.command.party.disband:
     default: false
   auroraparties.party.invite:
@@ -68,6 +70,7 @@ permissions:
     children:
       auroraparties.command.party: true
       auroraparties.command.parties: true
+      auroraparties.command.partychat: true
 
   auroraparties.create:
     description: Allows for creating parties

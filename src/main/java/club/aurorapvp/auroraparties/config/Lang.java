@@ -91,6 +91,8 @@ public class Lang {
     DEFAULTS.put("player-left-party", "prefix <red>%s left the party");
     DEFAULTS.put("player-joined-party", "prefix <green>%s joined the party!");
     DEFAULTS.put("party-full", "prefix <red>This party is full!");
+    DEFAULTS.put("party-chat-disabled", "prefix <yellow>Party chat disabled");
+    DEFAULTS.put("party-chat-enabled", "prefix <green>Party chat enabled");
     DEFAULTS.put("party-status-gui", "<yellow><bold>Choose Party Status");
     DEFAULTS.put("public-party", "<green><bold>Public Party");
     DEFAULTS.put("invite-only-party", "<blue><bold>Invite Only Party");

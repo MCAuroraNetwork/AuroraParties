@@ -7,10 +7,9 @@ import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
+import java.util.*;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
@@ -32,7 +31,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class TeamDuelGUI implements InventoryHolder, Listener {
 
-  private static final NamespacedKey key = new NamespacedKey(AuroraParties.getInstance(), "ui-item");
+  private static final NamespacedKey key =
+      new NamespacedKey(AuroraParties.getInstance(), "ui-item");
   private final Inventory inventory;
   private final Party party;
   private int index = 0;
@@ -57,9 +57,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
 
     inventory =
         Bukkit.createInventory(
-            this,
-            54,
-            AuroraParties.getInstance().getLang().getComponent("team-duel"));
+            this, 54, AuroraParties.getInstance().getLang().getComponent("team-duel"));
 
     for (int row = 0; row < 6; row++) {
       int blueSlot = row * 9 + 3;
@@ -81,6 +79,12 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     meta.displayName(AuroraParties.getInstance().getLang().getComponent("exit"));
     exit.setItemMeta(meta);
 
+    ItemStack shuffle = new ItemStack(Material.NETHER_STAR);
+    meta = shuffle.getItemMeta();
+    meta.displayName(AuroraParties.getInstance().getLang().getComponent("shuffle-teams"));
+    shuffle.setItemMeta(meta);
+    inventory.setItem(4, shuffle);
+
     inventory.setItem(49, startDuel);
     inventory.setItem(40, exit);
 
@@ -91,8 +95,8 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
               Component.text(
                   "ELO: "
                       + Rating.getRating("overall_duels")
-                      .getScore(party.getLeader())
-                      .getPoints())));
+                          .getScore(party.getLeader())
+                          .getPoints())));
       leaderSkull.setItemMeta(meta);
     }
 
@@ -117,6 +121,12 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
         || clickedItem.getType().equals(Material.BLUE_STAINED_GLASS_PANE)
         || clickedItem.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
       event.setCancelled(true);
+      return;
+    }
+
+    if (event.getSlot() == 4) {
+      event.setCancelled(true);
+      shuffleTeams();
       return;
     }
 
@@ -208,7 +218,9 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     }
 
     if (leftItemNames.isEmpty() || rightItemNames.isEmpty()) {
-      party.getLeader().sendMessage(AuroraParties.getInstance().getLang().getComponent("not-enough-players"));
+      party
+          .getLeader()
+          .sendMessage(AuroraParties.getInstance().getLang().getComponent("not-enough-players"));
       party.getLeader().closeInventory();
       return;
     }
@@ -274,10 +286,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       meta.lore(
           List.of(
               Component.text(
-                  "ELO: "
-                      + Rating.getRating("overall_duels")
-                      .getScore(player)
-                      .getPoints())));
+                  "ELO: " + Rating.getRating("overall_duels").getScore(player).getPoints())));
 
       meta.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
 
@@ -297,6 +306,43 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
     ItemStack lastSkull = InventoryUtil.getLastSkull(inventory);
 
     InventoryUtil.moveItem(inventory, lastSkull, slot);
+  }
+
+  private void shuffleTeams() {
+    List<ItemStack> skulls = new ArrayList<>();
+    for (int slot = 0; slot < 54; slot++) {
+      ItemStack it = inventory.getItem(slot);
+      if (it != null && it.getType() == Material.PLAYER_HEAD) {
+        skulls.add(it.clone());
+        inventory.clear(slot);
+      }
+    }
+
+    if (skulls.size() < 2) return;
+
+    Collections.shuffle(skulls);
+
+    int mid = (skulls.size() + 1) / 2;
+    List<ItemStack> left = skulls.subList(0, mid);
+    List<ItemStack> right = skulls.subList(mid, skulls.size());
+
+    int idx = 0;
+    for (int row = 0; row < 6 && idx < left.size(); row++) {
+      for (int col = 0; col < 3 && idx < left.size(); col++) {
+        inventory.setItem(row * 9 + col, left.get(idx++));
+      }
+    }
+    idx = 0;
+    for (int row = 0; row < 6 && idx < right.size(); row++) {
+      for (int col = 6; col < 9 && idx < right.size(); col++) {
+        inventory.setItem(row * 9 + col, right.get(idx++));
+      }
+    }
+
+    index =
+        InventoryUtil.getLastSkull(inventory) == null
+            ? -1
+            : InventoryUtil.findSkullSlot(InventoryUtil.getLastSkull(inventory), inventory);
   }
 
   private void decrementIndex() {

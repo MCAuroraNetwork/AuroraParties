@@ -1,10 +1,9 @@
-package club.aurorapvp.auroraparties.modules.guis;
+package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroracombat.modules.Rating;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
 import club.aurorapvp.auroraduels.modules.duels.teamduels.TeamDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.aurorawarps.modules.WorldSpawn;
@@ -72,12 +71,12 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
       inventory.setItem(redSlot, redDivider);
     }
 
-    ItemStack startDuel = new ItemStack(Material.GREEN_WOOL);
+    ItemStack startDuel = new ItemStack(Material.NETHERITE_SWORD);
     meta = startDuel.getItemMeta();
     meta.displayName(AuroraParties.getInstance().getLang().getComponent("start-team-duel"));
     startDuel.setItemMeta(meta);
 
-    ItemStack exit = new ItemStack(Material.RED_WOOL);
+    ItemStack exit = new ItemStack(Material.BARRIER);
     meta = exit.getItemMeta();
     meta.displayName(AuroraParties.getInstance().getLang().getComponent("exit"));
     exit.setItemMeta(meta);
@@ -234,7 +233,7 @@ public class TeamDuelGUI implements InventoryHolder, Listener {
   }
 
   @NotNull
-  static Location getRespawnPoint(Location loc, Party party) {
+  public static Location getRespawnPoint(Location loc, Party party) {
     if (AuroraParties.getInstance().isAuroraWarpsInstalled() && loc == null) {
 
       WorldSpawn worldSpawn = WorldSpawn.getWorldSpawn(party.getLeader().getWorld());

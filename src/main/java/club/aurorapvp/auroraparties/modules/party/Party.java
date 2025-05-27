@@ -7,7 +7,7 @@ import club.aurorapvp.auroraparties.modules.guis.PartyManageGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartyMemberGUI;
 import club.aurorapvp.auroraparties.modules.guis.PartySelectGUI;
 import club.aurorapvp.auroraparties.modules.guis.PublicPartyGUI;
-import club.aurorapvp.auroraparties.modules.guis.TeamDuelGUI;
+import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
 import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.HashMap;

@@ -5,11 +5,11 @@ import club.aurorapvp.auroraduels.modules.duels.FFADuel;
 import club.aurorapvp.auroraduels.modules.duels.RandomTeamDuel;
 import club.aurorapvp.auroraduels.modules.duels.StandardDuel;
 import club.aurorapvp.auroraparties.AuroraParties;
-import club.aurorapvp.auroraparties.config.Lang;
 import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
+import club.aurorapvp.auroraparties.modules.duels.TeamDuelGUI;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.util.InventoryUtil;
-import club.aurorapvp.aurorawarps.modules.WorldSpawn;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

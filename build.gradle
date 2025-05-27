@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'AuroraParties'
-version = '1.5.1'
+version = '1.5.2'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ dependencies {
 
     compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
     compileOnly 'net.luckperms:api:5.4'
-    compileOnly ':AuroraDuels:1.14.8'
+    compileOnly ':AuroraDuels:1.14.9'
     compileOnly ':AuroraKits:1.8.2'
     compileOnly ':AuroraWarps:1.3.2'
     compileOnly ':AuroraCombat:1.8.8'

@@ -2,6 +2,8 @@ package club.aurorapvp.auroraparties.modules.duels;
 
 import club.aurorapvp.auroraduels.events.custom.QueueSelectEvent;
 import club.aurorapvp.auroraduels.modules.duels.Duel;
+import club.aurorapvp.auroraduels.modules.duels.teamduels.FriendlyFireGUI;
+import club.aurorapvp.auroraduels.modules.duels.teamduels.TeamDuel;
 import club.aurorapvp.auroraduels.modules.queues.DuelQueueGUI;
 import club.aurorapvp.aurorakits.events.custom.KitSelectEvent;
 import club.aurorapvp.aurorakits.modules.kits.KitsGUI;
@@ -21,9 +23,11 @@ public class PendingDuel {
   public PendingDuel(Player duelStarter, Duel duel) {
     this.duelStarter = duelStarter;
     this.duel = duel;
-
-    new DuelQueueGUI("pending-duel").open(duelStarter);
-
+    if (duel instanceof TeamDuel teamDuel) {
+      new FriendlyFireGUI(duelStarter, teamDuel).open();
+    } else {
+      new DuelQueueGUI("pending-duel").open(duelStarter);
+    }
     PENDING_DUELS.add(this);
   }
 
@@ -43,7 +47,6 @@ public class PendingDuel {
         }
       }
     }
-
     return false;
   }
 
@@ -51,17 +54,19 @@ public class PendingDuel {
     if (duelStarter != event.getPlayer()) {
       return;
     }
-
-    if (!(event.getInventory().getHolder() instanceof DuelQueueGUI queueGUI)) {
+    if (event.getInventory().getHolder() instanceof FriendlyFireGUI) {
+      if (duel instanceof TeamDuel) {
+        new DuelQueueGUI("pending-duel").open(duelStarter);
+      }
       return;
     }
-
-    if (!queueGUI.getName().equals("pending-duel")) {
-      return;
-    }
-
-    if (duel.getQueue() == null) {
-      PENDING_DUELS.remove(this);
+    if (event.getInventory().getHolder() instanceof DuelQueueGUI queueGUI) {
+      if (!queueGUI.getName().equals("pending-duel")) {
+        return;
+      }
+      if (duel.getQueue() == null) {
+        PENDING_DUELS.remove(this);
+      }
     }
   }
 
@@ -69,39 +74,31 @@ public class PendingDuel {
     if (duelStarter != event.getPlayer()) {
       return;
     }
-
-
     if (!event.getName().equals("pending-duel")) {
       return;
     }
-
     duel.setQueue(event.getQueue());
-
     if (AuroraParties.getInstance().isAuroraKitsInstalled()) {
       event.getPlayer().openInventory(KitsGUI.getGUI(event.getPlayer()).getCurrentPage());
-      return;
+    } else {
+      event.getPlayer().closeInventory();
+      this.enterQueue();
     }
-
-    event.getPlayer().closeInventory();
-    this.enterQueue();
   }
 
   public void onKitSelect(KitSelectEvent event) {
     if (duelStarter != event.getPlayer()) {
       return;
     }
-
     duel.setKit(event.getKit());
-
     this.enterQueue();
   }
 
   public void enterQueue() {
     Party party = Party.getParty(duelStarter);
-
-      assert party != null;
+    if (party != null) {
       party.setInDuel(true);
-
+    }
     duel.getQueue().enterDuelQueue(duel);
     PENDING_DUELS.remove(this);
   }

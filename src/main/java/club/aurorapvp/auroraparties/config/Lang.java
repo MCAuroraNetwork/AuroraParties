@@ -30,13 +30,16 @@ public class Lang {
       if (Objects.requireNonNull(getYaml().getString((String) path)).startsWith("~")
           && Objects.requireNonNull(getYaml().getString((String) path)).endsWith("~")) {
         PLACEHOLDERS.put(
-            (String) path, Objects.requireNonNull(getYaml().getString((String) path)).replace("~", ""));
+            (String) path,
+            Objects.requireNonNull(getYaml().getString((String) path)).replace("~", ""));
       }
     }
 
     DEFAULTS.put("prefix", "~<gradient:#FFAA00:#FF55FF><bold>AuroraParties ><reset>~");
     DEFAULTS.put("reloaded", "prefix <green>Reloaded");
-    DEFAULTS.put("party-created", "prefix <green>Party created! Use <bold>/party<reset><green> to manage it!");
+    DEFAULTS.put(
+        "party-created",
+        "prefix <green>Party created! Use <bold>/party<reset><green> to manage it!");
     DEFAULTS.put("invite-sent", "prefix <green>Invite sent!");
     DEFAULTS.put(
         "invite-received",
@@ -88,24 +91,27 @@ public class Lang {
     DEFAULTS.put("player-left-party", "prefix <red>%s left the party");
     DEFAULTS.put("player-joined-party", "prefix <green>%s joined the party!");
     DEFAULTS.put("party-full", "prefix <red>This party is full!");
+    DEFAULTS.put("party-status-gui", "<yellow><bold>Choose Party Status");
+    DEFAULTS.put("public-party", "<green><bold>Public Party");
+    DEFAULTS.put("invite-only-party", "<blue><bold>Invite Only Party");
+    DEFAULTS.put("private-party", "<red><bold>Private Party");
     DEFAULTS.put(
         "help-command",
         """
-            prefix <yellow><bold>All Commands:
-                    
-                    
-            <blue><bold>/parties: <reset><yellow>Opens the GUI for all public parties
-            
-            <blue><bold>/party: <reset><yellow>Opens the party GUI
-            
-            <blue><bold>/party create [name]: <reset><yellow>Creates a party
-            
-            <blue><bold>/party disband: <reset><yellow>Disbands your party
-            
-            <blue><bold>/party invite [player]: <reset><yellow>Invites a player to your party
-            
-            <blue><bold>/partyduel [player]: <reset><yellow>Sends a duel request to someone else's party
-            """);
+                prefix <yellow><bold>All Commands:
+
+                <blue><bold>/parties: <reset><yellow>Opens the GUI for all public parties
+
+                <blue><bold>/party: <reset><yellow>Opens the party GUI
+
+                <blue><bold>/party create [name]: <reset><yellow>Creates a party
+
+                <blue><bold>/party disband: <reset><yellow>Disbands your party
+
+                <blue><bold>/party invite [player]: <reset><yellow>Invites a player to your party
+
+                <blue><bold>/partyduel [player]: <reset><yellow>Sends a duel request to someone else's party
+                """);
 
     for (String path : DEFAULTS.keySet()) {
       if (!getYaml().contains(path) || getYaml().getString(path) == null) {
@@ -123,7 +129,8 @@ public class Lang {
       if (Objects.requireNonNull(getYaml().getString((String) path)).startsWith("~")
           && Objects.requireNonNull(getYaml().getString((String) path)).endsWith("~")) {
         PLACEHOLDERS.put(
-            (String) path, Objects.requireNonNull(getYaml().getString((String) path)).replace("~", ""));
+            (String) path,
+            Objects.requireNonNull(getYaml().getString((String) path)).replace("~", ""));
       }
     }
   }
@@ -136,16 +143,13 @@ public class Lang {
         pathString = pathString.replace(placeholder.getKey(), placeholder.getValue());
       }
     }
-
     pathString = String.format(pathString, args);
-
     return MiniMessage.miniMessage().deserialize(pathString);
   }
 
   public Component getComponent(String message) {
     String pathString = getYaml().getString(message);
     assert pathString != null;
-
     for (var placeholder : PLACEHOLDERS.entrySet()) {
       if (pathString.contains(placeholder.getKey())) {
         pathString = pathString.replace(placeholder.getKey(), placeholder.getValue());
@@ -154,7 +158,8 @@ public class Lang {
     return MiniMessage.miniMessage().deserialize(pathString);
   }
 
-  public Component getformattedComponentCommand(String message, String hover, String command, Object... args) {
+  public Component getformattedComponentCommand(
+      String message, String hover, String command, Object... args) {
     String pathString = getYaml().getString(message);
     assert pathString != null;
     for (String placeholder : PLACEHOLDERS.keySet()) {
@@ -162,31 +167,25 @@ public class Lang {
         pathString = pathString.replace(placeholder, PLACEHOLDERS.get(placeholder));
       }
     }
-
     pathString = String.format(pathString, args);
-
     Component component = MiniMessage.miniMessage().deserialize(pathString);
-
     return component
-            .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, command))
-            .hoverEvent(HoverEvent.showText(Component.text(hover)));
+        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, command))
+        .hoverEvent(HoverEvent.showText(Component.text(hover)));
   }
 
   public Component getComponentCommand(String message, String hover, String command) {
     String pathString = getYaml().getString(message);
     assert pathString != null;
-
     for (String placeholder : PLACEHOLDERS.keySet()) {
       if (pathString.contains(placeholder)) {
         pathString = pathString.replace(placeholder, PLACEHOLDERS.get(placeholder));
       }
     }
-
     Component component = MiniMessage.miniMessage().deserialize(pathString);
-
     return component
-            .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, command))
-            .hoverEvent(HoverEvent.showText(Component.text(hover)));
+        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, command))
+        .hoverEvent(HoverEvent.showText(Component.text(hover)));
   }
 
   public YamlConfiguration getYaml() {
@@ -199,12 +198,12 @@ public class Lang {
       try {
         FILE.getParentFile().mkdirs();
         FILE.createNewFile();
-
         lang = YamlConfiguration.loadConfiguration(FILE);
-
         this.generateDefaults();
       } catch (IOException e) {
-        AuroraParties.getInstance().getLogger().log(Level.SEVERE, "Failed to generate lang file", e);
+        AuroraParties.getInstance()
+            .getLogger()
+            .log(Level.SEVERE, "Failed to generate lang file", e);
       }
     }
     lang = YamlConfiguration.loadConfiguration(FILE);

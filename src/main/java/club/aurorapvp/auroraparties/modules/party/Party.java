@@ -41,24 +41,19 @@ public class Party {
   private Status status;
   private boolean inDuel;
 
-  public Party(Player partyLeader) {
+  public Party(Player partyLeader, Status status) {
     this.partyLeader = partyLeader;
+    this.status = status;
 
     if (AuroraParties.getInstance().isLuckPermsInstalled()) {
       LuckPerms luckPerms =
           Objects.requireNonNull(Bukkit.getServicesManager().getRegistration(LuckPerms.class))
               .getProvider();
-
       User user = luckPerms.getPlayerAdapter(Player.class).getUser(partyLeader);
-
       String meta = user.getCachedData().getMetaData().getMetaValue("party-size");
-      if (meta != null) {
-        maxSize = Integer.parseInt(meta);
-      } else {
-        maxSize = 20;
-      }
+      maxSize = meta != null ? Integer.parseInt(meta) : 2;
     } else {
-      maxSize = 20;
+      maxSize = 2;
     }
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);
@@ -74,11 +69,13 @@ public class Party {
     ItemMeta meta = displayItem.getItemMeta();
     meta.displayName(
         AuroraParties.getInstance().getLang().formatComponent("party-name", partyLeader.getName()));
+    meta.lore(
+        List.of(
+            getStatusDisplayName(),
+            Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
     displayItem.setItemMeta(meta);
 
     this.displayItem = displayItem;
-
-    this.setStatus(Status.INVITE_ONLY);
 
     partyLeader.sendMessage(
         AuroraParties.getInstance()
@@ -93,7 +90,6 @@ public class Party {
       if (party.getLeader().equals(player)) {
         return true;
       }
-
       for (Player member : party.getMembers()) {
         if (member.equals(player)) {
           return true;
@@ -162,66 +158,25 @@ public class Party {
 
   public void setStatus(Status status) {
     this.status = status;
+    updateDisplayItem();
+    PartySelectGUI.refresh();
+  }
 
+  private Component getStatusDisplayName() {
+    return switch (status) {
+      case PRIVATE -> AuroraParties.getInstance().getLang().getComponent("private-party");
+      case ANYONE_CAN_JOIN -> AuroraParties.getInstance().getLang().getComponent("public-party");
+      case INVITE_ONLY -> AuroraParties.getInstance().getLang().getComponent("invite-only-party");
+    };
+  }
+
+  private void updateDisplayItem() {
     ItemMeta meta = displayItem.getItemMeta();
-
-    // TODO this should be done in the lang file, like duh
-    switch (status) {
-      case PRIVATE -> {
-        meta.lore(
-            List.of(
-                Component.text("Private"),
-                Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-
-        displayItem.setItemMeta(meta);
-
-        PartySelectGUI.refresh();
-      }
-      case ANYONE_CAN_JOIN -> {
-        meta.lore(
-            List.of(
-                Component.text("Anyone can Join"),
-                Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-
-        displayItem.setItemMeta(meta);
-
-        PartySelectGUI.refresh();
-      }
-      case INVITE_ONLY -> {
-        meta.lore(
-            List.of(
-                Component.text("Invite Only"),
-                Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
-
-        displayItem.setItemMeta(meta);
-
-        PartySelectGUI.refresh();
-      }
-    }
-  }
-
-  private void decrementIndex() {
-    if (index <= 10) {
-      throw new IndexOutOfBoundsException("Cannot decrement below 10");
-    }
-
-    index--;
-
-    if (index % 9 == 0) {
-      index -= 2;
-    }
-  }
-
-  private void incrementIndex() {
-    if (index >= 43) {
-      throw new IndexOutOfBoundsException("Cannot increment over 43");
-    }
-
-    index++;
-
-    if (index % 9 == 8) {
-      index += 2;
-    }
+    meta.lore(
+        List.of(
+            getStatusDisplayName(),
+            Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
+    displayItem.setItemMeta(meta);
   }
 
   public ItemStack getDisplayItem() {
@@ -236,7 +191,6 @@ public class Party {
     if (this.getLeader().equals(player)) {
       return true;
     }
-
     for (Player member : this.getMembers()) {
       if (member.equals(player)) {
         return true;
@@ -249,41 +203,31 @@ public class Party {
     if (partyMembers.contains(player)) {
       return;
     }
-
     if (DuelRequest.hasPendingRequest(player)) {
       for (DuelRequest request : DuelRequest.getRequests(player)) {
         request.deny();
       }
     }
-
     player.sendMessage(
         AuroraParties.getInstance()
             .getLang()
             .formatComponent("player-joined-party", player.getName()));
-
     player.openInventory(this.getMemberGUI().getInventory());
-
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
           AuroraParties.getInstance()
               .getLang()
               .formatComponent("player-joined-party", player.getName()));
     }
-
     partyLeader.sendMessage(
         AuroraParties.getInstance()
             .getLang()
             .formatComponent("player-joined-party", player.getName()));
-
     partyMembers.add(player);
-
     updateDisplayItem();
-
     incrementIndex();
     ItemStack memberSkull = PlayerHeadUtil.getPlayerSkull(player);
-
     memberSkulls.put(player.getUniqueId(), memberSkull);
-
     partyLeaderGUI.addMember(index, memberSkull);
     partyManageGUI.addMember(index, memberSkull);
     partyMemberGUI.addMember(index, memberSkull);
@@ -296,56 +240,43 @@ public class Party {
       this.disband();
       return;
     }
-
     this.removeMember(player);
-
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("left-party"));
-
     partyLeader.sendMessage(
         AuroraParties.getInstance()
             .getLang()
             .formatComponent("player-left-party", player.getName()));
-
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
           AuroraParties.getInstance()
               .getLang()
               .formatComponent("player-left-party", player.getName()));
     }
-
     updateDisplayItem();
   }
 
   public void kick(Player player) {
     this.removeMember(player);
-
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("removed-from-party"));
-
     partyLeader.sendMessage(
         AuroraParties.getInstance()
             .getLang()
             .formatComponent("player-removed-from-party", player.getName()));
-
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
           AuroraParties.getInstance()
               .getLang()
               .formatComponent("player-removed-from-party", player.getName()));
     }
-
     updateDisplayItem();
   }
 
   public void removeMember(Player player) {
     partyMembers.remove(player);
-
     decrementIndex();
-
     ItemStack memberSkull = memberSkulls.get(player.getUniqueId());
-
     int slot = InventoryUtil.findSkullSlot(memberSkull, publicPartyGUI.getInventory());
     ItemStack lastSkull = InventoryUtil.getLastSkull(publicPartyGUI.getInventory());
-
     partyLeaderGUI.removeMember(slot, memberSkull, lastSkull);
     partyManageGUI.removeMember(slot, memberSkull, lastSkull);
     partyMemberGUI.removeMember(slot, memberSkull, lastSkull);
@@ -358,38 +289,34 @@ public class Party {
         AuroraParties.getInstance()
             .getLang()
             .formatComponent("party-disbanded", partyLeader.getName()));
-
     for (Player player : partyMembers) {
       player.sendMessage(
           AuroraParties.getInstance()
               .getLang()
               .formatComponent("party-disbanded", partyLeader.getName()));
     }
-
     PartySelectGUI.reload();
-
     PARTIES.remove(this);
   }
 
-  private void updateDisplayItem() {
-    ItemMeta meta = displayItem.getItemMeta();
-
-    switch (status) {
-      case PRIVATE ->
-              meta.lore(
-                      List.of(Component.text("Private"), Component.text(this.getSize() + 1 + " Members")));
-      case ANYONE_CAN_JOIN ->
-              meta.lore(
-                      List.of(
-                              Component.text("Anyone Can Join"),
-                              Component.text(this.getSize() + 1 + " Members")));
-      case INVITE_ONLY ->
-              meta.lore(
-                      List.of(
-                              Component.text("Invite Only"), Component.text(this.getSize() + 1 + " Members")));
+  private void decrementIndex() {
+    if (index <= 10) {
+      throw new IndexOutOfBoundsException("Cannot decrement below 10");
     }
+    index--;
+    if (index % 9 == 0) {
+      index -= 2;
+    }
+  }
 
-    displayItem.setItemMeta(meta);
+  private void incrementIndex() {
+    if (index >= 43) {
+      throw new IndexOutOfBoundsException("Cannot increment over 43");
+    }
+    index++;
+    if (index % 9 == 8) {
+      index += 2;
+    }
   }
 
   public enum Status {

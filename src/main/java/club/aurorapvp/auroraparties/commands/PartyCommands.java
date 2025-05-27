@@ -7,6 +7,7 @@ import club.aurorapvp.auroraparties.modules.duels.PendingDuel;
 import club.aurorapvp.auroraparties.modules.party.Party;
 import club.aurorapvp.auroraparties.modules.party.PartyInvite;
 import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
+import club.aurorapvp.auroraparties.modules.party.PartyStatusGUI;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -52,7 +53,7 @@ public class PartyCommands extends BaseCommand {
       return;
     }
 
-    new Party(player);
+    new PartyStatusGUI(player).open();
   }
 
   @Subcommand("disband")

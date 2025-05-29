@@ -148,6 +148,10 @@ public class PartyInvite {
   }
 
   public void accept() {
+    if (party.getSize() == party.getMaxSize()) {
+      invited.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+    }
+
     party.addMember(invited);
     PENDING_INVITES.getOrDefault(party, new LinkedList<>()).remove(this);
 

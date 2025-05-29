@@ -7,7 +7,6 @@ import club.aurorapvp.auroraparties.modules.party.PartyJoinRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,14 +21,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class PartySelectGUI implements Listener {
 
   private static final Map<UUID, Integer> PLAYER_PAGES = new HashMap<>();
+
   private static final List<Page> pages = new ArrayList<>();
-  private static int index;
 
   public static void init() {
     reload();
@@ -37,152 +35,83 @@ public class PartySelectGUI implements Listener {
 
   public static Inventory getCurrentPage(Player player) {
     int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
+    if (currentPage >= pages.size()) {
+      currentPage = 0;
+      PLAYER_PAGES.put(player.getUniqueId(), 0);
+    }
     return pages.get(currentPage).getInventory();
   }
 
   public static void nextPage(Player player) {
-    int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
-
-    if (currentPage < index - 1) {
-      currentPage++;
-    } else {
-      currentPage = 0;
+    int currentPage = player != null ? PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0) : 0;
+    int nextPage = pages.isEmpty() ? 0 : (currentPage + 1) % pages.size();
+    if (player != null) {
+      PLAYER_PAGES.put(player.getUniqueId(), nextPage);
+      player.openInventory(pages.get(nextPage).getInventory());
     }
-
-    PLAYER_PAGES.put(player.getUniqueId(), currentPage);
-    PartySelectGUI.open(player);
   }
 
   public static void previousPage(Player player) {
-    int currentPage = PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0);
-
-    if (currentPage > 1) {
-      currentPage--;
-    } else {
-      currentPage = index - 1;
+    int currentPage = player != null ? PLAYER_PAGES.getOrDefault(player.getUniqueId(), 0) : 0;
+    int prevPage = pages.isEmpty() ? 0 : (currentPage - 1 + pages.size()) % pages.size();
+    if (player != null) {
+      PLAYER_PAGES.put(player.getUniqueId(), prevPage);
+      player.openInventory(pages.get(prevPage).getInventory());
     }
-
-    PLAYER_PAGES.put(player.getUniqueId(), currentPage);
-    PartySelectGUI.open(player);
   }
 
   public static void reload() {
     Set<Party> partySet = new HashSet<>(Party.getParties());
-
     partySet.removeIf(party -> party.getStatus().equals(Status.PRIVATE));
 
-    index = 0;
+    List<Party> partyList = new ArrayList<>(partySet);
+    partyList.sort((p1, p2) -> {
+      boolean p1Full = p1.getSize() >= p1.getMaxSize();
+      boolean p2Full = p2.getSize() >= p2.getMaxSize();
+      if (!p1Full && p2Full) return -1;
+      if (p1Full && !p2Full) return 1;
+      return 0;
+    });
+
+    int totalParties = partyList.size();
+    int currentPages = (int) Math.ceil(totalParties / 45.0);
+
     pages.clear();
-
-    for (int i = 0; i < partySet.size(); i++) {
-      if (i % 44 == 0 && i != 0) {
-        index++;
-      }
-    }
-
-    int currentPages = index + 1;
-
     for (int i = 0; i < currentPages; i++) {
-      int numParties = partySet.size() - i * 45;
-      Party[] parties = new Party[Math.max(numParties, 0)];
-
-      Iterator<Party> iterator = partySet.iterator();
-
-      int counter = 0;
-
-      while (iterator.hasNext()) {
-        if (counter < i * 45) {
-          iterator.next();
-          counter++;
-          continue;
-        }
-
-        if (counter - i * 45 >= parties.length) {
-          break;
-        }
-
-        parties[counter - i * 45] = iterator.next();
-        counter++;
-      }
-
-      pages.add(new Page(parties));
-      index++;
-    }
-  }
-
-  public static void refresh() {
-    Set<Party> partySet = new HashSet<>(Party.getParties());
-
-    partySet.removeIf(party -> party.getStatus().equals(Status.PRIVATE));
-
-    for (int i = 0; i < index; i++) {
-      int numParties = partySet.size() - i * 45;
-      Party[] parties = new Party[Math.max(numParties, 0)];
-
-      Iterator<Party> iterator = partySet.iterator();
-
-      int counter = 0;
-
-      while (iterator.hasNext()) {
-        if (counter < i * 45) {
-          iterator.next();
-          counter++;
-          continue;
-        }
-
-        if (counter - i * 45 >= parties.length) {
-          break;
-        }
-
-        parties[counter - i * 45] = iterator.next();
-        counter++;
-      }
-
-      pages.get(i).update(parties);
+      int start = i * 45;
+      int end = Math.min(start + 45, totalParties);
+      List<Party> pageParties = partyList.subList(start, end);
+      pages.add(new Page(pageParties.toArray(new Party[0])));
     }
   }
 
   @EventHandler
   public static void onInventoryClicked(InventoryClickEvent event) {
-    if (!(event.getInventory().getHolder() instanceof Page)) {
+    if (!(event.getInventory().getHolder() instanceof Page page)) {
       return;
     }
-
     event.setCancelled(true);
-
     Player player = (Player) event.getWhoClicked();
+    int slot = event.getSlot();
 
-    if (event.getSlot() == 45) {
-      PartySelectGUI.previousPage(player);
-      return;
-    } else if (event.getSlot() == 53) {
-      PartySelectGUI.nextPage(player);
-      return;
-    }
-
-    final ItemStack clickedItem = event.getCurrentItem();
-
-    if (clickedItem == null || !(clickedItem.getItemMeta() instanceof SkullMeta meta)) {
-      return;
-    }
-
-    if (Party.inParty(player)) {
-      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
-      return;
-    }
-
-    for (Party party : Party.getParties()) {
-      if (party.getSize() == party.getMaxSize()) {
-        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
-      }
-
-      meta = (SkullMeta) clickedItem.getItemMeta();
-      SkullMeta partyMeta = (SkullMeta) party.getDisplayItem().getItemMeta();
-
-      if (meta.getOwningPlayer() == partyMeta.getOwningPlayer()) {
-        if (party.getStatus().equals(Party.Status.ANYONE_CAN_JOIN)) {
+    if (slot == 45) {
+      previousPage(player);
+    } else if (slot == 53) {
+      nextPage(player);
+    } else if (slot >= 0 && slot < 45) {
+      Party party = page.slotToParty.get(slot);
+      if (party != null) {
+        if (Party.inParty(player)) {
+          player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
+          return;
+        }
+        if (party.getSize() >= party.getMaxSize()) {
+          player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+          return;
+        }
+        if (party.getStatus().equals(Status.ANYONE_CAN_JOIN)) {
           party.addMember(player);
-        } else if (party.getStatus().equals(Party.Status.INVITE_ONLY)) {
+        } else if (party.getStatus().equals(Status.INVITE_ONLY)) {
           new PartyJoinRequest(player, party);
         }
       }
@@ -191,61 +120,36 @@ public class PartySelectGUI implements Listener {
 
   public static void open(Player player) {
     reload();
-
-    player.openInventory(PartySelectGUI.getCurrentPage(player));
+    player.openInventory(getCurrentPage(player));
   }
 
   public static class Page implements InventoryHolder {
 
     private final Inventory inventory;
+    private final Map<Integer, Party> slotToParty = new HashMap<>();
 
     private Page(Party[] parties) {
       inventory = Bukkit.createInventory(this, 54, AuroraParties.getInstance().getLang().getComponent("parties-gui"));
-
-      for (Party party : parties) {
-        if (party.getStatus() != Party.Status.PRIVATE) {
-          inventory.addItem(party.getDisplayItem());
-        }
+      for (int slot = 0; slot < Math.min(parties.length, 45); slot++) {
+        Party party = parties[slot];
+        inventory.setItem(slot, party.getDisplayItem());
+        slotToParty.put(slot, party);
       }
-
-      ItemMeta meta;
-
-      ItemStack nextPage = new ItemStack(Material.PAPER);
-      meta = nextPage.getItemMeta();
-      meta.displayName(AuroraParties.getInstance().getLang().getComponent("next-page"));
-      nextPage.setItemMeta(meta);
-
-      ItemStack previousPage = new ItemStack(Material.PAPER);
-      meta = previousPage.getItemMeta();
-      meta.displayName(AuroraParties.getInstance().getLang().getComponent("previous-page"));
-      previousPage.setItemMeta(meta);
-
-      inventory.setItem(45, previousPage);
-      inventory.setItem(53, nextPage);
+      addNavigationButtons();
     }
 
-    public void update(Party[] parties) {
-      inventory.clear();
-
-      for (Party party : parties) {
-        if (party.getStatus() != Party.Status.PRIVATE) {
-          inventory.addItem(party.getDisplayItem());
-        }
-      }
-
+    private void addNavigationButtons() {
       ItemMeta meta;
+      ItemStack previousPage = new ItemStack(Material.PAPER);
+      meta = previousPage.getItemMeta();
+      meta.displayName(AuroraParties.getInstance().getLang().getComponent("previous-page"));
+      previousPage.setItemMeta(meta);
+      inventory.setItem(45, previousPage);
 
       ItemStack nextPage = new ItemStack(Material.PAPER);
       meta = nextPage.getItemMeta();
       meta.displayName(AuroraParties.getInstance().getLang().getComponent("next-page"));
       nextPage.setItemMeta(meta);
-
-      ItemStack previousPage = new ItemStack(Material.PAPER);
-      meta = previousPage.getItemMeta();
-      meta.displayName(AuroraParties.getInstance().getLang().getComponent("previous-page"));
-      previousPage.setItemMeta(meta);
-
-      inventory.setItem(45, previousPage);
       inventory.setItem(53, nextPage);
     }
 

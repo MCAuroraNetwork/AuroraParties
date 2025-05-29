@@ -89,6 +89,7 @@ public class PartyCommands extends BaseCommand {
 
     if (party.getSize() == party.getMaxSize()) {
       player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+      return;
     }
 
     Player invited = Bukkit.getPlayer(playerName);
@@ -127,6 +128,11 @@ public class PartyCommands extends BaseCommand {
 
     if (party.contains(player) || Party.inParty(player)) {
       player.sendMessage(AuroraParties.getInstance().getLang().getComponent("already-in-party"));
+      return;
+    }
+
+    if (party.getSize() == party.getMaxSize()) {
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
       return;
     }
 

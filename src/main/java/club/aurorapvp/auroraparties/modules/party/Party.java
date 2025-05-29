@@ -72,7 +72,7 @@ public class Party {
     meta.lore(
         List.of(
             getStatusDisplayName(),
-            Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
+            Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
     displayItem.setItemMeta(meta);
 
     this.displayItem = displayItem;
@@ -141,7 +141,7 @@ public class Party {
   }
 
   public int getSize() {
-    return this.getMembers().size();
+    return partyMembers.size() + 1;
   }
 
   public boolean isInDuel() {
@@ -159,7 +159,7 @@ public class Party {
   public void setStatus(Status status) {
     this.status = status;
     updateDisplayItem();
-    PartySelectGUI.refresh();
+    PartySelectGUI.reload();
   }
 
   private Component getStatusDisplayName() {
@@ -175,7 +175,7 @@ public class Party {
     meta.lore(
         List.of(
             getStatusDisplayName(),
-            Component.text(this.getSize() + 1 + "/" + this.getMaxSize() + " Members")));
+            Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
     displayItem.setItemMeta(meta);
   }
 
@@ -233,6 +233,7 @@ public class Party {
     partyMemberGUI.addMember(index, memberSkull);
     publicPartyGUI.addMember(index, memberSkull);
     teamDuelGUI.addMember(memberSkull, player);
+    PartySelectGUI.reload();
   }
 
   public void leave(Player player) {
@@ -282,6 +283,7 @@ public class Party {
     partyMemberGUI.removeMember(slot, memberSkull, lastSkull);
     publicPartyGUI.removeMember(slot, memberSkull, lastSkull);
     teamDuelGUI.removeMember(memberSkull);
+    PartySelectGUI.reload();
   }
 
   public void disband() {

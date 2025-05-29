@@ -54,19 +54,26 @@ public class PendingDuel {
     if (duelStarter != event.getPlayer()) {
       return;
     }
+
     if (event.getInventory().getHolder() instanceof FriendlyFireGUI) {
       if (duel instanceof TeamDuel) {
         new DuelQueueGUI("pending-duel").open(duelStarter);
       }
       return;
     }
+
     if (event.getInventory().getHolder() instanceof DuelQueueGUI queueGUI) {
       if (!queueGUI.getName().equals("pending-duel")) {
         return;
       }
-      if (duel.getQueue() == null) {
-        PENDING_DUELS.remove(this);
-      }
+
+      PENDING_DUELS.remove(this);
+      return;
+    }
+
+
+    if (duel.getKit() == null) {
+      PENDING_DUELS.remove(this);
     }
   }
 

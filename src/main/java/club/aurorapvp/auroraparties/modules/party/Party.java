@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Party {
 
   private static final Set<Party> PARTIES = new HashSet<>();
+  private static final Set<Player> PARTY_LEADERS = new HashSet<>();
   private final int maxSize;
   private final HashMap<UUID, ItemStack> memberSkulls = new HashMap<>();
   private final Player partyLeader;
@@ -44,6 +45,8 @@ public class Party {
   public Party(Player partyLeader, Status status) {
     this.partyLeader = partyLeader;
     this.status = status;
+
+    PARTY_LEADERS.add(partyLeader);
 
     if (AuroraParties.getInstance().isLuckPermsInstalled()) {
       LuckPerms luckPerms =
@@ -187,6 +190,10 @@ public class Party {
     return partyLeader.equals(player);
   }
 
+  public static boolean isPartyLeader(Player player) {
+    return PARTY_LEADERS.contains(player);
+  }
+
   public boolean contains(Player player) {
     if (this.getLeader().equals(player)) {
       return true;
@@ -298,6 +305,8 @@ public class Party {
               .formatComponent("party-disbanded", partyLeader.getName()));
     }
     PartySelectGUI.reload();
+
+    PARTY_LEADERS.remove(partyLeader);
     PARTIES.remove(this);
   }
 

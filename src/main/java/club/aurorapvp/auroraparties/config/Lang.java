@@ -92,6 +92,9 @@ public class Lang {
     DEFAULTS.put("public-party", "<green><bold>🌐 Public Party");
     DEFAULTS.put("invite-only-party", "<blue><bold>✉ Invite Only Party");
     DEFAULTS.put("private-party", "<red><bold>🔒 Private Party");
+    DEFAULTS.put("cannot-duel-own-party", "<red>❌ You cannot duel your own party!");
+    DEFAULTS.put("click-to-duel", "<green>Click to send duel request ⚔");
+    DEFAULTS.put("click-to-join", "<green>Click to join party ✉");
     DEFAULTS.put(
             "help-command",
             "<yellow><bold>Commands:\n\n"

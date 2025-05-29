@@ -73,6 +73,14 @@ public class PartyDuelCommands extends BaseCommand {
       }
     }
 
-    new DuelRequest(player, new PartyDuel(party.getMembers(), opponentParty.getMembers(), loc, false));
+    Set<Player> team1 = party.getMembers();
+
+    team1.add(party.getLeader());
+
+    Set<Player> team2 = opponentParty.getMembers();
+
+    team2.add(opponentParty.getLeader());
+
+    new DuelRequest(player, new PartyDuel(team1, team2, loc, false));
   }
 }

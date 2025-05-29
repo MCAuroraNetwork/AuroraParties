@@ -33,20 +33,25 @@ public class DuelEventListener implements Listener {
 
   @EventHandler
   public static void onDuelRequestSend(DuelRequestSendEvent event) {
+    if (event.getRequest().getDuel() instanceof PartyDuel) {
+      return;
+    }
+
     if (Party.inParty(event.getPlayer())) {
       Party party = Party.getParty(event.getPlayer());
 
       assert party != null;
 
-      if (!(party.isLeader(event.getPlayer())
-          && event.getRequest().getDuel() instanceof PartyDuel)) {
-        party.leave(event.getPlayer());
-      }
+      party.leave(event.getPlayer());
     }
   }
 
   @EventHandler
   public static void onDuelQueue(QueueJoinEvent event) {
+    if (event.getDuel() instanceof PartyDuel) {
+      return;
+    }
+
     for (Player player : event.getDuel().getPlayers()) {
       if (PartyInvite.hasPendingInvite(player)) {
         for (PartyInvite invite : PartyInvite.getInvites(player)) {
@@ -85,6 +90,7 @@ public class DuelEventListener implements Listener {
         Party party = Party.getParty(player);
 
         assert party != null;
+
         party.setInDuel(false);
       }
     }

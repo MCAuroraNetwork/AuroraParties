@@ -30,7 +30,7 @@ dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
     compileOnly 'net.luckperms:api:5.4'
     compileOnly ':AuroraDuels:1.14.9'
-    compileOnly ':AuroraKits:1.8.2'
+    compileOnly ':AuroraKits:1.8.4'
     compileOnly ':AuroraWarps:1.3.2'
     compileOnly ':AuroraCombat:1.8.8'
     compileOnly ':AuroraChat:1.1.0'

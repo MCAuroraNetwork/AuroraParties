@@ -16,13 +16,6 @@ public class PendingDuelEventListener implements Listener {
   }
 
   @EventHandler
-  public void onQueueSelect(QueueSelectEvent event) {
-    for (PendingDuel pendingDuel : PendingDuel.getPendingDuels()) {
-      pendingDuel.onQueueSelect(event);
-    }
-  }
-
-  @EventHandler
   public void onKitSelect(KitSelectEvent event) {
     for (PendingDuel pendingDuel : PendingDuel.getPendingDuels()) {
       pendingDuel.onKitSelect(event);

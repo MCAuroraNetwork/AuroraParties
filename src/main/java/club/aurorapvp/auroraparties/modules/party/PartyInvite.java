@@ -31,7 +31,7 @@ public class PartyInvite {
       partyLeader.sendMessage(
           AuroraParties.getInstance().getLang().getComponent("already-in-party"));
       return;
-    } else if (!party.isLeader(partyLeader)) {
+    } else if (!party.isLeader(partyLeader) && party.getStatus() != Party.Status.ANYONE_CAN_JOIN) {
       partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("no-permission"));
       return;
     } else if (PartyJoinRequest.hasRequest(party, invited)) {
@@ -150,6 +150,7 @@ public class PartyInvite {
   public void accept() {
     if (party.getSize() == party.getMaxSize()) {
       invited.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-full"));
+      return;
     }
 
     party.addMember(invited);

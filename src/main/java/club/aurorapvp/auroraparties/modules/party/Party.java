@@ -16,19 +16,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
+import net.luckperms.api.query.QueryOptions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Party {
 
   private static final Set<Party> PARTIES = new HashSet<>();
   private static final Set<Player> PARTY_LEADERS = new HashSet<>();
-  private final int maxSize;
   private final HashMap<UUID, ItemStack> memberSkulls = new HashMap<>();
   private final Player partyLeader;
   private final Set<Player> partyMembers = new HashSet<>();
@@ -38,6 +42,7 @@ public class Party {
   private final PublicPartyGUI publicPartyGUI;
   private final TeamDuelGUI teamDuelGUI;
   private int index = 10;
+  private int maxSize;
   private final ItemStack displayItem;
   private Status status;
   private boolean inDuel;
@@ -48,15 +53,25 @@ public class Party {
 
     PARTY_LEADERS.add(partyLeader);
 
-    if (AuroraParties.getInstance().isLuckPermsInstalled()) {
-      LuckPerms luckPerms =
-          Objects.requireNonNull(Bukkit.getServicesManager().getRegistration(LuckPerms.class))
-              .getProvider();
-      User user = luckPerms.getPlayerAdapter(Player.class).getUser(partyLeader);
-      String meta = user.getCachedData().getMetaData().getMetaValue("party-size");
-      maxSize = meta != null ? Integer.parseInt(meta) : 2;
-    } else {
-      maxSize = 2;
+    maxSize = 2;
+
+    RegisteredServiceProvider<LuckPerms> provider =
+        Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
+    if (provider != null && AuroraParties.getInstance().isLuckPermsInstalled()) {
+      LuckPerms api = provider.getProvider();
+      User user = api.getPlayerAdapter(Player.class).getUser(partyLeader);
+
+      QueryOptions queryOptions = api.getContextManager().getQueryOptions(user).orElse(null);
+
+      if (queryOptions != null) {
+        CachedMetaData metaData = user.getCachedData().getMetaData(queryOptions);
+        String meta = metaData.getMetaValue("party-size");
+
+        if (meta != null) {
+          maxSize = Integer.parseInt(meta);
+        }
+      }
     }
 
     ItemStack leaderSkull = PlayerHeadUtil.getPlayerSkull(partyLeader);

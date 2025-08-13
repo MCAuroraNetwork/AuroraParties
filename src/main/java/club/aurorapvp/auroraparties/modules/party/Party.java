@@ -1,5 +1,6 @@
 package club.aurorapvp.auroraparties.modules.party;
 
+import club.aurorapvp.aurorachat.modules.ChatGroup;
 import club.aurorapvp.auroraduels.modules.DuelRequest;
 import club.aurorapvp.auroraparties.AuroraParties;
 import club.aurorapvp.auroraparties.modules.guis.PartyLeaderGUI;
@@ -13,10 +14,8 @@ import club.aurorapvp.auroraparties.util.PlayerHeadUtil;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
@@ -29,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class Party {
+public class Party implements ChatGroup.ChatTarget {
 
   private static final Set<Party> PARTIES = new HashSet<>();
   private static final Set<Player> PARTY_LEADERS = new HashSet<>();
@@ -56,7 +55,7 @@ public class Party {
     maxSize = 2;
 
     RegisteredServiceProvider<LuckPerms> provider =
-        Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+            Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 
     if (provider != null && AuroraParties.getInstance().isLuckPermsInstalled()) {
       LuckPerms api = provider.getProvider();
@@ -86,21 +85,26 @@ public class Party {
     ItemStack displayItem = PlayerHeadUtil.getPlayerSkull(partyLeader);
     ItemMeta meta = displayItem.getItemMeta();
     meta.displayName(
-        AuroraParties.getInstance().getLang().formatComponent("party-name", partyLeader.getName()));
+            AuroraParties.getInstance().getLang().formatComponent("party-name", partyLeader.getName()));
     meta.lore(
-        List.of(
-            getStatusDisplayName(),
-            Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
+            List.of(
+                    getStatusDisplayName(),
+                    Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
     displayItem.setItemMeta(meta);
 
     this.displayItem = displayItem;
 
     partyLeader.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .getComponentCommand("party-created", "Click to open Party", "/party"));
+            AuroraParties.getInstance()
+                    .getLang()
+                    .getComponentCommand("party-created", "Click to open Party", "/party"));
 
     PARTIES.add(this);
+
+    // Enable party chat by default for leader
+    ChatGroup leaderGroup = ChatGroup.getChatGroup(partyLeader);
+    leaderGroup.setChatTarget(this);
+    partyLeader.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-enabled"));
   }
 
   public static boolean inParty(Player player) {
@@ -191,9 +195,9 @@ public class Party {
   private void updateDisplayItem() {
     ItemMeta meta = displayItem.getItemMeta();
     meta.lore(
-        List.of(
-            getStatusDisplayName(),
-            Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
+            List.of(
+                    getStatusDisplayName(),
+                    Component.text(this.getSize() + "/" + this.getMaxSize() + " Members")));
     displayItem.setItemMeta(meta);
   }
 
@@ -231,20 +235,20 @@ public class Party {
       }
     }
     player.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .formatComponent("player-joined-party", player.getName()));
+            AuroraParties.getInstance()
+                    .getLang()
+                    .formatComponent("player-joined-party", player.getName()));
     player.openInventory(this.getMemberGUI().getInventory());
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
-          AuroraParties.getInstance()
-              .getLang()
-              .formatComponent("player-joined-party", player.getName()));
+              AuroraParties.getInstance()
+                      .getLang()
+                      .formatComponent("player-joined-party", player.getName()));
     }
     partyLeader.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .formatComponent("player-joined-party", player.getName()));
+            AuroraParties.getInstance()
+                    .getLang()
+                    .formatComponent("player-joined-party", player.getName()));
     partyMembers.add(player);
     updateDisplayItem();
     incrementIndex();
@@ -256,6 +260,11 @@ public class Party {
     publicPartyGUI.addMember(index, memberSkull);
     teamDuelGUI.addMember(memberSkull, player);
     PartySelectGUI.reload();
+
+    // Enable party chat by default for new member
+    ChatGroup memberGroup = ChatGroup.getChatGroup(player);
+    memberGroup.setChatTarget(this);
+    player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-enabled"));
   }
 
   public void leave(Player player) {
@@ -264,32 +273,42 @@ public class Party {
       return;
     }
     this.removeMember(player);
+    ChatGroup cg = ChatGroup.getChatGroup(player);
+    if (cg.getMode() == ChatGroup.ChatMode.SELECT && cg.getAllowedGroup() == this) {
+      cg.setChatTarget(null);
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-reverted"));
+    }
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("left-party"));
     partyLeader.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .formatComponent("player-left-party", player.getName()));
+            AuroraParties.getInstance()
+                    .getLang()
+                    .formatComponent("player-left-party", player.getName()));
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
-          AuroraParties.getInstance()
-              .getLang()
-              .formatComponent("player-left-party", player.getName()));
+              AuroraParties.getInstance()
+                      .getLang()
+                      .formatComponent("player-left-party", player.getName()));
     }
     updateDisplayItem();
   }
 
   public void kick(Player player) {
     this.removeMember(player);
+    ChatGroup cg = ChatGroup.getChatGroup(player);
+    if (cg.getMode() == ChatGroup.ChatMode.SELECT && cg.getAllowedGroup() == this) {
+      cg.setChatTarget(null);
+      player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-reverted"));
+    }
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("removed-from-party"));
     partyLeader.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .formatComponent("player-removed-from-party", player.getName()));
+            AuroraParties.getInstance()
+                    .getLang()
+                    .formatComponent("player-removed-from-party", player.getName()));
     for (Player partyMember : this.getMembers()) {
       partyMember.sendMessage(
-          AuroraParties.getInstance()
-              .getLang()
-              .formatComponent("player-removed-from-party", player.getName()));
+              AuroraParties.getInstance()
+                      .getLang()
+                      .formatComponent("player-removed-from-party", player.getName()));
     }
     updateDisplayItem();
   }
@@ -309,15 +328,16 @@ public class Party {
   }
 
   public void disband() {
-    partyLeader.sendMessage(
-        AuroraParties.getInstance()
-            .getLang()
-            .formatComponent("party-disbanded", partyLeader.getName()));
-    for (Player player : partyMembers) {
+    for (Player player : getChatMembers()) {
       player.sendMessage(
-          AuroraParties.getInstance()
-              .getLang()
-              .formatComponent("party-disbanded", partyLeader.getName()));
+              AuroraParties.getInstance()
+                      .getLang()
+                      .formatComponent("party-disbanded", partyLeader.getName()));
+      ChatGroup cg = ChatGroup.getChatGroup(player);
+      if (cg.getMode() == ChatGroup.ChatMode.SELECT && cg.getAllowedGroup() == this) {
+        cg.setChatTarget(null);
+        player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-reverted"));
+      }
     }
     PartySelectGUI.reload();
 
@@ -343,6 +363,12 @@ public class Party {
     if (index % 9 == 8) {
       index += 2;
     }
+  }
+
+  public Set<Player> getChatMembers() {
+    Set<Player> all = new HashSet<>(partyMembers);
+    all.add(partyLeader);
+    return all;
   }
 
   public enum Status {

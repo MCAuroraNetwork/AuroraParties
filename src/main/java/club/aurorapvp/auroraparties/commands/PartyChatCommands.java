@@ -28,18 +28,13 @@ public class PartyChatCommands extends BaseCommand {
 
     ChatGroup group = ChatGroup.getChatGroup(player);
 
-    if (group.getMode() == ChatGroup.ChatMode.SELECT && group.getAllowedPlayers().equals(party.getMembers())) {
+    if (group.getMode() == ChatGroup.ChatMode.SELECT && group.getAllowedGroup() == party) {
       group.setMode(ChatGroup.ChatMode.ALL);
-
       player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-disabled"));
-
       return;
     }
 
-    group.setAllowedPlayers(party.getMembers());
-
-    group.setMode(ChatGroup.ChatMode.SELECT);
-
+    group.setChatTarget(party);
     player.sendMessage(AuroraParties.getInstance().getLang().getComponent("party-chat-enabled"));
   }
 }

@@ -5,6 +5,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 public class InventoryUtil {
 
   public static int findSkullSlot(ItemStack itemStack, Inventory inventory) {
@@ -24,7 +26,7 @@ public class InventoryUtil {
         continue;
       }
 
-      if (meta.getOwningPlayer().equals(currentMeta.getOwningPlayer())) {
+      if (Objects.equals(meta.getOwningPlayer(), currentMeta.getOwningPlayer())) {
         return i;
       }
     }
